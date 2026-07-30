@@ -1,0 +1,1284 @@
+{
+  "715/199 - SEFAZ (Departamento do Tesouro Estadual)": {
+    "1": [
+      {
+        "aplicacao": "PROSPECÇÃO DE MERCADO DA ECONOMIA VERDE NACIONAL E INTERNACIONAL.",
+        "dotacao": 5000000,
+        "tipo": "Exclusivo"
+      }
+    ],
+    "3": [
+      {
+        "aplicacao": "PROGRAMA ESTADUAL DE ENFRENTAMENTO ÀS DEMANDAS CONTINGENTES.",
+        "dotacao": 20000000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "MELHORIA, MODERNIZAÇÃO E INOVAÇÃO DOS SERVIÇOS DA SEFAZ.",
+        "dotacao": 1000000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "MODERNIZAÇÃO, APARELHAMENTO E MANUTENÇÃO DA ESTRUTURA DO FISCO.",
+        "dotacao": 4000000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "715/512 - CDSA": {
+    "1": [
+      {
+        "aplicacao": "PROSPECÇÃO DE MERCADOS DA ECONOMIA  VERDE NACIONAL E INTERNACIONAL.",
+        "dotacao": 784910.8,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "INCENTIVO E REGULAÇÃO DE SERVIÇOS AMBIENTAIS - CDSA.",
+        "dotacao": 20000,
+        "tipo": "Exclusivo"
+      }
+    ]
+  },
+  "720/001 - SEMA": {
+    "1": [
+      {
+        "aplicacao": "PROMOÇÃO DO MEIO AMBIENTE E CIDADES SUSTENTÁVEIS E RESILIENTES.",
+        "dotacao": 247000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "MELHORIA, MODERNIZAÇÃO E INOVAÇÃO DOS SERVIÇOS DA SEMA.",
+        "dotacao": 53000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "FOMENTOS DAS CADEIAS DE VALOR DA SOCIOBIODIVERSIDADE.",
+        "dotacao": 99000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "CONSOLIDAÇÃO DA GESTÃO DAS UNIDADES DE CONSERVAÇÃO ESTADUAIS.",
+        "dotacao": 3501000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "INSTRUMENTALIZAÇÃO DA BASE LEGAL DA POLÍTICA ESTADUAL DE MEIO AMBIENTE.",
+        "dotacao": 112000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "CONSOLIDAÇÃO DOS SISTEMAS DE OUVIDORIA.",
+        "dotacao": 5500,
+        "tipo": "Exclusivo"
+      }
+    ],
+    "2": [
+      {
+        "aplicacao": "CONSTRUÇÃO, REFORMA E AMPLIAÇÃO DOS PRÉDIOS DA SEMA.",
+        "dotacao": 300000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "MANUTENÇÃO DAS ATIVIDADES ADMINISTRATIVAS E OPERACIONAIS-SEMA.",
+        "dotacao": 1831764.37,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "APOIO A REGULARIZAÇÃO AMBIENTAL.",
+        "dotacao": 3560000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "IMPLEMENTAÇÃO DO ZONEAMENTO ECOLÓGICO ECONÔMICO-ZEE.",
+        "dotacao": 546680,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "MONITORAMENTO DAS AÇÕES DE IMPLEMENTAÇÃO DO PLANO ESTADUAL DE PREVENÇÃO E CONTROLE DO DESMATAMENTO E QUEIMADAS-PPCDQ-AC NOS MUNICÍPIOS.",
+        "dotacao": 73000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "MONITORAMENTO AMBIENTAL.",
+        "dotacao": 6320710,
+        "tipo": "Exclusivo"
+      }
+    ],
+    "3": [
+      {
+        "aplicacao": "MANUTENÇÃO DAS ATIVIDADES ADMINISTRATIVAS E OPERACIONAIS-SEMA.",
+        "dotacao": 1000,
+        "tipo": "Não Exclusivo"
+      }
+    ],
+    "5": [
+      {
+        "aplicacao": "CONSOLIDAÇÃO DOS SISTEMAS DE OUVIDORIA.",
+        "dotacao": 5500,
+        "tipo": "Exclusivo"
+      }
+    ]
+  },
+  "720/622 - SEMA (Fundo Est. de Meio Ambiente e Florestas)": {
+    "1": [
+      {
+        "aplicacao": "CONSOLIDAÇÃO DA GESTÃO DAS UNIDADES DE CONSERVAÇÃO ESTADUAIS.",
+        "dotacao": 1000,
+        "tipo": "Exclusivo"
+      }
+    ],
+    "2": [
+      {
+        "aplicacao": "MANUTENÇÃO DA ATIVIDADES ADMINISTRATIVAS E OPERACIONAIS-FUNDO ESTADUAL DE MEIO AMBIENTE E FLORESTAS.",
+        "dotacao": 1000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "APOIO A REGULARIZAÇÃO AMBIENTAL.",
+        "dotacao": 1000,
+        "tipo": "Exclusivo"
+      }
+    ]
+  },
+  "753/001 - SEAGRI": {
+    "1": [
+      {
+        "aplicacao": "AMPLIAÇÃO DO PROGRAMA DE AQUISIÇÃO DE ALIMENTOS.",
+        "dotacao": 6000000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "PROMOÇÃO DA ASSISTÊNCIA TÉCNICA E EXTENSÃO RURAL - ATER - SEAGRI.",
+        "dotacao": 1800000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "PROMOÇÃO DE ASSISTÊNCIA TÉCNICA E EXTENSÃO RURAL PARA OS POVOS ORIGINÁRIOS.",
+        "dotacao": 381000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "MELHORIA, MODERNIZAÇÃO E INOVAÇÃO DOS SERVIÇOS DA SEAGRI.",
+        "dotacao": 1210000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "FORTALECIMENTO, CONSOLIDAÇÃO E AMPLIAÇÃO DAS CADEIAS DE VALOR AGROFLORESTAL E AGROPECUÁRIA.",
+        "dotacao": 56346200,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "CONSOLIDAÇÃO E AMPLIAÇÃO DAS CADEIAS DE VALOR FLORESTAL.",
+        "dotacao": 5000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "PROMOÇÃO DA LOGÍSTICA DE BENEFICIAMENTO, ARMAZENAGEM E ESCOAMENTO DA PRODUÇÃO.",
+        "dotacao": 3344000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "PROMOÇÃO DE FEIRAS E EVENTOS.",
+        "dotacao": 30008000,
+        "tipo": "Exclusivo"
+      }
+    ],
+    "3": [
+      {
+        "aplicacao": "CONSTRUÇÃO, REFORMA E AMPLIAÇÃO DOS PRÉDIOS DA SEAGRI.",
+        "dotacao": 1000000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "FORTALECIMENTO, CONSOLIDAÇÃO E AMPLIAÇÃO DAS CADEIAS DE VALOR AGROFLORESTAL E AGROPECUÁRIA.",
+        "dotacao": 3100000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "PROMOÇÃO DA LOGÍSTICA DE BENEFICIAMENTO, ARMAZENAGEM E ESCOAMENTO DA PRODUÇÃO.",
+        "dotacao": 1000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "753/401 - CAGEACRE": {
+    "1": [
+      {
+        "aplicacao": "MELHORIA, MODERNIZAÇÃO E INOVAÇÃO DOS SERVIÇOS DA CAGEACRE.",
+        "dotacao": 630809.49,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "PROMOÇÃO DA LOGÍSTICA DE BENEFICIAMENTO, ARMAZENAGEM E ESCOAMENTO DA PRODUÇÃO.",
+        "dotacao": 590000,
+        "tipo": "Exclusivo"
+      }
+    ]
+  },
+  "753/402 - EMATER": {
+    "1": [
+      {
+        "aplicacao": "PROMOÇÃO DA ASSISTÊNCIA TÉCNICA E EXTENSÃO RURAL - ATER - EMATER.",
+        "dotacao": 2442771.45,
+        "tipo": "Exclusivo"
+      }
+    ]
+  },
+  "753/610 - SEAGRI (Fundo Agropecuário - FUNAGRO)": {
+    "1": [
+      {
+        "aplicacao": "FORTALECIMENTO, CONSOLIDAÇÃO E AMPLIAÇÃO DAS CADEIAS DE VALOR AGROFLORESTAL E AGROPECUÁRIA.",
+        "dotacao": 2000000,
+        "tipo": "Exclusivo"
+      }
+    ]
+  },
+  "761/615 - SEICT (Fundo de Desenvolvimento Sustentável - FDS)": {
+    "1": [
+      {
+        "aplicacao": "MANUTENÇÃO DAS ATIVIDADES ADMINISTRATIVAS E OPERACIONAIS-FDS.",
+        "dotacao": 3890000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "FOMENTAR O DESENVOLVIMENTO DA INDÚSTRIA E DO COMÉRCIO DO ESTADO DO ACRE.",
+        "dotacao": 710000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "FOMENTO AO DESENVOLVIMENTO DOS NEGÓCIOS NO ESTADO DO ACRE.",
+        "dotacao": 380000,
+        "tipo": "Não Exclusivo"
+      }
+    ],
+    "6": [
+      {
+        "aplicacao": "FORTALECIMENTO DO ECOSSISTEMA DE INOVAÇÃO.",
+        "dotacao": 70000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "IMPLEMENTAÇÃO DA INFRAESTRUTURA PARA APOIO À TECNOLOGIA E INOVAÇÃO.",
+        "dotacao": 270000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "FOMENTO A CIÊNCIA E INOVAÇÃO NO ESTADO DO ACRE.",
+        "dotacao": 680000,
+        "tipo": "Exclusivo"
+      }
+    ]
+  },
+  "715/205 - JUCEAC": {
+    "1": [
+      {
+        "aplicacao": "PROMOVER O PROCESSO DE LEGALIZAÇAO DE EMPRESAS, SIMPLIFICANDO, INTEGRANDO E DESBUROCRATIZANDO(SIMPLIFICA MAIS).",
+        "dotacao": 1361000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "761/001 - SEICT": {
+    "1": [
+      {
+        "aplicacao": "FOMENTAR O DESENVOLVIMENTO DA INDÚSTRIA E DO COMÉRCIO.",
+        "dotacao": 805582.32,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "FOMENTO AO DESENVOLVIMENTO DOS NEGÓCIOS NO ESTADO DO ACRE.",
+        "dotacao": 509811.63,
+        "tipo": "Exclusivo"
+      }
+    ]
+  },
+  "761/506 - ANAC": {
+    "1": [
+      {
+        "aplicacao": "FOMENTO AO DESENVOLVIMENTO DOS NEGÓCIOS DO ESTADO DO ACRE.",
+        "dotacao": 100000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "MANUTENÇÃO DAS ATIVIDADES ADMINISTRATIVAS E OPERACIONAIS-ANAC.",
+        "dotacao": 1285928.7,
+        "tipo": "Exclusivo"
+      }
+    ]
+  },
+  "713/001 - SEPLAN": {
+    "2": [
+      {
+        "aplicacao": "PROMOÇÃO DA POLÍTICA ESTADUAL DE DESENVOLVIMENTO REGIONAL SUSTENTÁVEL.",
+        "dotacao": 7538452.78,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "PROMOÇÃO DA TRANSIÇÃO E EFICIÊNCIA ENERGÉTICA NA ADMINISTRAÇÃO PÚBLICA.",
+        "dotacao": 1000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "APRIMORAMENTO DA GESTÃO ORÇAMENTARIA.",
+        "dotacao": 1058356,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "GESTÃO ESTRATÉGICA DE RECURSOS.",
+        "dotacao": 26040578.2,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "PROGRAMA ESTADUAL DE CONTRAPARTIDA DE CONV. CONTRATOS, OP. DE CRÉDITOS E OUTROS INSTRUMENTOS CONGÊNERES.",
+        "dotacao": 160164502,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "PROGRAMA DE OPERAÇÕES ESPECIAIS-TRANSFERÊNCIAS CONSTITUCIONAIS E AS DECORRENTES DE LEGISLAÇÃO ESPECÍFICA.",
+        "dotacao": 50000000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "714/001 - SEAD": {
+    "2": [
+      {
+        "aplicacao": "PROMOÇÃO DA TRANSIÇÃO E EFICIÊNCIA ENERGÉTICA NA ADMINISTRAÇÃO PÚBLICA.",
+        "dotacao": 1000,
+        "tipo": "Exclusivo"
+      }
+    ]
+  },
+  "715/001 - SEFAZ": {
+    "2": [
+      {
+        "aplicacao": "PROMOÇÃO DA TRANSIÇÃO E EFICIÊNCIA ENERGÉTICA NA ADMINISTRAÇÃO PÚBLICA.",
+        "dotacao": 1000,
+        "tipo": "Exclusivo"
+      }
+    ],
+    "3": [
+      {
+        "aplicacao": "MELHORIA, MODERNIZAÇÃO E INOVAÇÃO DOS SERVIÇOS DA SEFAZ.",
+        "dotacao": 5456616.5,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "MODERNIZAÇÃO DA GESTÃO TRIBUTÁRIA.",
+        "dotacao": 6468075,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "MODERNIZAÇÃO, APARELHAMENTO E MANUTENÇÃO DA ESTRUTURA DO FISCO.",
+        "dotacao": 5020000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "PROGRAMA DE REESTRUTURAÇÃO E DESENVOLVIMENTO DO FISCO ESTADUAL(PROFISCO).",
+        "dotacao": 5000000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "ADMINISTRAÇÃO E GESTÃO DAS AGÊNCIAS E POSTOS FISCAIS.",
+        "dotacao": 5250,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "719/001 - SEJUSP": {
+    "2": [
+      {
+        "aplicacao": "MONITORAMENTO AMBIENTAL-COMANDO E CONTROLE.",
+        "dotacao": 1195904.88,
+        "tipo": "Exclusivo"
+      }
+    ],
+    "3": [
+      {
+        "aplicacao": "CONSTRUÇÃO, REFORMA E AMPLIAÇÃO DOS PRÉDIOS DA SEJUSP.",
+        "dotacao": 4300000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "MELHORIA, MODERNIZAÇÃO E INOVAÇÃO DOS SERVIÇOS INTEGRADOS DE SEGURANÇA PÚBLICA",
+        "dotacao": 250000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "POLICIAMENTO COMUNITÁRIO INTEGRADO EM ÁREAS E PARQUES URBANOS.",
+        "dotacao": 400000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "MONITORAMENTO AMBIENTAL-COMANDO E CONTROLE.",
+        "dotacao": 2779.13,
+        "tipo": "Exclusivo"
+      }
+    ]
+  },
+  "719/637 - SEJUSP (Fundo Est. de Segurança - FUNDESEG)": {
+    "2": [
+      {
+        "aplicacao": "MONITORAMENTO AMBIENTAL-COMANDO E CONTROLE.",
+        "dotacao": 1000,
+        "tipo": "Exclusivo"
+      }
+    ],
+    "3": [
+      {
+        "aplicacao": "FORTALECIMENTO DAS AÇÕES DE ENFRENTAMENTO À VIOLÊNCIA CONTRA MULHER.",
+        "dotacao": 36000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "CONSTRUÇÃO, REFORMA E AMPLIAÇÃO DOS PRÉDIOS DA SEJUSP.",
+        "dotacao": 2800000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "POLICIAMENTO COMUNITÁRIO INTEGRADO EM ÁREAS E PARQUES URBANOS.",
+        "dotacao": 50000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "754/203 - SANEACRE": {
+    "2": [
+      {
+        "aplicacao": "EFICIÊNCIA ENERGÉTICA.",
+        "dotacao": 31000,
+        "tipo": "Exclusivo"
+      }
+    ],
+    "3": [
+      {
+        "aplicacao": "AMPLIAÇÃO E MELHORIA DOS SISTEMAS DE ABASTECIMENTO DE ÁGUA NOS MUNICÍPIOS DO ACRE.",
+        "dotacao": 6030000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "AMPLIAÇÃO E MELHORIA DOS SISTEMAS DE COLETA E TRATAMENTO DE ESGOTAMENTO SANITÁRIO NOS MUNICÍPIOS DO ACRE.",
+        "dotacao": 799000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "754/210 - AGEAC": {
+    "2": [
+      {
+        "aplicacao": "PROMOÇÃO DA TRANSIÇÃO E EFICIÊNCIA ENERGÉTICA NA ADMINISTRAÇÃO PÚBLICA.",
+        "dotacao": 1000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "PROMOÇÃO DA REGULAÇÃO DE ENERGIA ELÉTRICA.",
+        "dotacao": 70000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "PROMOÇÃO DA REGULAÇÃO E FISCALIZAÇÃO DO TRANSPORTE INTERMUNICIPAL(REGULAR E FLUVIAL).",
+        "dotacao": 480000,
+        "tipo": "Exclusivo"
+      }
+    ],
+    "3": [
+      {
+        "aplicacao": "PROMOÇÃO DA REGULAÇÃO DO SANEAMENTO BÁSICO.",
+        "dotacao": 325000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "720/202 - IMAC": {
+    "2": [
+      {
+        "aplicacao": "MANUTENÇÃO DAS ATIVIDADES ADMINISTRATIVAS E OPERACIONAIS-IMAC.",
+        "dotacao": 1698810.85,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "FORTALECIMENTO DA FISCALIZAÇÃO, DO MONITORAMENTO E DO CONTROLE AMBIENTAL DOS RECURSOS HIDRICOS E DA FAUNA NO ESTADO DO ACRE.",
+        "dotacao": 1000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "FORTALECIMENTO DA FISCALIZAÇÃO, LICENCIAMENTO, MONITORAMENTO E O CONTROLE AMBIENTAL NO ESTADO DO ACRE.",
+        "dotacao": 4951904,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "MELHORIA, MODERNIZAÇÃO E INOVAÇÃO DOS SERVIÇOS DO IMAC.",
+        "dotacao": 1000,
+        "tipo": "Exclusivo"
+      }
+    ],
+    "3": [
+      {
+        "aplicacao": "CONSTRUÇÃO, REFORMA E AMPLIAÇÃO DOS PRÉDIOS DO IMAC.",
+        "dotacao": 1000,
+        "tipo": "Não Exclusivo"
+      }
+    ],
+    "6": [
+      {
+        "aplicacao": "FORTALECIMENTO DA EDUCAÇÃO AMBIENTAL.",
+        "dotacao": 1000,
+        "tipo": "Exclusivo"
+      }
+    ]
+  },
+  "720/215 - IMC": {
+    "2": [
+      {
+        "aplicacao": "MANUTENÇÃO DAS ATIVIDADES ADMINISTRATIVAS E OPERACIONAIS-IMC.",
+        "dotacao": 262000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "INCENTIVO E REGULAÇÃO DE SERVIÇOS AMBIENTAIS - IMC.",
+        "dotacao": 8000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "MELHORIA, MODERNIZAÇÃO E INOVAÇÃO DOS SERVIÇOS DO IMC.",
+        "dotacao": 1000,
+        "tipo": "Exclusivo"
+      }
+    ],
+    "5": [
+      {
+        "aplicacao": "FORTALECIMENTO DA GOVERNANÇA DO SISTEMA ESTADUAL DE INCENTIVOS A SERVIÇOS AMBIENTAIS DO ACRE (SISA).",
+        "dotacao": 3000,
+        "tipo": "Exclusivo"
+      }
+    ]
+  },
+  "720/605 - SEMA (Fundo Est. de Comando e Controle Ambiental)": {
+    "2": [
+      {
+        "aplicacao": "MANUTENÇÃO DAS ATIVIDADES ADMINISTRATIVAS E OPERACIONAIS-IMAC.",
+        "dotacao": 1200,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "MANUTENÇÃO DAS ATIVIDADES ADMINISTRATIVAS E OPERACIONAIS-FUNDO ESTADUAL DE COMANDO E CONTROLE AMBIENTAL(FECCA).",
+        "dotacao": 5000000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "FORTALECIMENTO DA EDUCAÇÃO AMBIENTAL.",
+        "dotacao": 500,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "FORTALECIMENTO DA FISCALIZAÇÃO, LICENCIAMENTO, MONITORAMENTO E O CONTROLE AMBIENTAL NO ESTADO DO ACRE.",
+        "dotacao": 1000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "MELHORIA, MODERNIZAÇÃO E INOVAÇÃO DOS SERVIÇOS DO IMAC.",
+        "dotacao": 1000,
+        "tipo": "Exclusivo"
+      }
+    ],
+    "6": [
+      {
+        "aplicacao": "FORTALECIMENTO DA EDUCAÇÃO AMBIENTAL.",
+        "dotacao": 500,
+        "tipo": "Exclusivo"
+      }
+    ]
+  },
+  "744/201 - DERACRE": {
+    "2": [
+      {
+        "aplicacao": "FORTALECIMENTO DAS AÇÕES DE APOIO AOS MUNICÍPIOS.",
+        "dotacao": 4737384.18,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "RAMAIS DO ACRE-CONSTRUÇÃO, RECUPERAÇÃO E MANUTENÇÃO DE RAMAIS, GALERIAS E SISTEMAS DE DRENAGENS.",
+        "dotacao": 97285647.31,
+        "tipo": "Não Exclusivo"
+      }
+    ],
+    "3": [
+      {
+        "aplicacao": "URBANIZAÇÃO DE ORLAS DO ACRE.",
+        "dotacao": 3295000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "ESTUDOS, AVALIAÇÕES E ELABORAÇÕES DE PROJETOS.",
+        "dotacao": 33.52,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "MANUTENÇÃO DAS ATIVIDADES ADMINISTRATIVAS E OPERACIONAIS-DERACRE.",
+        "dotacao": 335.17,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "CONSTRUÇÃO, REFORMA E AMPLIAÇÃO DAS UNIDADES DO DERACRE.",
+        "dotacao": 368.69,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "CONSTRUÇÃO, RECUPERAÇÃO, AMPLIAÇÃO E MELHORIAS DOS AERODROMOS E AEROPORTOS.",
+        "dotacao": 750308.03,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "MELHORIA, MODERNIZAÇÃO E INOVAÇÃO DOS SERVIÇOS DO DERACRE.",
+        "dotacao": 33.52,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "OBRAS DE ARTE ESPECIAIS-CONSTRUÇÃO, RECUPERAÇÃO DE PONTES, PASSARELAS.",
+        "dotacao": 57531318.18,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "IMPLANTAÇÃO, AMPLIAÇÃO, MANUTENÇÃO E RESTAURAÇÃO DE VIAS URBANAS E EXECUÇÃO DE OBRAS DE ARTES CORRENTES.",
+        "dotacao": 9541877.72,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "CONSTRUÇÃO, AMPLIAÇÃO, PAVIMENTAÇÃO E MANUTENÇÃO DAS RODOVIAS ESTADUAIS-AC'S E EXECUÇÃO DE OBRAS DE ARTES CORRENTES.",
+        "dotacao": 33300262.46,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "RESTAURAÇÃO DE VIAS, ESPAÇOS E PARQUES PÚBLICOS DENTRO DO ESTADO DO ACRE.",
+        "dotacao": 33516.79,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "CONSTRUÇÃO E MANUTENÇÃO DE PORTOS E HIDROVIAS (RAMPAS E ESCADARIAS).",
+        "dotacao": 335.17,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "510/001 - PGE": {
+    "3": [
+      {
+        "aplicacao": "CONSTRUÇÃO, REFORMA E AMPLIAÇÃO DOS PRÉDIOS DA PGE.",
+        "dotacao": 1000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "445/001 - SEGOV": {
+    "3": [
+      {
+        "aplicacao": "MANUTENÇÃO DAS ATIVIDADES ADMINISTRATIVAS E OPERACONAIS-SEGOV.",
+        "dotacao": 100000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "722/001 - SEPI": {
+    "3": [
+      {
+        "aplicacao": "MANUTENÇÃO DAS ATIVIDADES ADMINISTRATIVAS E FINANCEIRAS-SEPI.",
+        "dotacao": 110000,
+        "tipo": "Não Exclusivo"
+      }
+    ],
+    "4": [
+      {
+        "aplicacao": "FORTALECIMENTO DAS POLÍTICAS PÚBLICAS PARA OS POVOS INDÍGENAS DO ESTADO DO ACRE.",
+        "dotacao": 2000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "VALORIZAÇÃO DA CULTURA E DOS CONHECIMENTOS TRADICIONAIS INDÍGENAS.",
+        "dotacao": 2000,
+        "tipo": "Exclusivo"
+      }
+    ]
+  },
+  "452/001 - DEFESA CIVIL": {
+    "3": [
+      {
+        "aplicacao": "MELHORIA, MODERNIZAÇÃO E INOVAÇÃO DOS SERVIÇOS DA DEFESA CIVIL-CEPDEC",
+        "dotacao": 1000,
+        "tipo": "Não Exclusivo"
+      }
+    ],
+    "7": [
+      {
+        "aplicacao": "PROMOÇÃO DAS AÇÕES DE PREVENÇÃO E DE RESPOSTAS AOS DESASTRES NATURAIS E TECNOLÓGICOS.",
+        "dotacao": 17753000,
+        "tipo": "Exclusivo"
+      }
+    ]
+  },
+  "609/001 - CBMAC": {
+    "3": [
+      {
+        "aplicacao": "MELHORIA, MODERNIZAÇÃO E INOVAÇÃO DOS SERVIÇOS DO CBMAC.",
+        "dotacao": 500000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "CONSTRUÇÃO, REFORMA E AMPLIAÇÃO DOS PRÉDIOS DO CBMAC.",
+        "dotacao": 1999000,
+        "tipo": "Não Exclusivo"
+      }
+    ],
+    "7": [
+      {
+        "aplicacao": "PROMOÇÃO DE AÇÕES SOCIAIS E COMUNITÁRIAS DO CORPO DE BOMBEIROS.",
+        "dotacao": 4000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "FORTALECIMENTO DAS AÇÕES PARA PROTEÇÃO DA VIDA, DO MEIO AMBIENTE E DO PATRIMÔNIO.",
+        "dotacao": 589667,
+        "tipo": "Exclusivo"
+      }
+    ]
+  },
+  "451/001 - PCAC": {
+    "3": [
+      {
+        "aplicacao": "CONSTRUÇÃO, REFORMA E AMPLIAÇÃO DAS UNIDADES DA PCAC.",
+        "dotacao": 3300000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "608/001 - PMAC": {
+    "3": [
+      {
+        "aplicacao": "FORTALECIMENTO DA POLÍCIA MILITAR.",
+        "dotacao": 3300000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "MANUTENÇÃO DAS ATIVIDADES ADMINISTRATIVAS E OPERACIONAIS DA PMAC.",
+        "dotacao": 1000000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "609/632 - CBMAC (Fundo Esp. do Corpo de Bombeiros Militar do Estado do Acre - FUNESBOM)": {
+    "3": [
+      {
+        "aplicacao": "MANUTENÇÃO DAS ATIVIDADES ADMINISTRATIVAS E OPERACIONAIS-FUNESBOM.",
+        "dotacao": 200000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "719/209 - IAPEN": {
+    "3": [
+      {
+        "aplicacao": "CONSTRUÇÃO, REFORMA E AMPLIAÇÃO DE PRÉDIOS DO SISTEMA PRISIONAL.",
+        "dotacao": 800,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "RESSOCIALIZAÇÃO DAS PESSOAS PRIVADAS DE LIBERDADE, SOB CUSTÓDIA DO SISTEMA PRISIONAL.",
+        "dotacao": 1000000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "719/626 - SEJUSP (Fundo Penitenciário do Estado do Acre)": {
+    "3": [
+      {
+        "aplicacao": "CONSTRUÇÃO, REFORMA E AMPLIAÇÃO DE PRÉDIOS DO SISTEMA PRISIONAL.",
+        "dotacao": 1771713.29,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "760/001 - SEASDH": {
+    "3": [
+      {
+        "aplicacao": "MANUTENÇÃO DAS ATIVIDADES ADMINISTRATIVAS E OPERACIONAIS-SEASDH.",
+        "dotacao": 1000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "CONSTRUÇÃO, REFORMA E AMPLIAÇÃO DOS PRÉDIOS DA SEASDH.",
+        "dotacao": 5000000,
+        "tipo": "Não Exclusivo"
+      }
+    ],
+    "4": [
+      {
+        "aplicacao": "APOIO AS ORGANIZAÇÕES DA SOCIEDADE CIVIL(OSCS).",
+        "dotacao": 79000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "JUNTOS PELO ACRE:CUIDANDO DE PESSOAS.",
+        "dotacao": 1000000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "PROMOÇÃO DAS AÇÕES DE SAÚDE E DE SEGURANÇA NO TRABALHO PARA OS SERVIDORES DA SEASDH.",
+        "dotacao": 69000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "FORTALECIMENTO DAS AÇÕES DE PROTEÇÃO SOCIAL AOS POVOS INDÍGENAS.",
+        "dotacao": 800000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "PROMOÇÃO DA POLÍTICA ESTADUAL DE CIDADANIA E DIREITOS HUMANOS.",
+        "dotacao": 580000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "714/211 - ACREPREVIDÊNCIA": {
+    "3": [
+      {
+        "aplicacao": "MANUTENÇÃO DA ATIVIDADES ADMINISTRATIVAS E OPERACIONAIS DO ACREPREVIDÊNCIA.",
+        "dotacao": 100000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "CONSTRUÇÃO, REFORMA E AMPLIAÇÃO DOS PRÉDIOS DO ACREPREVIDÊNCIA.",
+        "dotacao": 4000000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "721/607 - SESACRE (Fundo Estadual de Saúde - FUNDES)": {
+    "3": [
+      {
+        "aplicacao": "CONSTRUÇÃO, REFORMA E AMPLIAÇÃO DOS PRÉDIOS DA SESACRE.",
+        "dotacao": 44510000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "MELHORIA, MODERNIZAÇÃO E INOVAÇÃO DOS SERVIÇOS DA REDE PÚBLICA DE SAÚDE.",
+        "dotacao": 12997000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "759/001 - SETE": {
+    "3": [
+      {
+        "aplicacao": "PROMOÇÃO E DESENVOLVIMENTO DO TURISMO SUSTENTÁVEL EM SEUS DIVERSOS SEGMENTOS.",
+        "dotacao": 700001,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "PROMOÇÃO DO ETNOTURISMO.",
+        "dotacao": 1,
+        "tipo": "Exclusivo"
+      }
+    ]
+  },
+  "717/001 - SEE": {
+    "3": [
+      {
+        "aplicacao": "MANUTENÇÃO DAS ATIVIDADES ADMINISTRATIVAS E OPERACIONAIS-SEE.",
+        "dotacao": 1900000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "CONSTRUÇÃO, REFORMA E AMPLIAÇÃO DOS PRÉDIOS DA EDUCAÇÃO-SEE.",
+        "dotacao": 24950000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "MELHORIA, MODERNIZAÇÃO E INOVAÇÃO DA REDE ESTADUAL DE ENSINO.",
+        "dotacao": 4000000,
+        "tipo": "Não Exclusivo"
+      }
+    ],
+    "4": [
+      {
+        "aplicacao": "PROMOÇÃO DOS DIREITOS HUMANOS E DIVERSIDADE.",
+        "dotacao": 65200,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "717/212 - IEPTEC": {
+    "3": [
+      {
+        "aplicacao": "MANUTENÇÃO DAS ATIVIDADES ADMINISTRATIVAS E OPERACIONAIS-IEPTEC.",
+        "dotacao": 500,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "AMPLIAÇÃO DA REDE DE QUALIFICAÇÃO PROFISSIONAL E TECNOLÓGICA DO ESTADO DO ACRE.",
+        "dotacao": 500,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "CONSTRUÇÃO, REFORMA E AMPLIAÇÃO DOS PRÉDIOS DO IEPTEC.",
+        "dotacao": 1601000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "717/303 - FEM": {
+    "3": [
+      {
+        "aplicacao": "CONSTRUÇÃO, REFORMA E AMPLIAÇÃO DOS PRÉDIOS DA FEM.",
+        "dotacao": 147472.27,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "FOMENTO A CULTURA: LEI ALDIR BLANC.",
+        "dotacao": 750000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "PROMOÇÃO DE ATIVIDADES CULTURAIS TRADICIONAIS.",
+        "dotacao": 290000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "717/628 - FEM (Fundo Estadual de Cultura  - Funcultura)": {
+    "3": [
+      {
+        "aplicacao": "CONSTRUÇÃO, REFORMA E AMPLIAÇÃO DOS PRÉDIOS DA FEM.",
+        "dotacao": 151000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "719/213 - ISE": {
+    "3": [
+      {
+        "aplicacao": "CONSTRUÇÃO, REFORMA E AMPLIAÇÃO DOS PRÉDIOS DO ISE.",
+        "dotacao": 2251384.93,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "760/640 - SEASDH (Fundo Est. Def. Consumidor  - DEFC)": {
+    "3": [
+      {
+        "aplicacao": "CONSTRUÇÃO, REFORMA E AMPLIAÇÃO DOS PRÉDIOS PÚBLICOS ESTADUAIS-FEDC.",
+        "dotacao": 5000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "762/001 - SEMULHER": {
+    "3": [
+      {
+        "aplicacao": "FORTALECIMENTO DO ENFRENTAMENTO À VIOLÊNCIA CONTRA MULHERES.",
+        "dotacao": 589560,
+        "tipo": "Não Exclusivo"
+      }
+    ],
+    "4": [
+      {
+        "aplicacao": "CONSOLIDAÇÃO DAS POLÍTICAS PARA MULHERES.",
+        "dotacao": 478000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "744/001 - SEHURB": {
+    "3": [
+      {
+        "aplicacao": "IMPLANTAÇÃO E URBANIZAÇÃO DE PARQUES.",
+        "dotacao": 1000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "PRESERVAÇÃO DAS ENCOSTAS DE RIOS E IGARAPÉS.",
+        "dotacao": 9362139.29,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "IMPLANTAÇÃO E MELHORIA DE VIAS DE ACESSO PARA O TRANSPORTE.",
+        "dotacao": 34914353.3,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "CONSTRUÇÃO, REFORMA E AMPLIAÇÃO DE PRÉDIOS DO PODER EXECUTIVO.",
+        "dotacao": 1001000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "MANUTENÇÃO DE PRÉDIOS E ESPAÇOS PÚBLICOS.",
+        "dotacao": 1000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "ESTUDOS, AVALIAÇÕES E ELABORAÇÕES DE PROJETOS.",
+        "dotacao": 1000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "IMPLANTAÇÃO DO SISTEMA DE COLETA E TR ATAMENTO DE ESGOTOS SANITÁRIOS.",
+        "dotacao": 3000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "AMPLIAÇÃO DO ACESSO À MORADIA DIGNA.",
+        "dotacao": 7541842.2,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "IMPLANTAÇÃO DE SISTEMAS DE ABASTECIMENTO DE ÁGUA.",
+        "dotacao": 3000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "REGULARIZAÇÃO FUNDIÁRIA ESTADUAL URBANA.",
+        "dotacao": 1000,
+        "tipo": "Não Exclusivo"
+      }
+    ],
+    "4": [
+      {
+        "aplicacao": "REGULARIZAÇÃO FUNDIÁRIA ESTADUAL URBANA.",
+        "dotacao": 1150000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "744/643 - SEHURB (Fundo Est. Esp. Recup. Bacia Igarapé S. Francisco)": {
+    "3": [
+      {
+        "aplicacao": "PRESERVAÇÃO DAS ENCOSTAS DE RIOS E IGARAPÉS.",
+        "dotacao": 1000,
+        "tipo": "Exclusivo"
+      }
+    ]
+  },
+  "754/001 - SEOP": {
+    "3": [
+      {
+        "aplicacao": "MELHORIA E AMPLIAÇÃO DOS ESPAÇOS/EQUIPAMENTOS PÚBLICOS DE USO COLETIVO PARA A POPULAÇÃO ACREANA.",
+        "dotacao": 17862500,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "IMPLANTAÇÃO DE INFRAESTRUTURA DE MOBILIDADE URBANA.",
+        "dotacao": 9938000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "URBANIZAÇÃO DE ORLAS DO ACRE.",
+        "dotacao": 17400000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "CONSTRUÇÃO E REFORMA DE PRÉDIOS PÚBLICOS DO PODER EXECUTIVO",
+        "dotacao": 5705000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "PLANO DE ESTÍMULO A CONSTRUÇÃO CIVIL PARA GERAÇÃO DE EMPREGO E RENDA.",
+        "dotacao": 10000000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "IMPLANTAÇÃO, MANUTENÇÃO E RESTAURAÇÃO DE VIAS RURAIS E URBANAS.",
+        "dotacao": 16034000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "AMPLIAÇÃO DO SISTEMA DE COLETA E TRATAMENTO DE ESGOTOS SANITÁRIOS.",
+        "dotacao": 3221000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "IMPLANTAÇÃO DE SISTEMAS DE ABASTECIMENTO DE ÁGUA.",
+        "dotacao": 1000000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "SANEAMENTO INTEGRADO.",
+        "dotacao": 8550000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "744/619 - SEHURB (Fundo Est. Habitação - FEH)": {
+    "3": [
+      {
+        "aplicacao": "MANUTENÇÃO DAS ATIVIDADES ADMINISTRATIVAS E OPERACIONAIS-FEH.",
+        "dotacao": 150000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "715/501 - COHAB": {
+    "3": [
+      {
+        "aplicacao": "AMPLIAÇÃO DO ACESSO À MORADIA DIGNA.",
+        "dotacao": 100000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "761/301 - FUNTAC": {
+    "3": [
+      {
+        "aplicacao": "MELHORIA, MODERNIZAÇÃO E INOVAÇÃO DOS SERVIÇOS DA FUNTAC.",
+        "dotacao": 10,
+        "tipo": "Não Exclusivo"
+      }
+    ],
+    "6": [
+      {
+        "aplicacao": "MELHORIA, MODERNIZAÇÃO E INOVAÇÃO DOS SERVIÇOS DA FUNTAC.",
+        "dotacao": 50,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "DIFUSÃO E TRANSFERÊNCIA TECNOLÓGICA.",
+        "dotacao": 700050,
+        "tipo": "Exclusivo"
+      }
+    ]
+  },
+  "753/207 - IDAF": {
+    "3": [
+      {
+        "aplicacao": "CONSTRUÇÃO, REFORMA E AMPLIAÇÃO DOS PRÉDIOS DO IDAF.",
+        "dotacao": 2000000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "718/001 - SEEL": {
+    "3": [
+      {
+        "aplicacao": "CONSTRUÇÃO, REFORMA E AMPLIAÇÃO/SEEL.",
+        "dotacao": 4466051.73,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "760/608 - SEASDH (Fundo de Assistência Social - FEAS)": {
+    "4": [
+      {
+        "aplicacao": "CONCESSÃO DO BOLSA MORADIA TRANSITÓRIA.",
+        "dotacao": 529000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "FORTALECIMENTO DAS AÇÕES DE PROTEÇÃO SOCIAL AOS POVOS INDÍGENAS.",
+        "dotacao": 50000,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "OFERTA DE BENEFÍCIOS EVENTUAIS EM SITUAÇÃO DE EMERGÊNCIAS/CALAMIDADE PÚBLICA.",
+        "dotacao": 250000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "760/216 - PROCON": {
+    "4": [
+      {
+        "aplicacao": "PROMOÇÃO DE AÇÕES DE FISCALIZAÇÃO-ROTA DA QUALIDADE.",
+        "dotacao": 178000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "AMPLIAÇÃO DAS AÇÕES EDUCATIVAS-PROCON EDUCA.",
+        "dotacao": 71000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "AMPLIAÇÃO DO ATENDIMENTO AOS CONSUMIDORES E FORNECEDORES-PROCON ATENDE.",
+        "dotacao": 321000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "PROMOÇÃO DO ATENDIMENTO AOS CONSUMIDORES SUPERENDIVIDADOS.",
+        "dotacao": 221000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "MANUTENÇÃO DAS ATIVIDADES ADMINISTRATIVAS E OPERACIONAIS DO INSTITUTO PROCON/AC.",
+        "dotacao": 4048000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "760/640 - SEADH (Fundo Estadual de Defesa do Consumidor - FEDC)": {
+    "4": [
+      {
+        "aplicacao": "AMPLIAÇÃO DAS AÇÕES EDUCATIVAS-PROCON EDUCA.",
+        "dotacao": 1030000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "744/206 - ITERACRE": {
+    "4": [
+      {
+        "aplicacao": "REGULARIZAÇÃO FUNDIÁRIA ESTADUAL URBANA.",
+        "dotacao": 797700,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "REGULARIZAÇÃO FUNDIÁRIA ESTADUAL RURAL.",
+        "dotacao": 5156900,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "REGULARIZAÇÃO FUNDIÁRIA ESTADUAL NAS INSTITUIÇÕES RELIGIOSAS DO ESTADO DO ACRE-IGREJA LEGAL.",
+        "dotacao": 102000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "MELHORIA, MODERNIZAÇÃO E INOVAÇÃO DOS SERVIÇOS DO ITERACRE.",
+        "dotacao": 20000,
+        "tipo": "Não Exclusivo"
+      },
+      {
+        "aplicacao": "MANUTENÇÃO DAS ATIVIDADES ADMINISTRATIVAS E OPERACIONAIS DO ITERACRE.",
+        "dotacao": 6110535.52,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "448/001 - CGE": {
+    "5": [
+      {
+        "aplicacao": "IMPLEMENTAÇÃO DE POLÍTICAS DE TRANSPARÊNCIA PÚBLICA, OUVIDORIA, INTEGRIDADE E CONTROLE NA ADMINISTRAÇÃO PÚBLICA.",
+        "dotacao": 660000,
+        "tipo": "Não Exclusivo"
+      }
+    ]
+  },
+  "761/309 - FAPAC": {
+    "6": [
+      {
+        "aplicacao": "APOIO A GERAÇÃO E DIFUSÃO DE CONHECIMENTO POR MEIO DA PESQUISA CIENTÍFICA E TECNOLÓGICA.",
+        "dotacao": 1156486,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "FAPAC TESOURO ESTADUAL AMAZÔNIA +10.",
+        "dotacao": 1,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "CNPQ-RECURSOS PRÓPRIOS AMAZONIA +10.",
+        "dotacao": 1,
+        "tipo": "Exclusivo"
+      },
+      {
+        "aplicacao": "AMPLIAÇÃO DE EMPREENDIMENTOS INOVADORES NO ESTADO DO ACRE.",
+        "dotacao": 2,
+        "tipo": "Exclusivo"
+      }
+    ]
+  }
+}

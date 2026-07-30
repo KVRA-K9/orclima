@@ -1,0 +1,44 @@
+[
+  {
+    "numero": 1,
+    "romano": "I",
+    "rotulo": "Desenvolvimento sustentável e bioeconomia",
+    "titulo": "Desenvolvimento sustentável e bioeconomia"
+  },
+  {
+    "numero": 2,
+    "romano": "II",
+    "rotulo": "Mitigação das mudanças climáticas",
+    "titulo": "Mitigação das mudanças climáticas"
+  },
+  {
+    "numero": 3,
+    "romano": "III",
+    "rotulo": "Adaptação climática",
+    "titulo": "Adaptação climática"
+  },
+  {
+    "numero": 4,
+    "romano": "IV",
+    "rotulo": "Justiça climática e inclusão social",
+    "titulo": "Justiça climática e inclusão social"
+  },
+  {
+    "numero": 5,
+    "romano": "V",
+    "rotulo": "Governança ambiental e transparência",
+    "titulo": "Governança ambiental e transparência"
+  },
+  {
+    "numero": 6,
+    "romano": "VI",
+    "rotulo": "Educação ambiental e inovação",
+    "titulo": "Educação ambiental e inovação"
+  },
+  {
+    "numero": 7,
+    "romano": "VII",
+    "rotulo": "Gestão de riscos e proteção civil",
+    "titulo": "Gestão de riscos e proteção civil"
+  }
+]

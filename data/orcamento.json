@@ -1,0 +1,793 @@
+{
+  "exercicio": 2026,
+  "fonte": "SEPLAN/AC — Departamento de Estudos e Planejamento (DEPLAN)",
+  "resumo": {
+    "numeroOrgaosAtuantes": 58,
+    "acoesExclusivas": 83,
+    "acoesNaoExclusivas": 117,
+    "gastoExclusivo": 200124164.91,
+    "gastoNaoExclusivo": 778655275.46,
+    "total": 978779440.37
+  },
+  "orgaos": [
+    {
+      "nome": "445/001 - SEGOV",
+      "codigo": "445/001",
+      "sigla": "SEGOV",
+      "total": 100000,
+      "exclusivo": 0,
+      "naoExclusivo": 100000,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "3": 100000
+      }
+    },
+    {
+      "nome": "448/001 - CGE",
+      "codigo": "448/001",
+      "sigla": "CGE",
+      "total": 660000,
+      "exclusivo": 0,
+      "naoExclusivo": 660000,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "5": 660000
+      }
+    },
+    {
+      "nome": "451/001 - PCAC",
+      "codigo": "451/001",
+      "sigla": "PCAC",
+      "total": 3300000,
+      "exclusivo": 0,
+      "naoExclusivo": 3300000,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "3": 3300000
+      }
+    },
+    {
+      "nome": "452/001 - DEFESA CIVIL",
+      "codigo": "452/001",
+      "sigla": "DEFESA CIVIL",
+      "total": 17754000,
+      "exclusivo": 17753000,
+      "naoExclusivo": 1000,
+      "tipo": "Exclusivo",
+      "intensidade": "Exclusivo (100%) / Não Exclusivo (0%)",
+      "eixos": {
+        "3": 1000,
+        "7": 17753000
+      }
+    },
+    {
+      "nome": "510/001 - PGE",
+      "codigo": "510/001",
+      "sigla": "PGE",
+      "total": 1000,
+      "exclusivo": 0,
+      "naoExclusivo": 1000,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "3": 1000
+      }
+    },
+    {
+      "nome": "608/001 - PMAC",
+      "codigo": "608/001",
+      "sigla": "PMAC",
+      "total": 4300000,
+      "exclusivo": 0,
+      "naoExclusivo": 4300000,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "3": 4300000
+      }
+    },
+    {
+      "nome": "609/001 - CBMAC",
+      "codigo": "609/001",
+      "sigla": "CBMAC",
+      "total": 3092667,
+      "exclusivo": 593667,
+      "naoExclusivo": 2499000,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (19%) / Não Exclusivo (81%)",
+      "eixos": {
+        "3": 2499000,
+        "7": 593667
+      }
+    },
+    {
+      "nome": "609/632 - CBMAC (Fundo Esp. do Corpo de Bombeiros Militar do Estado do Acre - FUNESBOM)",
+      "codigo": "609/632",
+      "sigla": "CBMAC (Fundo Esp. do Corpo de Bombeiros Militar do Estado do Acre - FUNESBOM)",
+      "total": 200000,
+      "exclusivo": 0,
+      "naoExclusivo": 200000,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "3": 200000
+      }
+    },
+    {
+      "nome": "713/001 - SEPLAN",
+      "codigo": "713/001",
+      "sigla": "SEPLAN",
+      "total": 244802888.98,
+      "exclusivo": 1000,
+      "naoExclusivo": 244801888.98,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "2": 244802888.98
+      }
+    },
+    {
+      "nome": "714/001 - SEAD",
+      "codigo": "714/001",
+      "sigla": "SEAD",
+      "total": 1000,
+      "exclusivo": 1000,
+      "naoExclusivo": 0,
+      "tipo": "Exclusivo",
+      "intensidade": "Exclusivo (100%) / Não Exclusivo (0%)",
+      "eixos": {
+        "2": 1000
+      }
+    },
+    {
+      "nome": "714/211 - ACREPREVIDÊNCIA",
+      "codigo": "714/211",
+      "sigla": "ACREPREVIDÊNCIA",
+      "total": 4100000,
+      "exclusivo": 0,
+      "naoExclusivo": 4100000,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "3": 4100000
+      }
+    },
+    {
+      "nome": "715/001 - SEFAZ",
+      "codigo": "715/001",
+      "sigla": "SEFAZ",
+      "total": 21950941.5,
+      "exclusivo": 1000,
+      "naoExclusivo": 21949941.5,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "2": 1000,
+        "3": 21949941.5
+      }
+    },
+    {
+      "nome": "715/199 - SEFAZ (Departamento do Tesouro Estadual)",
+      "codigo": "715/199",
+      "sigla": "SEFAZ (Departamento do Tesouro Estadual)",
+      "total": 30000000,
+      "exclusivo": 5000000,
+      "naoExclusivo": 25000000,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (17%) / Não Exclusivo (83%)",
+      "eixos": {
+        "1": 5000000,
+        "3": 25000000
+      }
+    },
+    {
+      "nome": "715/205 - JUCEAC",
+      "codigo": "715/205",
+      "sigla": "JUCEAC",
+      "total": 1361000,
+      "exclusivo": 0,
+      "naoExclusivo": 1361000,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "1": 1361000
+      }
+    },
+    {
+      "nome": "715/501 - COHAB",
+      "codigo": "715/501",
+      "sigla": "COHAB",
+      "total": 100000,
+      "exclusivo": 0,
+      "naoExclusivo": 100000,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "3": 100000
+      }
+    },
+    {
+      "nome": "715/512 - CDSA",
+      "codigo": "715/512",
+      "sigla": "CDSA",
+      "total": 804910.8,
+      "exclusivo": 804910.8,
+      "naoExclusivo": 0,
+      "tipo": "Exclusivo",
+      "intensidade": "Exclusivo (100%) / Não Exclusivo (0%)",
+      "eixos": {
+        "1": 804910.8
+      }
+    },
+    {
+      "nome": "717/001 - SEE",
+      "codigo": "717/001",
+      "sigla": "SEE",
+      "total": 30915200,
+      "exclusivo": 0,
+      "naoExclusivo": 30915200,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "3": 30850000,
+        "4": 65200
+      }
+    },
+    {
+      "nome": "717/212 - IEPTEC",
+      "codigo": "717/212",
+      "sigla": "IEPTEC",
+      "total": 1602000,
+      "exclusivo": 0,
+      "naoExclusivo": 1602000,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "3": 1602000
+      }
+    },
+    {
+      "nome": "717/303 - FEM",
+      "codigo": "717/303",
+      "sigla": "FEM",
+      "total": 1187472.27,
+      "exclusivo": 0,
+      "naoExclusivo": 1187472.27,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "3": 1187472.27
+      }
+    },
+    {
+      "nome": "717/628 - FEM (Fundo Estadual de Cultura  - Funcultura)",
+      "codigo": "717/628",
+      "sigla": "FEM (Fundo Estadual de Cultura  - Funcultura)",
+      "total": 151000,
+      "exclusivo": 0,
+      "naoExclusivo": 151000,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "3": 151000
+      }
+    },
+    {
+      "nome": "718/001 - SEEL",
+      "codigo": "718/001",
+      "sigla": "SEEL",
+      "total": 4466051.73,
+      "exclusivo": 0,
+      "naoExclusivo": 4466051.73,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "3": 4466051.73
+      }
+    },
+    {
+      "nome": "719/001 - SEJUSP",
+      "codigo": "719/001",
+      "sigla": "SEJUSP",
+      "total": 6148684.01,
+      "exclusivo": 1198684.01,
+      "naoExclusivo": 4950000,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (19%) / Não Exclusivo (81%)",
+      "eixos": {
+        "2": 1195904.88,
+        "3": 4952779.13
+      }
+    },
+    {
+      "nome": "719/209 - IAPEN",
+      "codigo": "719/209",
+      "sigla": "IAPEN",
+      "total": 1000800,
+      "exclusivo": 0,
+      "naoExclusivo": 1000800,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "3": 1000800
+      }
+    },
+    {
+      "nome": "719/213 - ISE",
+      "codigo": "719/213",
+      "sigla": "ISE",
+      "total": 2251384.93,
+      "exclusivo": 0,
+      "naoExclusivo": 2251384.93,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "3": 2251384.93
+      }
+    },
+    {
+      "nome": "719/626 - SEJUSP (Fundo Penitenciário do Estado do Acre)",
+      "codigo": "719/626",
+      "sigla": "SEJUSP (Fundo Penitenciário do Estado do Acre)",
+      "total": 1771713.29,
+      "exclusivo": 0,
+      "naoExclusivo": 1771713.29,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "3": 1771713.29
+      }
+    },
+    {
+      "nome": "719/637 - SEJUSP (Fundo Est. de Segurança - FUNDESEG)",
+      "codigo": "719/637",
+      "sigla": "SEJUSP (Fundo Est. de Segurança - FUNDESEG)",
+      "total": 2887000,
+      "exclusivo": 1000,
+      "naoExclusivo": 2886000,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "2": 1000,
+        "3": 2886000
+      }
+    },
+    {
+      "nome": "720/001 - SEMA",
+      "codigo": "720/001",
+      "sigla": "SEMA",
+      "total": 16656154.37,
+      "exclusivo": 16655154.37,
+      "naoExclusivo": 1000,
+      "tipo": "Exclusivo",
+      "intensidade": "Exclusivo (100%) / Não Exclusivo (0%)",
+      "eixos": {
+        "1": 4017500,
+        "2": 12632154.37,
+        "3": 1000,
+        "5": 5500
+      }
+    },
+    {
+      "nome": "720/202 - IMAC",
+      "codigo": "720/202",
+      "sigla": "IMAC",
+      "total": 6654714.85,
+      "exclusivo": 6653714.85,
+      "naoExclusivo": 1000,
+      "tipo": "Exclusivo",
+      "intensidade": "Exclusivo (100%) / Não Exclusivo (0%)",
+      "eixos": {
+        "2": 6652714.85,
+        "3": 1000,
+        "6": 1000
+      }
+    },
+    {
+      "nome": "720/215 - IMC",
+      "codigo": "720/215",
+      "sigla": "IMC",
+      "total": 274000,
+      "exclusivo": 274000,
+      "naoExclusivo": 0,
+      "tipo": "Exclusivo",
+      "intensidade": "Exclusivo (100%) / Não Exclusivo (0%)",
+      "eixos": {
+        "2": 271000,
+        "5": 3000
+      }
+    },
+    {
+      "nome": "720/605 - SEMA (Fundo Est. de Comando e Controle Ambiental)",
+      "codigo": "720/605",
+      "sigla": "SEMA (Fundo Est. de Comando e Controle Ambiental)",
+      "total": 5004200,
+      "exclusivo": 5004200,
+      "naoExclusivo": 0,
+      "tipo": "Exclusivo",
+      "intensidade": "Exclusivo (100%) / Não Exclusivo (0%)",
+      "eixos": {
+        "2": 5003700,
+        "6": 500
+      }
+    },
+    {
+      "nome": "720/622 - SEMA (Fundo Est. de Meio Ambiente e Florestas)",
+      "codigo": "720/622",
+      "sigla": "SEMA (Fundo Est. de Meio Ambiente e Florestas)",
+      "total": 3000,
+      "exclusivo": 3000,
+      "naoExclusivo": 0,
+      "tipo": "Exclusivo",
+      "intensidade": "Exclusivo (100%) / Não Exclusivo (0%)",
+      "eixos": {
+        "1": 1000,
+        "2": 2000
+      }
+    },
+    {
+      "nome": "721/607 - SESACRE (Fundo Estadual de Saúde - FUNDES)",
+      "codigo": "721/607",
+      "sigla": "SESACRE (Fundo Estadual de Saúde - FUNDES)",
+      "total": 57507000,
+      "exclusivo": 0,
+      "naoExclusivo": 57507000,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "3": 57507000
+      }
+    },
+    {
+      "nome": "722/001 - SEPI",
+      "codigo": "722/001",
+      "sigla": "SEPI",
+      "total": 114000,
+      "exclusivo": 4000,
+      "naoExclusivo": 110000,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (4%) / Não Exclusivo (96%)",
+      "eixos": {
+        "3": 110000,
+        "4": 4000
+      }
+    },
+    {
+      "nome": "744/001 - SEHURB",
+      "codigo": "744/001",
+      "sigla": "SEHURB",
+      "total": 53979334.79,
+      "exclusivo": 9363139.29,
+      "naoExclusivo": 44616195.5,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (17%) / Não Exclusivo (83%)",
+      "eixos": {
+        "3": 52829334.79,
+        "4": 1150000
+      }
+    },
+    {
+      "nome": "744/201 - DERACRE",
+      "codigo": "744/201",
+      "sigla": "DERACRE",
+      "total": 206476420.74,
+      "exclusivo": 3295000,
+      "naoExclusivo": 203181420.74,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (2%) / Não Exclusivo (98%)",
+      "eixos": {
+        "2": 102023031.49,
+        "3": 104453389.25
+      }
+    },
+    {
+      "nome": "744/206 - ITERACRE",
+      "codigo": "744/206",
+      "sigla": "ITERACRE",
+      "total": 12187135.52,
+      "exclusivo": 0,
+      "naoExclusivo": 12187135.52,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "4": 12187135.52
+      }
+    },
+    {
+      "nome": "744/619 - SEHURB (Fundo Est. Habitação - FEH)",
+      "codigo": "744/619",
+      "sigla": "SEHURB (Fundo Est. Habitação - FEH)",
+      "total": 150000,
+      "exclusivo": 0,
+      "naoExclusivo": 150000,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "3": 150000
+      }
+    },
+    {
+      "nome": "744/643 - SEHURB (Fundo Est. Esp. Recup. Bacia Igarapé S. Francisco)",
+      "codigo": "744/643",
+      "sigla": "SEHURB (Fundo Est. Esp. Recup. Bacia Igarapé S. Francisco)",
+      "total": 1000,
+      "exclusivo": 1000,
+      "naoExclusivo": 0,
+      "tipo": "Exclusivo",
+      "intensidade": "Exclusivo (100%) / Não Exclusivo (0%)",
+      "eixos": {
+        "3": 1000
+      }
+    },
+    {
+      "nome": "753/001 - SEAGRI",
+      "codigo": "753/001",
+      "sigla": "SEAGRI",
+      "total": 103195200,
+      "exclusivo": 99094200,
+      "naoExclusivo": 4101000,
+      "tipo": "Exclusivo",
+      "intensidade": "Exclusivo (96%) / Não Exclusivo (4%)",
+      "eixos": {
+        "1": 99094200,
+        "3": 4101000
+      }
+    },
+    {
+      "nome": "753/207 - IDAF",
+      "codigo": "753/207",
+      "sigla": "IDAF",
+      "total": 2000000,
+      "exclusivo": 0,
+      "naoExclusivo": 2000000,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "3": 2000000
+      }
+    },
+    {
+      "nome": "753/401 - CAGEACRE",
+      "codigo": "753/401",
+      "sigla": "CAGEACRE",
+      "total": 1220809.49,
+      "exclusivo": 1220809.49,
+      "naoExclusivo": 0,
+      "tipo": "Exclusivo",
+      "intensidade": "Exclusivo (100%) / Não Exclusivo (0%)",
+      "eixos": {
+        "1": 1220809.49
+      }
+    },
+    {
+      "nome": "753/402 - EMATER",
+      "codigo": "753/402",
+      "sigla": "EMATER",
+      "total": 2442771.45,
+      "exclusivo": 2442771.45,
+      "naoExclusivo": 0,
+      "tipo": "Exclusivo",
+      "intensidade": "Exclusivo (100%) / Não Exclusivo (0%)",
+      "eixos": {
+        "1": 2442771.45
+      }
+    },
+    {
+      "nome": "753/610 - SEAGRI (Fundo Agropecuário - FUNAGRO)",
+      "codigo": "753/610",
+      "sigla": "SEAGRI (Fundo Agropecuário - FUNAGRO)",
+      "total": 2000000,
+      "exclusivo": 2000000,
+      "naoExclusivo": 0,
+      "tipo": "Exclusivo",
+      "intensidade": "Exclusivo (100%) / Não Exclusivo (0%)",
+      "eixos": {
+        "1": 2000000
+      }
+    },
+    {
+      "nome": "754/001 - SEOP",
+      "codigo": "754/001",
+      "sigla": "SEOP",
+      "total": 89710500,
+      "exclusivo": 17400000,
+      "naoExclusivo": 72310500,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (19%) / Não Exclusivo (81%)",
+      "eixos": {
+        "3": 89710500
+      }
+    },
+    {
+      "nome": "754/203 - SANEACRE",
+      "codigo": "754/203",
+      "sigla": "SANEACRE",
+      "total": 6860000,
+      "exclusivo": 31000,
+      "naoExclusivo": 6829000,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "2": 31000,
+        "3": 6829000
+      }
+    },
+    {
+      "nome": "754/210 - AGEAC",
+      "codigo": "754/210",
+      "sigla": "AGEAC",
+      "total": 876000,
+      "exclusivo": 481000,
+      "naoExclusivo": 395000,
+      "tipo": "Exclusivo",
+      "intensidade": "Exclusivo (55%) / Não Exclusivo (45%)",
+      "eixos": {
+        "2": 551000,
+        "3": 325000
+      }
+    },
+    {
+      "nome": "759/001 - SETE",
+      "codigo": "759/001",
+      "sigla": "SETE",
+      "total": 700002,
+      "exclusivo": 1,
+      "naoExclusivo": 700001,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "3": 700002
+      }
+    },
+    {
+      "nome": "760/001 - SEASDH",
+      "codigo": "760/001",
+      "sigla": "SEASDH",
+      "total": 7529000,
+      "exclusivo": 800000,
+      "naoExclusivo": 6729000,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (11%) / Não Exclusivo (89%)",
+      "eixos": {
+        "3": 5001000,
+        "4": 2528000
+      }
+    },
+    {
+      "nome": "760/216 - PROCON",
+      "codigo": "760/216",
+      "sigla": "PROCON",
+      "total": 4839000,
+      "exclusivo": 0,
+      "naoExclusivo": 4839000,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "4": 4839000
+      }
+    },
+    {
+      "nome": "760/608 - SEASDH (Fundo de Assistência Social - FEAS)",
+      "codigo": "760/608",
+      "sigla": "SEASDH (Fundo de Assistência Social - FEAS)",
+      "total": 829000,
+      "exclusivo": 579000,
+      "naoExclusivo": 250000,
+      "tipo": "Exclusivo",
+      "intensidade": "Exclusivo (70%) / Não Exclusivo (30%)",
+      "eixos": {
+        "4": 829000
+      }
+    },
+    {
+      "nome": "760/640 - SEADH (Fundo Estadual de Defesa do Consumidor - FEDC)",
+      "codigo": "760/640",
+      "sigla": "SEADH (Fundo Estadual de Defesa do Consumidor - FEDC)",
+      "total": 1030000,
+      "exclusivo": 0,
+      "naoExclusivo": 1030000,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "4": 1030000
+      }
+    },
+    {
+      "nome": "760/640 - SEASDH (Fundo Est. Def. Consumidor  - DEFC)",
+      "codigo": "760/640",
+      "sigla": "SEASDH (Fundo Est. Def. Consumidor  - DEFC)",
+      "total": 5000,
+      "exclusivo": 0,
+      "naoExclusivo": 5000,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "3": 5000
+      }
+    },
+    {
+      "nome": "761/001 - SEICT",
+      "codigo": "761/001",
+      "sigla": "SEICT",
+      "total": 1315393.95,
+      "exclusivo": 1315393.95,
+      "naoExclusivo": 0,
+      "tipo": "Exclusivo",
+      "intensidade": "Exclusivo (100%) / Não Exclusivo (0%)",
+      "eixos": {
+        "1": 1315393.95
+      }
+    },
+    {
+      "nome": "761/301 - FUNTAC",
+      "codigo": "761/301",
+      "sigla": "FUNTAC",
+      "total": 700110,
+      "exclusivo": 700100,
+      "naoExclusivo": 10,
+      "tipo": "Exclusivo",
+      "intensidade": "Exclusivo (100%) / Não Exclusivo (0%)",
+      "eixos": {
+        "3": 10,
+        "6": 700100
+      }
+    },
+    {
+      "nome": "761/309 - FAPAC",
+      "codigo": "761/309",
+      "sigla": "FAPAC",
+      "total": 1156490,
+      "exclusivo": 1156490,
+      "naoExclusivo": 0,
+      "tipo": "Exclusivo",
+      "intensidade": "Exclusivo (100%) / Não Exclusivo (0%)",
+      "eixos": {
+        "6": 1156490
+      }
+    },
+    {
+      "nome": "761/506 - ANAC",
+      "codigo": "761/506",
+      "sigla": "ANAC",
+      "total": 1385928.7,
+      "exclusivo": 1385928.7,
+      "naoExclusivo": 0,
+      "tipo": "Exclusivo",
+      "intensidade": "Exclusivo (100%) / Não Exclusivo (0%)",
+      "eixos": {
+        "1": 1385928.7
+      }
+    },
+    {
+      "nome": "761/615 - SEICT (Fundo de Desenvolvimento Sustentável - FDS)",
+      "codigo": "761/615",
+      "sigla": "SEICT (Fundo de Desenvolvimento Sustentável - FDS)",
+      "total": 6000000,
+      "exclusivo": 4910000,
+      "naoExclusivo": 1090000,
+      "tipo": "Exclusivo",
+      "intensidade": "Exclusivo (82%) / Não Exclusivo (18%)",
+      "eixos": {
+        "1": 4980000,
+        "6": 1020000
+      }
+    },
+    {
+      "nome": "762/001 - SEMULHER",
+      "codigo": "762/001",
+      "sigla": "SEMULHER",
+      "total": 1067560,
+      "exclusivo": 0,
+      "naoExclusivo": 1067560,
+      "tipo": "Não Exclusivo",
+      "intensidade": "Exclusivo (0%) / Não Exclusivo (100%)",
+      "eixos": {
+        "3": 589560,
+        "4": 478000
+      }
+    }
+  ]
+}
