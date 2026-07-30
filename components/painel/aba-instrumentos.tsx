@@ -23,7 +23,14 @@ export function AbaInstrumentos() {
             <CardContent>
               <ul className="space-y-4">
                 {grupo.itens.map((item) => (
-                  <li key={item.titulo} className="border-l-2 border-border pl-3">
+                  // A alfa não é a mesma nos dois temas de propósito: sobre o
+                  // branco puro do cartão claro, `primary/10` renderia 1,14 de
+                  // contraste contra 1,25 no escuro. O /15 no claro iguala a
+                  // presença dos dois — o alvo é a leitura, não a alfa.
+                  <li
+                    key={item.titulo}
+                    className="rounded-lg border-l-2 border-primary/40 bg-primary/15 p-3 dark:bg-primary/10"
+                  >
                     {item.url ? (
                       <a
                         href={item.url}
