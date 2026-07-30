@@ -34,7 +34,7 @@ export function CtaPainel() {
         {/* O bg-primary/5 original era translúcido demais para ficar sobre
             foto: aqui o cartão ganha um fundo escuro próprio, como o
             "Em outras palavras" da seção Sobre. */}
-        <div className="revelar-rolagem mx-auto w-full max-w-6xl rounded-2xl border border-white/25 bg-black/40 px-6 py-14 text-center text-white backdrop-blur-sm [text-shadow:0_1px_4px_rgb(0_0_0/0.7)] sm:px-12">
+        <div data-revelar className="mx-auto w-full max-w-6xl rounded-2xl border border-white/25 bg-black/40 px-6 py-14 text-center text-white backdrop-blur-sm [text-shadow:0_1px_4px_rgb(0_0_0/0.7)] sm:px-12">
           <h2 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
             Explore os dados do Orçamento Climático
           </h2>

@@ -241,69 +241,59 @@
   }
 
   /*
-   * Revelação atrelada à rolagem: o bloco surge ao entrar na viewport e some ao
-   * sair, com o progresso preso à posição de rolagem — não a um timer.
+   * Revelação de entrada. Um único gesto para os dois casos:
    *
-   * Três salvaguardas, todas necessárias:
+   * - Na primeira dobra, `.revelar-entrada` é aplicada direto no JSX e dispara
+   *   no carregamento, escalonada por `animation-delay`.
+   * - Mais abaixo, os blocos levam `data-revelar` e o componente
+   *   `RevelarAoRolar` aplica a MESMA classe quando chegam à tela, também
+   *   escalonando os que entram no mesmo lote.
    *
-   * 1. `@supports`. Sem suporte a `animation-timeline`, nada é aplicado e o
-   *    conteúdo aparece normal. É o que impede o pior cenário: um `opacity: 0`
-   *    permanente escondendo a página inteira em navegador antigo.
-   * 2. `prefers-reduced-motion`. Quem pediu menos movimento no sistema não
-   *    recebe nenhum.
-   * 3. Platô longo (15%→85%). O conteúdo passa 70% do percurso em opacidade
-   *    plena; o esmaecimento fica só nas bordas da viewport. No painel isso é o
-   *    que mantém os números estáveis enquanto se lê e se compara.
+   * A regra que esconde depende de `.revelar-pronto` na raiz, posta pelo
+   * componente ao montar. É a salvaguarda: sem JavaScript, ou se o bundle
+   * falhar, nada é escondido e o conteúdo aparece normalmente. Numa ferramenta
+   * pública, conteúdo permanentemente invisível é pior que animação ausente.
    *
-   * Sem JavaScript: as seções continuam Server Components.
+   * `prefers-reduced-motion` desliga tudo — o componente nem chega a marcar a
+   * raiz, então a regra abaixo nunca casa.
    */
-  @supports (animation-timeline: view()) {
-    @media (prefers-reduced-motion: no-preference) {
-      .revelar-rolagem {
-        /* `ease-in-out` e não `linear`: a curva vale entre cada par de
-           keyframes, então a entrada e a saída ganham aceleração e freio em vez
-           de um esmaecimento de taxa constante, que lê como mecânico. */
-        animation: revelar-rolagem ease-in-out both;
-        animation-timeline: view();
-      }
+  @media (prefers-reduced-motion: no-preference) {
+    .revelar-pronto [data-revelar]:not(.revelar-entrada) {
+      opacity: 0;
+    }
+
+    .revelar-entrada {
+      /* `ease-out`: chega rápido e desacelera no fim — é a curva que lê como
+         "assentar no lugar", em vez do avanço de taxa constante do `linear`. */
+      animation: revelar-rolagem 700ms ease-out both;
     }
   }
 }
 
 /*
- * As porcentagens são do percurso `cover` — da borda inferior da viewport até a
- * superior —, não do tempo. Onde elas caem decide se o efeito é visto:
+ * Revelação de mão única: o bloco sobe um pouco, aparece e fica. Não há
+ * keyframe de saída — quem controla isso é o `animation-range` da regra acima.
  *
- * Com 15%/85% (primeira versão) o elemento já entrava em opacidade 0,80 e só
- * começava a sumir com o topo a -20% da tela, ou seja, depois de ter saído.
- * Toda a transição acontecia nas margens, e na área de leitura ficava sempre
- * em 1 — a animação rodava sem ser vista.
+ * Deliberadamente enxuto: só opacidade e um deslocamento curto. A inclinação em
+ * perspectiva e a redução de escala que existiam aqui somavam três movimentos
+ * simultâneos por bloco — com 21 deles na página, o conjunto pesava. Um único
+ * gesto, repetido, lê como acabamento; três, como efeito.
  *
- * Com 40%/60% a entrada só se completa com o elemento perto do meio da tela e a
- * saída já começa antes de ele encostar no topo: as duas pontas ocorrem bem
- * dentro do campo de visão, e o platô curto deixa o bloco em movimento durante
- * a maior parte do percurso. Mexer nesses dois números é mexer na visibilidade.
+ * 1rem é o suficiente para o olho perceber a chegada sem que o texto pareça
+ * saltar. Acima de ~2rem o bloco passa a disputar atenção com o que ele diz.
  *
- * Só `opacity` e `transform`: as duas rodam no compositor, então os 21 blocos
- * animados não disputam a thread principal a cada quadro de rolagem. Um
- * `filter: blur()` ficaria bonito e travaria a página — os gráficos do painel
- * são SVG e voltariam a rasterizar a cada frame.
+ * Só `opacity` e `transform`: as duas rodam no compositor, então os blocos não
+ * disputam a thread principal a cada quadro de rolagem. Um `filter: blur()`
+ * ficaria bonito e travaria a página — os gráficos do painel são SVG e
+ * voltariam a rasterizar a cada frame.
  */
 @keyframes revelar-rolagem {
-  0% {
+  from {
     opacity: 0;
-    transform: translateY(2.5rem) scale(0.94);
+    transform: translateY(1rem);
   }
-  40% {
+  to {
     opacity: 1;
     transform: none;
-  }
-  60% {
-    opacity: 1;
-    transform: none;
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-2.5rem) scale(0.94);
   }
 }

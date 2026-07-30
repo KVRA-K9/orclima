@@ -65,7 +65,8 @@ export function Filtros() {
   if (aba === "instrumentos" || aba === "ods") return null;
 
   return (
-    <Card>
+    // Primeira dobra do painel: entra por tempo, logo depois do banner.
+    <Card className="revelar-entrada" style={{ animationDelay: "120ms" }}>
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-base">
           <SlidersHorizontal className="size-4 text-muted-foreground" />

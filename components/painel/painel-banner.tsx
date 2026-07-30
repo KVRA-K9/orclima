@@ -35,7 +35,7 @@ export function PainelBanner() {
   const secao = SECOES[aba] ?? SECOES.analises;
 
   return (
-    <section className="rounded-xl bg-accent px-6 py-4">
+    <section className="revelar-entrada rounded-xl bg-accent px-6 py-4">
       <h1 className="text-sm font-semibold text-accent-foreground">{secao.titulo}</h1>
       <p className="mt-1 max-w-5xl text-sm leading-relaxed text-muted-foreground">
         {secao.descricao}

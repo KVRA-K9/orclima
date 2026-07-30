@@ -40,12 +40,12 @@ export function Sobre() {
           filhos e é o que sustenta a leitura sobre as áreas mais claras. */}
       <div className="-mt-[100svh] flex min-h-svh flex-col justify-center px-4 py-24 sm:px-6">
         <div className="mx-auto w-full max-w-6xl text-white [text-shadow:0_1px_4px_rgb(0_0_0/0.7)]">
-          <h2 className="revelar-rolagem text-3xl font-semibold tracking-tight sm:text-4xl">
+          <h2 data-revelar className="text-3xl font-semibold tracking-tight sm:text-4xl">
             O que é o Orçamento Climático?
           </h2>
 
           <div className="mt-10 grid gap-10 lg:grid-cols-[1.5fr_1fr]">
-            <div className="revelar-rolagem space-y-5 text-base leading-relaxed text-white/90">
+            <div data-revelar className="space-y-5 text-base leading-relaxed text-white/90">
               <p>
                 O Orçamento Climático é uma ferramenta inédita no Estado do Acre, criada
                 para organizar e acompanhar os gastos públicos destinados à proteção
@@ -89,7 +89,7 @@ export function Sobre() {
 
             {/* O bg-primary/5 original era translúcido demais para ficar sobre
                 foto: aqui o card ganha um fundo escuro próprio. */}
-            <Card className="revelar-rolagem h-fit border-white/25 bg-black/40 text-white backdrop-blur-sm">
+            <Card data-revelar className="h-fit border-white/25 bg-black/40 text-white backdrop-blur-sm">
               <CardContent className="space-y-3">
                 <h3 className="text-sm font-semibold tracking-wide uppercase">
                   Em outras palavras

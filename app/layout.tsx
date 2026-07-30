@@ -3,6 +3,7 @@ import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+import { RevelarAoRolar } from "@/components/revelar-ao-rolar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
@@ -48,6 +49,9 @@ export default function RootLayout({
       <body className="flex min-h-full flex-col">
         <ThemeProvider>
           <TooltipProvider delayDuration={200}>{children}</TooltipProvider>
+          {/* Observa os blocos `data-revelar` de qualquer rota. Não renderiza
+              nada, então fica fora da árvore visual. */}
+          <RevelarAoRolar />
         </ThemeProvider>
       </body>
     </html>

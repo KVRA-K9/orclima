@@ -66,7 +66,7 @@ export function MolduraGrafico({
   }, [visivel]);
 
   return (
-    <Card className={cn("revelar-rolagem gap-4", className)}>
+    <Card data-revelar className={cn("gap-4", className)}>
       <CardHeader>
         <CardTitle className="text-base">{titulo}</CardTitle>
         {descricao ? <CardDescription>{descricao}</CardDescription> : null}

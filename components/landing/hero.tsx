@@ -36,18 +36,30 @@ export function Hero() {
       <div className="-mt-[100svh] flex min-h-svh flex-col justify-center px-4 pt-24 pb-32 sm:px-6">
         {/* Cores fixas em branco, e não os tokens do tema: atrás do texto está
             sempre a foto sob o véu escuro, nos dois temas. */}
-        <div className="revelar-rolagem mx-auto w-full max-w-6xl text-white [text-shadow:0_2px_8px_rgb(0_0_0/0.6)]">
-          <h1 className="max-w-3xl text-4xl font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl">
+        {/* `revelar-entrada`, e não `revelar-rolagem`: o hero nasce dentro da
+            viewport, então a revelação por rolagem o entregaria pronto. Cada
+            linha entra um pouco depois da anterior. */}
+        <div className="mx-auto w-full max-w-6xl text-white [text-shadow:0_2px_8px_rgb(0_0_0/0.6)]">
+          <h1
+            className="revelar-entrada max-w-3xl text-4xl font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl"
+            style={{ animationDelay: "80ms" }}
+          >
             Orçamento Climático{" "}
             <span className="text-emerald-300">do Estado do Acre</span>
           </h1>
 
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/85">
+          <p
+            className="revelar-entrada mt-6 max-w-2xl text-lg leading-relaxed text-white/85"
+            style={{ animationDelay: "220ms" }}
+          >
             Ferramenta inédita para organizar e acompanhar os gastos públicos destinados à
             proteção ambiental e ao enfrentamento das mudanças climáticas.
           </p>
 
-          <div className="mt-9 flex flex-wrap gap-3">
+          <div
+            className="revelar-entrada mt-9 flex flex-wrap gap-3"
+            style={{ animationDelay: "360ms" }}
+          >
             <Button asChild size="lg">
               <Link href="/painel">
                 Acessar painel interativo

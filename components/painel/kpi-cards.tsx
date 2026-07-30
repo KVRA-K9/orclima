@@ -104,10 +104,17 @@ export function KpiCards() {
 
   return (
     <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-      {kpis.map((kpi) => {
+      {kpis.map((kpi, indice) => {
         const Icone = kpi.icone;
         return (
-          <Card key={kpi.titulo} className="revelar-rolagem relative gap-0 overflow-hidden">
+          // Os KPIs abrem a área de dados e costumam nascer na primeira dobra:
+          // entram por tempo, escalonados, e não pela rolagem — que os
+          // entregaria prontos por já estarem em tela.
+          <Card
+            key={kpi.titulo}
+            className="revelar-entrada relative gap-0 overflow-hidden"
+            style={{ animationDelay: `${240 + indice * 90}ms` }}
+          >
             {/* Marca d'água: sangra pelas bordas e é recortada pelo rounded-xl
                 do cartão. Decorativo, então fora da árvore de acessibilidade —
                 não acrescenta nada ao que o texto já diz.

@@ -226,7 +226,8 @@ export function AbaOds() {
           return (
             <Card
               key={tile.titulo}
-              className="revelar-rolagem relative gap-0 overflow-hidden"
+              data-revelar
+              className="relative gap-0 overflow-hidden"
             >
               {/* Marca d'água decorativa, no mesmo idioma dos KPIs do painel. */}
               <Icone
