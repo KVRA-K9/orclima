@@ -224,7 +224,10 @@ export function AbaOds() {
         {tiles.map((tile) => {
           const Icone = tile.icone;
           return (
-            <Card key={tile.titulo} className="relative gap-0 overflow-hidden">
+            <Card
+              key={tile.titulo}
+              className="revelar-rolagem relative gap-0 overflow-hidden"
+            >
               {/* Marca d'água decorativa, no mesmo idioma dos KPIs do painel. */}
               <Icone
                 aria-hidden

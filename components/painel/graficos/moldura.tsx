@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { ResponsiveContainer } from "recharts";
 
 import {
@@ -37,15 +38,41 @@ export function MolduraGrafico({
   children,
 }: Props) {
   const montado = useMontado();
+  const alvo = useRef<HTMLDivElement>(null);
+  const [visivel, setVisivel] = useState(false);
+
+  // O Recharts anima na montagem. Sem esperar a visibilidade, os quatro
+  // gráficos animariam juntos no carregamento — atrás de um cartão ainda
+  // transparente — e o usuário só encontraria o desenho já parado ao rolar até
+  // lá. Montando na entrada em tela, a animação toca quando há quem veja.
+  useEffect(() => {
+    if (visivel) return;
+    const no = alvo.current;
+    if (!no || typeof IntersectionObserver === "undefined") {
+      setVisivel(true);
+      return;
+    }
+    const observador = new IntersectionObserver(
+      ([entrada]) => {
+        if (!entrada.isIntersecting) return;
+        setVisivel(true);
+        observador.disconnect();
+      },
+      // Espera o cartão entrar de fato, não só encostar na borda inferior.
+      { rootMargin: "0px 0px -12% 0px" },
+    );
+    observador.observe(no);
+    return () => observador.disconnect();
+  }, [visivel]);
 
   return (
-    <Card className={cn("gap-4", className)}>
+    <Card className={cn("revelar-rolagem gap-4", className)}>
       <CardHeader>
         <CardTitle className="text-base">{titulo}</CardTitle>
         {descricao ? <CardDescription>{descricao}</CardDescription> : null}
       </CardHeader>
-      <CardContent>
-        {montado ? (
+      <CardContent ref={alvo}>
+        {montado && visivel ? (
           <ResponsiveContainer width="100%" height={altura}>
             {children}
           </ResponsiveContainer>

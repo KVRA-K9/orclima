@@ -124,26 +124,47 @@ function Navegacao({
 
   const classe = (ativo: boolean) =>
     cn(
-      "flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors",
-      recolhida && "justify-center px-0",
+      // `group/nav` deixa o ícone reagir ao hover do item inteiro.
+      // A transição lista `translate` e `scale`, não `transform`: no Tailwind v4
+      // as utilidades `translate-x-*` e `scale-*` escrevem nas propriedades
+      // individuais. Transicionar `transform` não pegaria nada e o deslize
+      // aconteceria de um quadro para o outro.
+      "group/nav flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-[background-color,color,translate,scale] duration-200 ease-out",
+      // Entrada escalonada: os itens deslizam da borda esquerda ao montar.
+      "animate-in fade-in-0 slide-in-from-left-3 duration-500",
+      recolhida
+        ? "justify-center px-0"
+        : // Só desliza quando há rótulo: com a sidebar recolhida o ícone é
+          // centralizado, e empurrá-o o tiraria do eixo dos demais.
+          "hover:translate-x-1",
       ativo
         ? "bg-primary/20 font-medium text-primary"
         : "text-foreground/80 hover:bg-primary/10 hover:text-foreground",
     );
+
+  /** Escalona a entrada: cada item entra 60 ms depois do anterior. */
+  const atraso = (ordem: number) => ({
+    animationDelay: `${ordem * 60}ms`,
+    animationFillMode: "backwards" as const,
+  });
+
+  const classeIcone =
+    "size-4.5 shrink-0 transition-[scale] duration-200 ease-out group-hover/nav:scale-110";
 
   return (
     <nav aria-label="Seções do painel" className="flex flex-col gap-1">
       <Link
         href="/"
         className={classe(false)}
+        style={atraso(0)}
         title={recolhida ? "Voltar à Página Inicial" : undefined}
         onClick={aoNavegar}
       >
-        <Home className="size-4.5 shrink-0" strokeWidth={1.75} />
+        <Home className={classeIcone} strokeWidth={1.75} />
         {recolhida ? null : "Voltar à Página Inicial"}
       </Link>
 
-      {ITENS.map((item) => {
+      {ITENS.map((item, indice) => {
         const Icone = item.icone;
         const ativo = aba === item.aba;
         return (
@@ -157,8 +178,9 @@ function Navegacao({
               aoNavegar?.();
             }}
             className={classe(ativo)}
+            style={atraso(indice + 1)}
           >
-            <Icone className="size-4.5 shrink-0" strokeWidth={1.75} />
+            <Icone className={classeIcone} strokeWidth={1.75} />
             {recolhida ? null : item.rotulo}
           </button>
         );

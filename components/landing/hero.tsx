@@ -36,7 +36,7 @@ export function Hero() {
       <div className="-mt-[100svh] flex min-h-svh flex-col justify-center px-4 pt-24 pb-32 sm:px-6">
         {/* Cores fixas em branco, e não os tokens do tema: atrás do texto está
             sempre a foto sob o véu escuro, nos dois temas. */}
-        <div className="mx-auto w-full max-w-6xl text-white [text-shadow:0_2px_8px_rgb(0_0_0/0.6)]">
+        <div className="revelar-rolagem mx-auto w-full max-w-6xl text-white [text-shadow:0_2px_8px_rgb(0_0_0/0.6)]">
           <h1 className="max-w-3xl text-4xl font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl">
             Orçamento Climático{" "}
             <span className="text-emerald-300">do Estado do Acre</span>

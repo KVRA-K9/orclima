@@ -55,7 +55,8 @@ export function GraficoComposicao() {
           paddingAngle={2}
           strokeWidth={2}
           stroke="var(--card)"
-          isAnimationActive={false}
+          animationDuration={800}
+          animationEasing="ease-out"
         >
           {dados.map((fatia) => (
             <Cell key={fatia.chave} fill={CORES[fatia.chave]} />

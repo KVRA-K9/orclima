@@ -11,7 +11,7 @@ export function AbaInstrumentos() {
       {INSTRUMENTOS_LEGAIS.map((grupo) => {
         const Icone = grupo.icone;
         return (
-          <Card key={grupo.categoria}>
+          <Card key={grupo.categoria} className="revelar-rolagem">
             <CardHeader>
               <CardTitle className="flex items-center gap-2.5 text-base">
                 <span className="flex size-8 items-center justify-center rounded-md bg-primary/10 text-primary">

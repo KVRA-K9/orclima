@@ -85,7 +85,8 @@ export function GraficoPorOrgao() {
           dataKey="valor"
           fill="var(--barra-orgao)"
           radius={[0, 4, 4, 0]}
-          isAnimationActive={false}
+          animationDuration={850}
+          animationEasing="ease-out"
         />
       </BarChart>
     </MolduraGrafico>

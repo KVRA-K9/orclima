@@ -80,7 +80,16 @@ export function GraficoPorEixo() {
             );
           }}
         />
-        <Bar dataKey="valor" radius={[4, 4, 0, 0]} maxBarSize={64} isAnimationActive={false}>
+        {/* As barras crescem do eixo X quando o cartão entra em tela — a
+            moldura só monta o gráfico nesse momento. Também toca de novo a cada
+            troca de filtro, o que dá retorno de que o recorte mudou. */}
+        <Bar
+          dataKey="valor"
+          radius={[4, 4, 0, 0]}
+          maxBarSize={64}
+          animationDuration={750}
+          animationEasing="ease-out"
+        >
           {dados.map((eixo) => (
             <Cell key={eixo.numero} fill={eixo.cor} />
           ))}

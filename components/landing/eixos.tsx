@@ -33,7 +33,7 @@ export function Eixos() {
           {/* Título e subtítulo em branco fixo: os tokens do tema sumiriam
               sobre a foto no tema claro. Os cartões abaixo mantêm o fundo do
               tema, que é opaco e já se sustenta sozinho. */}
-          <div className="text-white [text-shadow:0_1px_4px_rgb(0_0_0/0.7)]">
+          <div className="revelar-rolagem text-white [text-shadow:0_1px_4px_rgb(0_0_0/0.7)]">
             <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
               Eixos temáticos
             </h2>
@@ -52,7 +52,7 @@ export function Eixos() {
               return (
                 <Card
                   key={eixo.numero}
-                  className="group relative overflow-hidden transition-colors hover:border-primary/40"
+                  className="revelar-rolagem group relative overflow-hidden transition-colors hover:border-primary/40"
                 >
                   <span
                     aria-hidden

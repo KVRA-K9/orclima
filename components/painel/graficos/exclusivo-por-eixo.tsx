@@ -80,7 +80,8 @@ export function GraficoExclusivoPorEixo() {
             stackId="eixo"
             fill={serie.cor}
             maxBarSize={64}
-            isAnimationActive={false}
+            animationDuration={750}
+            animationEasing="ease-out"
             // 2px de respiro entre os segmentos empilhados, na cor da superfície.
             stroke="var(--card)"
             strokeWidth={2}

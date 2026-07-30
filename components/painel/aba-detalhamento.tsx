@@ -122,7 +122,7 @@ export function AbaDetalhamento() {
   }
 
   return (
-    <Card>
+    <Card className="revelar-rolagem">
       <CardHeader>
         <CardTitle className="text-base">Tabela detalhada</CardTitle>
         <div className="col-start-2 row-span-2 row-start-1 flex flex-wrap items-start gap-2 self-start justify-self-end">

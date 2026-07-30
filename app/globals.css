@@ -239,4 +239,71 @@
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
   }
+
+  /*
+   * Revelação atrelada à rolagem: o bloco surge ao entrar na viewport e some ao
+   * sair, com o progresso preso à posição de rolagem — não a um timer.
+   *
+   * Três salvaguardas, todas necessárias:
+   *
+   * 1. `@supports`. Sem suporte a `animation-timeline`, nada é aplicado e o
+   *    conteúdo aparece normal. É o que impede o pior cenário: um `opacity: 0`
+   *    permanente escondendo a página inteira em navegador antigo.
+   * 2. `prefers-reduced-motion`. Quem pediu menos movimento no sistema não
+   *    recebe nenhum.
+   * 3. Platô longo (15%→85%). O conteúdo passa 70% do percurso em opacidade
+   *    plena; o esmaecimento fica só nas bordas da viewport. No painel isso é o
+   *    que mantém os números estáveis enquanto se lê e se compara.
+   *
+   * Sem JavaScript: as seções continuam Server Components.
+   */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .revelar-rolagem {
+        /* `ease-in-out` e não `linear`: a curva vale entre cada par de
+           keyframes, então a entrada e a saída ganham aceleração e freio em vez
+           de um esmaecimento de taxa constante, que lê como mecânico. */
+        animation: revelar-rolagem ease-in-out both;
+        animation-timeline: view();
+      }
+    }
+  }
+}
+
+/*
+ * As porcentagens são do percurso `cover` — da borda inferior da viewport até a
+ * superior —, não do tempo. Onde elas caem decide se o efeito é visto:
+ *
+ * Com 15%/85% (primeira versão) o elemento já entrava em opacidade 0,80 e só
+ * começava a sumir com o topo a -20% da tela, ou seja, depois de ter saído.
+ * Toda a transição acontecia nas margens, e na área de leitura ficava sempre
+ * em 1 — a animação rodava sem ser vista.
+ *
+ * Com 40%/60% a entrada só se completa com o elemento perto do meio da tela e a
+ * saída já começa antes de ele encostar no topo: as duas pontas ocorrem bem
+ * dentro do campo de visão, e o platô curto deixa o bloco em movimento durante
+ * a maior parte do percurso. Mexer nesses dois números é mexer na visibilidade.
+ *
+ * Só `opacity` e `transform`: as duas rodam no compositor, então os 21 blocos
+ * animados não disputam a thread principal a cada quadro de rolagem. Um
+ * `filter: blur()` ficaria bonito e travaria a página — os gráficos do painel
+ * são SVG e voltariam a rasterizar a cada frame.
+ */
+@keyframes revelar-rolagem {
+  0% {
+    opacity: 0;
+    transform: translateY(2.5rem) scale(0.94);
+  }
+  40% {
+    opacity: 1;
+    transform: none;
+  }
+  60% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-2.5rem) scale(0.94);
+  }
 }
