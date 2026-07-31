@@ -17,7 +17,11 @@ import { useEffect } from "react";
  * - **Um gesto só.** Carregamento e rolagem passam a usar exatamente a mesma
  *   animação, em vez de dois caminhos que precisam ser mantidos iguais.
  *
- * Monta uma vez, na raiz. Não renderiza nada.
+ * Monta uma vez, na raiz, e acompanha a árvore: o painel troca de aba e
+ * re-renderiza por filtro, então há blocos que nascem muito depois desta
+ * montagem. Ver `observadorDeNovos` abaixo.
+ *
+ * Não renderiza nada.
  */
 export function RevelarAoRolar() {
   useEffect(() => {
@@ -55,9 +59,32 @@ export function RevelarAoRolar() {
       { rootMargin: "0px 0px -12% 0px" },
     );
 
-    document.querySelectorAll("[data-revelar]").forEach((no) => observador.observe(no));
+    const observar = (raizDaBusca: ParentNode) => {
+      if (raizDaBusca instanceof Element && raizDaBusca.hasAttribute("data-revelar")) {
+        observador.observe(raizDaBusca);
+      }
+      raizDaBusca.querySelectorAll("[data-revelar]").forEach((no) => observador.observe(no));
+    };
+
+    observar(document);
+
+    // Sem isto, só os blocos presentes nesta montagem seriam observados — e
+    // como este componente vive no layout, ele monta uma vez por sessão. Tudo
+    // que aparecesse depois (troca de aba do painel, re-render por filtro)
+    // ficaria preso em `opacity: 0`, porque a regra que esconde só solta quem
+    // recebe `.revelar-entrada`, e quem aplica essa classe é o observador.
+    const observadorDeNovos = new MutationObserver((mutacoes) => {
+      for (const mutacao of mutacoes) {
+        for (const no of mutacao.addedNodes) {
+          if (no instanceof Element) observar(no);
+        }
+      }
+    });
+
+    observadorDeNovos.observe(document.body, { childList: true, subtree: true });
 
     return () => {
+      observadorDeNovos.disconnect();
       observador.disconnect();
       raiz.classList.remove("revelar-pronto");
     };
