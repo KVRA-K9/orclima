@@ -20,7 +20,11 @@
  * sem elas 2 aplicações não acham chave (dígito perdido no código) e 12 caem
  * em chave zerada (unidades transferidas de secretaria).
  *
- * Recusa-se a escrever se alguma aplicação ficar sem lastro no QDD.
+ * Emite também `data/fontes-rotulos.json`, o nome de cada fonte, lido da aba
+ * "Fonte" de `TABELAS.xlsx` — o QDD traz só o código, que sozinho é opaco.
+ *
+ * Recusa-se a escrever se alguma aplicação ficar sem lastro no QDD, ou se
+ * alguma fonte em uso ficar sem nome.
  */
 import { writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
@@ -31,7 +35,16 @@ import { aplicarCorrecoes } from "./correcoes-orcamentos-programas.ts";
 const RAIZ = resolve(import.meta.dirname, "..");
 const PADRAO_QDD = join(RAIZ, "QDD_Orclim.xlsx");
 const PADRAO_CLIMA = join(RAIZ, "docs", "fonte", "ORCAMENTOS - PROGRAMAS.xlsx");
+const PADRAO_TABELAS = join(RAIZ, "TABELAS.xlsx");
 const SAIDA = join(RAIZ, "data", "fontes.json");
+const SAIDA_ROTULOS = join(RAIZ, "data", "fontes-rotulos.json");
+
+/**
+ * Aba "Fonte" de TABELAS.xlsx: `Fonte | Descrição | FonteCompleta`. O índice
+ * é a posição da aba no arquivo; o cabeçalho é conferido em `lerRotulos` para
+ * que reordenar as abas vire erro claro em vez de dado errado.
+ */
+const TABELAS = { aba: 8, codigo: "A", descricao: "B" } as const;
 
 /** Colunas do QDD (cabeçalho na linha 5, dados a partir da 6). */
 const QDD = {
@@ -63,9 +76,48 @@ function digitos(v: string | number | undefined): string {
 
 const chaveDe = (orgao: string, codigo: string) => `${orgao}|${codigo}`;
 
+/**
+ * Nome de cada fonte, por código de 8 dígitos. Descrições repetidas em códigos
+ * diferentes são normais — "EMENDAS PARLAMENTARES DE BANCADA" serve a três
+ * fontes —, e é por isso que o painel mostra o número junto do nome.
+ */
+function lerRotulos(arquivo: string): Map<string, string> {
+  const linhas = lerPlanilha(arquivo, TABELAS.aba);
+  const cabecalho = linhas[0];
+  if (
+    String(cabecalho?.[TABELAS.codigo] ?? "").trim() !== "Fonte" ||
+    String(cabecalho?.[TABELAS.descricao] ?? "").trim() !== "Descrição"
+  ) {
+    throw new Error(
+      `aba ${TABELAS.aba} de ${arquivo} não é a de fontes — esperava o cabeçalho ` +
+        `"Fonte | Descrição", encontrei ` +
+        `${JSON.stringify([cabecalho?.[TABELAS.codigo], cabecalho?.[TABELAS.descricao]])}`,
+    );
+  }
+
+  const rotulos = new Map<string, string>();
+  for (const linha of linhas.slice(1)) {
+    const codigo = digitos(linha[TABELAS.codigo]).padStart(8, "0");
+    const descricao = String(linha[TABELAS.descricao] ?? "").trim();
+    if (!codigo || codigo === "00000000" || !descricao) continue;
+
+    const anterior = rotulos.get(codigo);
+    if (anterior && anterior !== descricao) {
+      throw new Error(
+        `linha ${linha._linha}: fonte ${codigo} repetida com descrições diferentes ` +
+          `(${JSON.stringify(anterior)} e ${JSON.stringify(descricao)})`,
+      );
+    }
+    rotulos.set(codigo, descricao);
+  }
+  return rotulos;
+}
+
 function main() {
   const arquivoQdd = resolve(process.argv[2] ?? PADRAO_QDD);
   const arquivoClima = resolve(process.argv[3] ?? PADRAO_CLIMA);
+  const arquivoTabelas = resolve(process.argv[4] ?? PADRAO_TABELAS);
+  const rotulos = lerRotulos(arquivoTabelas);
 
   /* --- QDD: dotação inicial por chave × fonte --- */
 
@@ -149,6 +201,21 @@ function main() {
     saida[alvo.chave] = proporcoes;
   }
 
+  /* --- valor climático por fonte, e o nome de cada uma --- */
+
+  const climaPorFonte = new Map<string, number>();
+  for (const alvo of alvos) {
+    for (const [fonte, proporcao] of Object.entries(saida[alvo.chave] ?? {})) {
+      climaPorFonte.set(fonte, (climaPorFonte.get(fonte) ?? 0) + alvo.dotacao * proporcao);
+    }
+  }
+
+  // Só as fontes em uso entram no arquivo de rótulos: das 161 da tabela, o
+  // painel nunca precisa das outras — e o que ele precisa não pode faltar.
+  for (const fonte of [...climaPorFonte.keys()].filter((f) => !rotulos.has(f)).sort()) {
+    erros.push(`fonte ${fonte} está em uso mas não tem descrição em ${arquivoTabelas}`);
+  }
+
   if (erros.length) {
     console.log(`Cruzamento com o QDD falhou — nada foi escrito:\n`);
     for (const e of erros) console.log(`  ${e}`);
@@ -164,14 +231,13 @@ function main() {
   );
   writeFileSync(SAIDA, `${JSON.stringify(ordenado, null, 2)}\n`, "utf8");
 
+  const rotulosEmUso = Object.fromEntries(
+    [...climaPorFonte.keys()].sort().map((fonte) => [fonte, rotulos.get(fonte)!]),
+  );
+  writeFileSync(SAIDA_ROTULOS, `${JSON.stringify(rotulosEmUso, null, 2)}\n`, "utf8");
+
   /* --- relatório --- */
 
-  const climaPorFonte = new Map<string, number>();
-  for (const alvo of alvos) {
-    for (const [fonte, proporcao] of Object.entries(saida[alvo.chave])) {
-      climaPorFonte.set(fonte, (climaPorFonte.get(fonte) ?? 0) + alvo.dotacao * proporcao);
-    }
-  }
   const multiplas = Object.values(saida).filter((f) => Object.keys(f).length > 1).length;
   const brl = (n: number) => n.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
@@ -179,14 +245,16 @@ function main() {
   console.log(`orçamento climático . ${arquivoClima}`);
   console.log(`aplicações .......... ${alvos.length}`);
   console.log(`chaves órgão#ação ... ${Object.keys(saida).length} (${multiplas} com mais de uma fonte)`);
-  console.log(`fontes distintas .... ${climaPorFonte.size}`);
+  console.log(`tabela de nomes ..... ${arquivoTabelas} (${rotulos.size} fontes)`);
+  console.log(`fontes distintas .... ${climaPorFonte.size} (todas com nome)`);
   console.log(`\n10 maiores fontes por valor climático:`);
   for (const [fonte, valor] of [...climaPorFonte.entries()]
     .sort((a, b) => b[1] - a[1])
     .slice(0, 10)) {
-    console.log(`  ${fonte}  ${brl(valor)}`);
+    console.log(`  ${fonte}  ${brl(valor).padStart(20)}  ${rotulos.get(fonte)}`);
   }
   console.log(`\n-> ${SAIDA}`);
+  console.log(`-> ${SAIDA_ROTULOS}`);
 }
 
 main();

@@ -1,4 +1,5 @@
 import { ODS, type IndicadorOds, type Ods } from "@/data/ods";
+import { normalizar } from "@/lib/texto";
 
 /**
  * Situação do indicador. A planilha de origem não traz um campo próprio para
@@ -35,14 +36,6 @@ export type OdsDerivado = Omit<Ods, "indicadores"> & {
   /** Eixos do Orçamento Climático citados pelos indicadores, únicos e ordenados. */
   eixosRelacionados: number[];
 };
-
-/** Minúsculas e sem acento — para comparar marcadores e busca sem surpresa. */
-function normalizar(texto: string): string {
-  return texto
-    .normalize("NFD")
-    .replace(/\p{Diacritic}/gu, "")
-    .toLowerCase();
-}
 
 export function statusDoIndicador(texto: string): StatusOds {
   const t = normalizar(texto);

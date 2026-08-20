@@ -117,6 +117,30 @@ alimenta o filtro por fonte da visão **Detalhado**.
 > painel exibe uma fonte por vez, então o desvio nunca aparece na tela; ele
 > também não entra na cascata abaixo, que roda sobre a camada 3 intacta.
 
+### Nomes das fontes (`data/fontes-rotulos.json`)
+
+O QDD traz só o código, e `15000100` sozinho não diz nada a ninguém. Os nomes
+vêm da aba **Fonte** de `TABELAS.xlsx` (`Fonte | Descrição | FonteCompleta`,
+161 fontes), lida pelo mesmo `scripts/ingest-fontes.ts`:
+
+```jsonc
+{ "15000100": "RECURSOS PRÓPRIOS DO TESOURO", "17540502": "FUNDO CLIMA" }
+```
+
+Só as fontes **em uso** entram (43 hoje) — o painel nunca precisa das outras. A
+ingestão aborta se alguma fonte em uso ficar sem nome, ou se um mesmo código
+aparecer com descrições divergentes. Descrições **repetidas em códigos
+diferentes** são normais e passam: "EMENDAS PARLAMENTARES DE BANCADA" serve a
+`17003120`, `16013120` e `16003120`, e é justamente por isso que a interface
+mostra o número junto do nome.
+
+O texto fica **em caixa alta, como na origem** — o mesmo tratamento que o
+painel já dá aos nomes das aplicações. Converter para capitalização normal
+quebraria as siglas (SUS, BIRD, RPPS, FUNPEN, DRE, FSP, FUNDEB).
+
+A aba é lida pela posição (a 8ª), mas o cabeçalho é conferido: reordenar as
+abas da planilha vira erro claro, não dado errado.
+
 O QDD é um **snapshot mensal**. Regere `data/fontes.json` junto com o ciclo de
 `docs/07-CICLO-MENSAL.md`, sempre que o QDD for atualizado.
 

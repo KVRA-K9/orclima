@@ -1,6 +1,7 @@
 import bruto from "@/data/orcamento.json";
 import aplicacoesBruto from "@/data/aplicacoes.json";
 import fontesBruto from "@/data/fontes.json";
+import rotulosFonteBruto from "@/data/fontes-rotulos.json";
 import { EIXOS, eixoPorNumero } from "@/data/eixos";
 import type {
   Aplicacao,
@@ -24,6 +25,13 @@ export const APLICACOES = aplicacoesBruto as unknown as Aplicacoes;
  * `scripts/ingest-fontes.ts` a partir do QDD — ver docs/02-ARQUITETURA-DE-DADOS.md.
  */
 export const FONTES = fontesBruto as Record<string, Record<string, number>>;
+
+/**
+ * Nome de cada fonte em uso, ex.: `"17540502" -> "FUNDO CLIMA"`. O QDD traz só
+ * o código; os nomes vêm da aba "Fonte" de `TABELAS.xlsx`. Em caixa alta, como
+ * na fonte oficial — o mesmo tratamento dado aos nomes das aplicações.
+ */
+export const ROTULOS_FONTE = rotulosFonteBruto as Record<string, string>;
 
 /**
  * Exercícios disponíveis. Hoje a fonte traz um único exercício; a assinatura já
@@ -287,18 +295,31 @@ export function fontesDe(codigoOrgao: string, codigo: string): Record<string, nu
 }
 
 /**
- * Reduz uma lista de aplicações a uma única fonte, com a dotação rateada pela
- * participação daquela fonte. Sem fonte, devolve a lista intacta.
+ * Nome de uma fonte. A ingestão garante que toda fonte em uso tenha o seu, mas
+ * a interface não deve quebrar por um rótulo ausente — daí o texto vazio.
+ */
+export function rotuloDaFonte(codigo: string): string {
+  return ROTULOS_FONTE[codigo] ?? "";
+}
+
+/**
+ * Reduz uma lista de aplicações às fontes escolhidas, com a dotação rateada
+ * pela participação delas. Lista de fontes vazia = sem restrição.
+ *
+ * Com mais de uma fonte, a parcela é a SOMA das participações — uma ação
+ * custeada por duas fontes selecionadas entra uma vez só, com o que as duas
+ * respondem juntas.
  */
 export function ratearPorFonte(
   aplicacoes: Aplicacao[],
   codigoOrgao: string,
-  fonte: string | null,
+  fontes: string[],
 ): Aplicacao[] {
-  if (!fonte) return aplicacoes;
+  if (!fontes.length) return aplicacoes;
 
   return aplicacoes.reduce<Aplicacao[]>((acc, aplicacao) => {
-    const participacao = fontesDe(codigoOrgao, aplicacao.codigo)[fonte];
+    const participacoes = fontesDe(codigoOrgao, aplicacao.codigo);
+    const participacao = fontes.reduce((s, f) => s + (participacoes[f] ?? 0), 0);
     if (!participacao) return acc;
     acc.push({ ...aplicacao, dotacao: arredonda(aplicacao.dotacao * participacao) });
     return acc;
@@ -309,13 +330,13 @@ export function ratearPorFonte(
 export function ratearAplicacoes(
   porEixo: Record<string, Aplicacao[]>,
   codigoOrgao: string,
-  fonte: string | null,
+  fontes: string[],
 ): Record<string, Aplicacao[]> {
-  if (!fonte) return porEixo;
+  if (!fontes.length) return porEixo;
 
   const saida: Record<string, Aplicacao[]> = {};
   for (const [eixo, aplicacoes] of Object.entries(porEixo)) {
-    const rateadas = ratearPorFonte(aplicacoes, codigoOrgao, fonte);
+    const rateadas = ratearPorFonte(aplicacoes, codigoOrgao, fontes);
     if (rateadas.length) saida[eixo] = rateadas;
   }
   return saida;
@@ -362,20 +383,21 @@ export function orgaoDeAplicacoes(
 }
 
 /**
- * Recorta órgãos e aplicações a uma fonte de recurso, devolvendo o mesmo par
- * `(órgãos, aplicacoesDe)` que a tela e a exportação consomem — assim as duas
- * partem exatamente do mesmo cálculo. Sem fonte, devolve a entrada intacta.
+ * Recorta órgãos e aplicações às fontes de recurso escolhidas, devolvendo o
+ * mesmo par `(órgãos, aplicacoesDe)` que a tela e a exportação consomem —
+ * assim as duas partem exatamente do mesmo cálculo. Sem fontes, devolve a
+ * entrada intacta.
  */
 export function aplicarFonte(
   orgaos: Orgao[],
   aplicacoesDe: (orgao: string) => Record<string, Aplicacao[]>,
-  fonte: string | null,
+  fontes: string[],
 ): { orgaos: Orgao[]; aplicacoesDe: (orgao: string) => Record<string, Aplicacao[]> } {
-  if (!fonte) return { orgaos, aplicacoesDe };
+  if (!fontes.length) return { orgaos, aplicacoesDe };
 
   const porOrgao = new Map<string, Record<string, Aplicacao[]>>();
   const recortados = orgaos.reduce<Orgao[]>((acc, orgao) => {
-    const porEixo = ratearAplicacoes(aplicacoesDe(orgao.nome), orgao.codigo, fonte);
+    const porEixo = ratearAplicacoes(aplicacoesDe(orgao.nome), orgao.codigo, fontes);
     const recortado = orgaoDeAplicacoes(orgao, porEixo);
     if (!recortado) return acc;
     porOrgao.set(orgao.nome, porEixo);
@@ -393,7 +415,7 @@ export function aplicarFonte(
 export function fontesDisponiveis(
   orgaos: Orgao[],
   aplicacoesDe: (orgao: string) => Record<string, Aplicacao[]>,
-): { fonte: string; valor: number; acoes: number }[] {
+): { fonte: string; nome: string; valor: number; acoes: number }[] {
   const acumulado = new Map<string, { valor: number; acoes: number }>();
 
   for (const orgao of orgaos) {
@@ -412,6 +434,11 @@ export function fontesDisponiveis(
   }
 
   return [...acumulado.entries()]
-    .map(([fonte, { valor, acoes }]) => ({ fonte, valor: arredonda(valor), acoes }))
+    .map(([fonte, { valor, acoes }]) => ({
+      fonte,
+      nome: rotuloDaFonte(fonte),
+      valor: arredonda(valor),
+      acoes,
+    }))
     .sort((a, b) => b.valor - a.valor || a.fonte.localeCompare(b.fonte));
 }

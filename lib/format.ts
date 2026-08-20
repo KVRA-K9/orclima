@@ -41,6 +41,23 @@ function escala(valor: number, casas: number): string {
   });
 }
 
+/**
+ * Participação, com piso de precisão: `"46,5%"`, mas `"< 0,1%"` para o que não
+ * chega a uma décima. Fontes de recurso pequenas — R$ 6 mil num orçamento de
+ * quase R$ 1 bilhão — apareciam como "0,0%", que se lê como defeito. Zero
+ * exato continua "0,0%": ali é verdade, não arredondamento.
+ */
+export function formatParticipacao(fracao: number, casas = 1): string {
+  const minimo = 10 ** -casas;
+  if (fracao > 0 && fracao * 100 < minimo) {
+    return `< ${minimo.toLocaleString("pt-BR", {
+      minimumFractionDigits: casas,
+      maximumFractionDigits: casas,
+    })}%`;
+  }
+  return formatPercentual(fracao, casas);
+}
+
 /** 12,4% */
 export function formatPercentual(fracao: number, casas = 1): string {
   return `${(fracao * 100).toLocaleString("pt-BR", {

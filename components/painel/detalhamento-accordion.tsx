@@ -16,12 +16,12 @@ import type { Aplicacao, Orgao } from "@/lib/types";
 export function DetalhamentoAccordion({
   orgaos: entrada,
   aplicacoesDe,
-  fonte,
+  fontes,
 }: {
-  /** Órgãos já recortados pela fonte, quando há uma selecionada. */
+  /** Órgãos já recortados pelas fontes, quando há alguma selecionada. */
   orgaos: Orgao[];
   aplicacoesDe: (orgao: string) => Record<string, Aplicacao[]>;
-  fonte: string | null;
+  fontes: string[];
 }) {
   const { filtros } = useFiltros();
 
@@ -33,33 +33,28 @@ export function DetalhamentoAccordion({
   if (orgaos.length === 0) {
     return (
       <p className="py-14 text-center text-sm text-muted-foreground">
-        {fonte
-          ? `Nenhum órgão tem ação na fonte ${fonte} dentro dos filtros selecionados.`
-          : "Nenhum órgão corresponde aos filtros selecionados."}
+        {fontes.length === 0
+          ? "Nenhum órgão corresponde aos filtros selecionados."
+          : fontes.length === 1
+            ? `Nenhum órgão tem ação na fonte ${fontes[0]} dentro dos filtros selecionados.`
+            : `Nenhum órgão tem ação nas ${fontes.length} fontes selecionadas dentro dos filtros selecionados.`}
       </p>
     );
   }
 
+  // A ressalva sobre o rateio não fica aqui: ela é parte da ficha da fonte,
+  // em `aba-detalhamento.tsx`, onde vem acompanhada do nome e dos valores.
   return (
-    <>
-      <Accordion type="multiple">
-        {orgaos.map((orgao) => (
-          <ItemOrgao
-            key={orgao.nome}
-            orgao={orgao}
-            filtroEixo={filtros.eixo}
-            aplicacoes={aplicacoesDe(orgao.nome)}
-          />
-        ))}
-      </Accordion>
-
-      {fonte ? (
-        <p className="mt-4 text-xs text-muted-foreground">
-          Valores rateados pela participação da fonte {fonte} na dotação inicial de
-          cada ação no QDD.
-        </p>
-      ) : null}
-    </>
+    <Accordion type="multiple">
+      {orgaos.map((orgao) => (
+        <ItemOrgao
+          key={orgao.nome}
+          orgao={orgao}
+          filtroEixo={filtros.eixo}
+          aplicacoes={aplicacoesDe(orgao.nome)}
+        />
+      ))}
+    </Accordion>
   );
 }
 

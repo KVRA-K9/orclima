@@ -4,6 +4,7 @@ import {
   ArrowDown,
   ArrowUp,
   ArrowUpDown,
+  Check,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
@@ -15,7 +16,6 @@ import { useMemo, useState } from "react";
 
 import { DetalhamentoAccordion } from "@/components/painel/detalhamento-accordion";
 import { useFiltros } from "@/components/painel/filtros-context";
-import { PILULA_ATIVA, PILULA_BASE, PILULA_INATIVA } from "@/components/painel/pilula";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -34,10 +34,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { EIXOS } from "@/data/eixos";
-import { aplicarFonte, fontesDisponiveis } from "@/lib/data";
+import { aplicarFonte, fontesDisponiveis, resumoDe } from "@/lib/data";
+import { normalizar } from "@/lib/texto";
 import { exportarPdf, exportarXlsx } from "@/lib/export";
-import { formatBRL, formatCompactoBRL, formatPercentual } from "@/lib/format";
-import type { Orgao } from "@/lib/types";
+import {
+  formatBRL,
+  formatCompactoBRL,
+  formatParticipacao,
+  formatPercentual,
+} from "@/lib/format";
+import type { Aplicacao, Orgao } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 type Visao = "tabela" | "detalhado";
@@ -61,16 +67,19 @@ const COLUNAS: Coluna[] = [
 const TAMANHO_PAGINA = 10;
 
 /**
- * Fontes com pílula própria na linha de filtro. Seis cobrem cerca de 80% do
- * orçamento — o resto é uma cauda longa que não merece espaço permanente e
- * fica atrás do botão que abre a lista completa.
+ * Onde a lista de fontes corta entre "Maiores" e "Demais". Seis cobrem cerca
+ * de 80% do orçamento; o resto é uma cauda longa, que só fica legível quando
+ * as barras são escaladas separadamente das grandes.
  */
 const FONTES_EM_DESTAQUE = 6;
+
+/** Identidade estável para "nenhuma fonte", que os `useMemo` usam de dependência. */
+const VAZIO: string[] = [];
 
 export function AbaDetalhamento() {
   const { orgaosFiltrados, resumo, aplicacoesDe } = useFiltros();
   const [visao, setVisao] = useState<Visao>("tabela");
-  const [fonte, setFonte] = useState<string | null>(null);
+  const [fontesEscolhidas, setFontesEscolhidas] = useState<string[]>([]);
   const [ordem, setOrdem] = useState<{ chave: Coluna["chave"]; desc: boolean }>({
     chave: "total",
     desc: true,
@@ -80,9 +89,9 @@ export function AbaDetalhamento() {
   const [pagina, setPagina] = useState(0);
 
   // O filtro por fonte vale só na visão detalhada — é lá que as ações, e
-  // portanto as fontes, aparecem. Na tabela por órgão `fonteAtiva` é sempre
-  // nula, então tudo abaixo se reduz aos órgãos filtrados de sempre.
-  const fonteAtiva = visao === "detalhado" ? fonte : null;
+  // portanto as fontes, aparecem. Na tabela por órgão a lista é sempre vazia,
+  // então tudo abaixo se reduz aos órgãos filtrados de sempre.
+  const fontesAtivas = visao === "detalhado" ? fontesEscolhidas : VAZIO;
 
   const fontes = useMemo(
     () => fontesDisponiveis(orgaosFiltrados, aplicacoesDe),
@@ -90,14 +99,32 @@ export function AbaDetalhamento() {
   );
 
   const recorte = useMemo(
-    () => aplicarFonte(orgaosFiltrados, aplicacoesDe, fonteAtiva),
-    [aplicacoesDe, fonteAtiva, orgaosFiltrados],
+    () => aplicarFonte(orgaosFiltrados, aplicacoesDe, fontesAtivas),
+    [aplicacoesDe, fontesAtivas, orgaosFiltrados],
   );
 
-  // Uma fonte selecionada some quando os filtros do painel mudam a ponto de
-  // ela não existir mais no recorte — senão a tela ficaria vazia sem motivo
-  // visível.
-  if (fonte && !fontes.some((f) => f.fonte === fonte)) setFonte(null);
+  const selecionadas = useMemo(
+    () => fontes.filter((f) => fontesAtivas.includes(f.fonte)),
+    [fontes, fontesAtivas],
+  );
+
+  // Uma fonte escolhida pode sumir quando os filtros do painel mudam. Podamos
+  // só as que sumiram — zerar a seleção inteira faria o usuário perder as
+  // outras sem motivo visível.
+  const sobreviventes = fontesEscolhidas.filter((f) =>
+    fontes.some((o) => o.fonte === f),
+  );
+  if (sobreviventes.length !== fontesEscolhidas.length) {
+    setFontesEscolhidas(sobreviventes);
+  }
+
+  function alternarFonte(codigo: string) {
+    setFontesEscolhidas((atuais) =>
+      atuais.includes(codigo)
+        ? atuais.filter((f) => f !== codigo)
+        : [...atuais, codigo],
+    );
+  }
 
   const linhas = useMemo(() => {
     const copia = [...recorte.orgaos];
@@ -170,7 +197,7 @@ export function AbaDetalhamento() {
               size="sm"
               onClick={() => {
                 setVisao("tabela");
-                setFonte(null);
+                setFontesEscolhidas(VAZIO);
               }}
             >
               Tabela
@@ -183,6 +210,21 @@ export function AbaDetalhamento() {
               Detalhado
             </Button>
           </div>
+          {/* A fonte de recursos só existe no grão da ação, então o filtro
+              acompanha a visão detalhada. É um botão só: as 43 fontes moram
+              todas dentro do popover. */}
+          {visao === "detalhado" && fontes.length > 0 ? (
+            <div className="flex gap-1 rounded-lg border border-border p-1">
+              <FiltroFonte
+                fontes={fontes}
+                escolhidas={fontesAtivas}
+                alternar={alternarFonte}
+                limpar={() => setFontesEscolhidas(VAZIO)}
+                total={resumo.total}
+              />
+            </div>
+          ) : null}
+
           {/* Mesma moldura do seletor de visão ao lado — é o que iguala a
               altura dos dois grupos, já que o quadro soma a borda e o `p-1`
               à altura dos botões `sm`. */}
@@ -212,18 +254,18 @@ export function AbaDetalhamento() {
       <CardContent>
         {visao === "detalhado" ? (
           <div className="flex flex-col gap-4">
-            {fontes.length > 0 ? (
-              <FiltroFonte
-                fontes={fontes}
-                fonte={fonte}
-                definir={setFonte}
+            {selecionadas.length > 0 ? (
+              <FichaFonte
+                opcoes={selecionadas}
+                orgaos={recorte.orgaos}
+                aplicacoesDe={recorte.aplicacoesDe}
                 total={resumo.total}
               />
             ) : null}
             <DetalhamentoAccordion
               orgaos={recorte.orgaos}
               aplicacoesDe={recorte.aplicacoesDe}
-              fonte={fonteAtiva}
+              fontes={fontesAtivas}
             />
           </div>
         ) : (
@@ -389,156 +431,291 @@ export function AbaDetalhamento() {
   );
 }
 
-type OpcaoFonte = { fonte: string; valor: number; acoes: number };
+type OpcaoFonte = { fonte: string; nome: string; valor: number; acoes: number };
 
 /**
- * Linha de filtro por fonte de recursos, no mesmo idioma das pílulas da aba
- * ODS. A diferença é de escala: são 43 fontes, e a distribuição é muito
- * concentrada (uma delas responde por quase metade do orçamento). Por isso só
- * as maiores ganham pílula; a cauda fica no popover.
+ * Identificação das fontes selecionadas. O número sozinho é opaco, e o nome não
+ * cabe na pílula — as descrições têm mediana de 37 caracteres e chegam a 100 —,
+ * então ele ganha lugar próprio aqui, junto dos números do recorte e da
+ * ressalva sobre o rateio.
+ */
+function FichaFonte({
+  opcoes,
+  orgaos,
+  aplicacoesDe,
+  total,
+}: {
+  opcoes: OpcaoFonte[];
+  /** Órgãos já recortados — a origem do agregado. */
+  orgaos: Orgao[];
+  aplicacoesDe: (orgao: string) => Record<string, Aplicacao[]>;
+  total: number;
+}) {
+  // O agregado sai do recorte, e não da soma dos valores por fonte: uma ação
+  // custeada por duas fontes selecionadas seria contada duas vezes.
+  const { valor, acoes } = useMemo(() => {
+    let acoes = 0;
+    for (const orgao of orgaos) {
+      for (const lista of Object.values(aplicacoesDe(orgao.nome))) acoes += lista.length;
+    }
+    return { valor: resumoDe(orgaos).total, acoes };
+  }, [aplicacoesDe, orgaos]);
+
+  const varias = opcoes.length > 1;
+
+  return (
+    <div className="rounded-lg border-l-2 border-primary/40 bg-primary/15 p-3 dark:bg-primary/10">
+      <p className="text-xs font-medium tracking-wide text-muted-foreground tabular-nums">
+        {varias ? `${opcoes.length} fontes selecionadas` : `Fonte ${opcoes[0].fonte}`}
+      </p>
+
+      {varias ? null : (
+        <p className="mt-0.5 text-sm leading-snug font-medium">{opcoes[0].nome}</p>
+      )}
+
+      <p className="mt-2 text-xs text-muted-foreground">
+        <span className="font-medium text-foreground tabular-nums">
+          {formatBRL(valor)}
+        </span>{" "}
+        · {formatParticipacao(total > 0 ? valor / total : 0)} do recorte · {acoes}{" "}
+        {acoes === 1 ? "ação" : "ações"}
+      </p>
+
+      {varias ? (
+        <ul className="mt-3 flex flex-col gap-1 border-t border-primary/25 pt-2">
+          {opcoes.map((opcao) => (
+            <li
+              key={opcao.fonte}
+              className="flex items-baseline justify-between gap-3 text-xs"
+            >
+              <span className="min-w-0">
+                <span className="font-medium tabular-nums">{opcao.fonte}</span>{" "}
+                <span className="text-muted-foreground">{opcao.nome}</span>
+              </span>
+              <span className="shrink-0 text-muted-foreground tabular-nums">
+                {formatCompactoBRL(opcao.valor)}
+              </span>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+
+      <p className="mt-2 text-xs text-muted-foreground">
+        Valores rateados pela participação {varias ? "das fontes" : "da fonte"} na
+        dotação inicial de cada ação no QDD.
+      </p>
+    </div>
+  );
+}
+
+/**
+ * Filtro por fonte de recursos: um botão no cabeçalho que abre a lista das 43.
+ *
+ * A lista vai em duas seções, "Maiores" e "Demais", cada uma escalando as
+ * barras pela sua própria maior. Numa régua única a `15000100` (46,5% do
+ * orçamento) achataria as outras 42 — o percentual ao lado é que segue sempre
+ * sobre o total, então a separação organiza sem enganar.
  */
 function FiltroFonte({
   fontes,
-  fonte,
-  definir,
+  escolhidas,
+  alternar,
+  limpar,
   total,
 }: {
   fontes: OpcaoFonte[];
-  fonte: string | null;
-  definir: (fonte: string | null) => void;
+  escolhidas: string[];
+  alternar: (fonte: string) => void;
+  limpar: () => void;
   /** Denominador das participações — o mesmo total exibido no rodapé da tabela. */
   total: number;
 }) {
   const [aberto, setAberto] = useState(false);
   const [busca, setBusca] = useState("");
 
-  const destaque = fontes.slice(0, FONTES_EM_DESTAQUE);
-  const resto = fontes.slice(FONTES_EM_DESTAQUE);
+  // A seção de cada fonte vem do posto no orçamento inteiro, e não da posição
+  // entre os resultados: senão buscar "fundo" listaria o Fundo Amazônia (2,8%)
+  // sob "Maiores". `fontes` já vem ordenada por valor decrescente de
+  // `fontesDisponiveis`, então o corte é por índice.
+  const maiores = fontes.slice(0, FONTES_EM_DESTAQUE);
+  const demais = fontes.slice(FONTES_EM_DESTAQUE);
 
-  // Uma fonte escolhida na lista completa não tem pílula própria; ela entra no
-  // fim da linha para que a seleção ativa esteja sempre visível.
-  const avulsa =
-    fonte && !destaque.some((o) => o.fonte === fonte)
-      ? fontes.find((o) => o.fonte === fonte)
-      : undefined;
+  // Busca por código ou nome, sem acento: "credito" acha OPERAÇÕES DE CRÉDITO.
+  const termo = normalizar(busca.trim());
+  const casa = (lista: OpcaoFonte[]) =>
+    termo ? lista.filter((o) => normalizar(`${o.fonte} ${o.nome}`).includes(termo)) : lista;
 
-  const filtradas = busca.trim()
-    ? resto.filter((o) => o.fonte.includes(busca.trim()))
-    : resto;
-
-  function escolher(codigo: string | null) {
-    definir(codigo);
-    setAberto(false);
-    setBusca("");
-  }
+  const secoes = [
+    { titulo: "Maiores", itens: casa(maiores) },
+    { titulo: "Demais", itens: casa(demais) },
+  ].filter((secao) => secao.itens.length > 0);
 
   return (
-    <div
-      role="group"
-      aria-label="Filtrar por fonte de recursos"
-      className="flex flex-wrap items-center gap-2"
-    >
-      <span className="text-sm font-medium text-muted-foreground">Fonte:</span>
+    <Popover open={aberto} onOpenChange={setAberto}>
+      <PopoverTrigger asChild>
+        <Button variant="ghost" size="sm" aria-label="Filtrar por fonte de recursos">
+          Fonte
+          {escolhidas.length > 0 ? (
+            <span className="tabular-nums">· {escolhidas.length}</span>
+          ) : null}
+          <ChevronDown className="size-3" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent align="end" className="w-96 p-2">
+        <div className="relative">
+          <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            type="search"
+            value={busca}
+            onChange={(evento) => setBusca(evento.target.value)}
+            placeholder="Buscar por código ou nome..."
+            aria-label="Buscar fonte de recursos"
+            className="pl-9"
+          />
+        </div>
 
-      <button
-        type="button"
-        onClick={() => escolher(null)}
-        aria-pressed={fonte === null}
-        className={cn(PILULA_BASE, fonte === null ? PILULA_ATIVA : PILULA_INATIVA)}
-      >
-        Todas
-      </button>
+        {escolhidas.length > 0 ? (
+          <div className="mt-2 flex items-center justify-between gap-2 px-2 text-xs text-muted-foreground">
+            <span>
+              {escolhidas.length}{" "}
+              {escolhidas.length === 1 ? "selecionada" : "selecionadas"}
+            </span>
+            <button
+              type="button"
+              onClick={limpar}
+              className="font-medium text-foreground underline-offset-2 hover:underline"
+            >
+              Limpar
+            </button>
+          </div>
+        ) : null}
 
-      {[...destaque, ...(avulsa ? [avulsa] : [])].map((opcao) => (
-        <PilulaFonte
-          key={opcao.fonte}
-          opcao={opcao}
-          total={total}
-          ativa={fonte === opcao.fonte}
-          onClick={() => escolher(opcao.fonte)}
-        />
-      ))}
-
-      {resto.length > 0 ? (
-        <Popover open={aberto} onOpenChange={setAberto}>
-          <PopoverTrigger
-            className={cn(PILULA_BASE, PILULA_INATIVA)}
-            aria-label={`Ver as outras ${resto.length} fontes`}
-          >
-            + {resto.length} {resto.length === 1 ? "fonte" : "fontes"}
-            <ChevronDown className="size-3" />
-          </PopoverTrigger>
-          <PopoverContent align="start" className="w-80 p-2">
-            <div className="relative">
-              <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                type="search"
-                value={busca}
-                onChange={(evento) => setBusca(evento.target.value)}
-                placeholder="Buscar código da fonte..."
-                aria-label="Buscar fonte de recursos"
-                className="pl-9"
+        <div className="mt-2 max-h-80 overflow-y-auto">
+          {secoes.length === 0 ? (
+            <p className="px-2 py-6 text-center text-sm text-muted-foreground">
+              Nenhuma fonte com esse código ou nome.
+            </p>
+          ) : (
+            secoes.map((secao) => (
+              <SecaoFontes
+                key={secao.titulo}
+                titulo={secao.titulo}
+                itens={secao.itens}
+                escolhidas={escolhidas}
+                alternar={alternar}
+                total={total}
               />
-            </div>
-
-            <ul className="mt-2 max-h-72 overflow-y-auto">
-              {filtradas.length === 0 ? (
-                <li className="px-2 py-6 text-center text-sm text-muted-foreground">
-                  Nenhuma fonte com esse código.
-                </li>
-              ) : (
-                filtradas.map((opcao) => (
-                  <li key={opcao.fonte}>
-                    <button
-                      type="button"
-                      onClick={() => escolher(opcao.fonte)}
-                      aria-pressed={fonte === opcao.fonte}
-                      className={cn(
-                        "flex w-full items-baseline justify-between gap-3 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-muted",
-                        fonte === opcao.fonte && "bg-muted font-medium",
-                      )}
-                    >
-                      <span className="tabular-nums">{opcao.fonte}</span>
-                      <span className="text-xs text-muted-foreground tabular-nums">
-                        {formatCompactoBRL(opcao.valor)} ·{" "}
-                        {formatPercentual(total > 0 ? opcao.valor / total : 0)}
-                      </span>
-                    </button>
-                  </li>
-                ))
-              )}
-            </ul>
-          </PopoverContent>
-        </Popover>
-      ) : null}
-    </div>
+            ))
+          )}
+        </div>
+      </PopoverContent>
+    </Popover>
   );
 }
 
-function PilulaFonte({
+/**
+ * Um bloco da lista, com régua própria: a barra de cada linha é proporcional à
+ * maior fonte DA SEÇÃO, não ao total nem à maior de todas. É o que devolve
+ * legibilidade à cauda, onde a maior vale 2,8% do orçamento.
+ */
+function SecaoFontes({
+  titulo,
+  itens,
+  escolhidas,
+  alternar,
+  total,
+}: {
+  titulo: string;
+  itens: OpcaoFonte[];
+  escolhidas: string[];
+  alternar: (fonte: string) => void;
+  total: number;
+}) {
+  const teto = Math.max(...itens.map((o) => o.valor), 0);
+
+  return (
+    <>
+      <p className="sticky top-0 z-10 bg-popover px-2 py-1 text-xs font-medium tracking-wide text-muted-foreground uppercase">
+        {titulo}
+      </p>
+      <ul>
+        {itens.map((opcao) => (
+          <li key={opcao.fonte}>
+            <LinhaFonte
+              opcao={opcao}
+              total={total}
+              teto={teto}
+              marcada={escolhidas.includes(opcao.fonte)}
+              onClick={() => alternar(opcao.fonte)}
+            />
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+}
+
+/**
+ * Uma fonte na lista completa. O popover não fecha ao clicar — a seleção é
+ * múltipla, e fechar a cada escolha tornaria impossível montar um conjunto.
+ */
+function LinhaFonte({
   opcao,
   total,
-  ativa,
+  teto,
+  marcada,
   onClick,
 }: {
   opcao: OpcaoFonte;
   total: number;
-  ativa: boolean;
+  /** Maior valor da lista, que define a barra cheia. */
+  teto: number;
+  marcada: boolean;
   onClick: () => void;
 }) {
+  // Um piso de 2% de largura mantém visível a barra das menores fontes, que de
+  // outro modo desapareceriam: nesta lista a maior vale 4.243× a menor.
+  const largura = teto > 0 ? Math.max((opcao.valor / teto) * 100, 2) : 0;
+
   return (
     <button
       type="button"
+      role="checkbox"
+      aria-checked={marcada}
       onClick={onClick}
-      aria-pressed={ativa}
-      title={`${formatBRL(opcao.valor)} · ${opcao.acoes} ${
-        opcao.acoes === 1 ? "ação" : "ações"
-      }`}
-      className={cn(PILULA_BASE, ativa ? PILULA_ATIVA : PILULA_INATIVA)}
+      className="flex w-full items-start gap-2 rounded-md px-2 py-1.5 text-left transition-colors hover:bg-muted"
     >
-      <span className="tabular-nums">{opcao.fonte}</span>
-      <span className={cn("tabular-nums", !ativa && "text-muted-foreground/70")}>
-        · {formatPercentual(total > 0 ? opcao.valor / total : 0)}
+      <span
+        aria-hidden
+        className={cn(
+          "mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-[4px] border transition-colors",
+          marcada ? "border-primary bg-primary text-primary-foreground" : "border-input",
+        )}
+      >
+        {marcada ? <Check className="size-3" /> : null}
+      </span>
+
+      <span className="min-w-0 flex-1">
+        <span className="flex items-baseline justify-between gap-3 text-sm">
+          <span className={cn("tabular-nums", marcada && "font-medium")}>
+            {opcao.fonte}
+          </span>
+          <span className="shrink-0 text-xs text-muted-foreground tabular-nums">
+            {formatCompactoBRL(opcao.valor)} ·{" "}
+            {formatParticipacao(total > 0 ? opcao.valor / total : 0)}
+          </span>
+        </span>
+
+        <span aria-hidden className="mt-1 block h-1 rounded-full bg-muted">
+          <span
+            className="block h-full rounded-full bg-primary/60"
+            style={{ width: `${largura}%` }}
+          />
+        </span>
+
+        <span className="mt-1 line-clamp-2 block text-xs leading-snug text-muted-foreground">
+          {opcao.nome}
+        </span>
       </span>
     </button>
   );
