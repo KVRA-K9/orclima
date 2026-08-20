@@ -191,6 +191,28 @@ export function AbaDetalhamento() {
       <CardHeader>
         <CardTitle className="text-base">Tabela detalhada</CardTitle>
         <div className="col-start-2 row-span-2 row-start-1 flex flex-wrap items-start gap-2 self-start justify-self-end">
+          {/* A fonte de recursos só existe no grão da ação, então o filtro
+              acompanha a visão detalhada. É um botão só: as 43 fontes moram
+              todas dentro do popover.
+
+              Ele vem PRIMEIRO de propósito. A barra é ancorada à direita, então
+              um grupo que nasce aqui cresce para a esquerda, sobre espaço
+              vazio, e os dois grupos seguintes não saem do lugar. Entre o
+              alternador e os botões de exportação, como estava, o alternador
+              pulava para a esquerda no instante do clique — o botão fugia de
+              baixo do cursor. */}
+          {visao === "detalhado" && fontes.length > 0 ? (
+            <div className="flex gap-1 rounded-lg border border-border p-1 motion-safe:animate-in motion-safe:duration-300 motion-safe:ease-out motion-safe:fade-in-0">
+              <FiltroFonte
+                fontes={fontes}
+                escolhidas={fontesAtivas}
+                alternar={alternarFonte}
+                limpar={() => setFontesEscolhidas(VAZIO)}
+                total={resumo.total}
+              />
+            </div>
+          ) : null}
+
           <div className="flex gap-1 rounded-lg border border-border p-1">
             <Button
               variant={visao === "tabela" ? "default" : "ghost"}
@@ -210,20 +232,6 @@ export function AbaDetalhamento() {
               Detalhado
             </Button>
           </div>
-          {/* A fonte de recursos só existe no grão da ação, então o filtro
-              acompanha a visão detalhada. É um botão só: as 43 fontes moram
-              todas dentro do popover. */}
-          {visao === "detalhado" && fontes.length > 0 ? (
-            <div className="flex gap-1 rounded-lg border border-border p-1">
-              <FiltroFonte
-                fontes={fontes}
-                escolhidas={fontesAtivas}
-                alternar={alternarFonte}
-                limpar={() => setFontesEscolhidas(VAZIO)}
-                total={resumo.total}
-              />
-            </div>
-          ) : null}
 
           {/* Mesma moldura do seletor de visão ao lado — é o que iguala a
               altura dos dois grupos, já que o quadro soma a borda e o `p-1`
@@ -252,6 +260,19 @@ export function AbaDetalhamento() {
       </CardHeader>
 
       <CardContent>
+        {/* Trocar de visão é um gesto, não um corte. O bloco que chega usa o
+            mesmo desenho da revelação da página — só opacidade e um
+            deslocamento curto, `ease-out` —, e o `key` força a remontagem para
+            que ele rode a cada troca. Meio rem em vez de um: a mudança é
+            dentro de um cartão, não a entrada de uma seção inteira.
+
+            A altura muda muito entre as duas visões (10 linhas contra 58
+            órgãos) e isso é inerente; o que a animação resolve é o corte seco,
+            dando ao olho um instante para acompanhar de onde veio o conteúdo. */}
+        <div
+          key={visao}
+          className="motion-safe:animate-in motion-safe:duration-300 motion-safe:ease-out motion-safe:fade-in-0 motion-safe:slide-in-from-bottom-2"
+        >
         {visao === "detalhado" ? (
           <div className="flex flex-col gap-4">
             {selecionadas.length > 0 ? (
@@ -426,6 +447,7 @@ export function AbaDetalhamento() {
         </div>
         </div>
         )}
+        </div>
       </CardContent>
     </Card>
   );
