@@ -38,6 +38,8 @@ export type Orcamento = {
 /** Uma ação orçamentária individual dentro de um órgão × eixo. */
 export type Aplicacao = {
   aplicacao: string;
+  /** Código projeto/atividade, ex.: "22290000" — chave das fontes de recurso. */
+  codigo: string;
   dotacao: number;
   tipo: TipoDotacao;
 };

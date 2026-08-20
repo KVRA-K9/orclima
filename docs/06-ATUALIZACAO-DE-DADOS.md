@@ -88,6 +88,13 @@ status`** com diffs de formatação.
 
 ## Ingestão (o passo que falta automatizar)
 
+> No painel Orclima há hoje dois ingestores nativos de XLSX:
+> `npm run ingest:orcamentos-programas` (planilha oficial -> `data/orcamento.json`
+> + `data/aplicacoes.json`) e `npm run ingest:fontes` (QDD -> `data/fontes.json`,
+> as fontes de recurso). Os dois abortam sem escrever quando a integridade não
+> fecha.
+
+
 Hoje `dados/` é atualizado a partir da planilha por fora do kit — não há
 conversor de XLSX aqui. As fontes ficam em [`fonte/`](fonte/) para
 rastreabilidade.

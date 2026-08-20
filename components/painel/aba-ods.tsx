@@ -12,6 +12,7 @@ import {
 import type { LucideIcon } from "lucide-react";
 
 import { useFiltros } from "@/components/painel/filtros-context";
+import { PILULA_ATIVA, PILULA_BASE, PILULA_INATIVA } from "@/components/painel/pilula";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -29,11 +30,6 @@ import {
   type StatusOds,
 } from "@/lib/ods";
 import { cn } from "@/lib/utils";
-
-/** Pílula de filtro. Mesmo formato para eixo e status; a cor ativa é injetada. */
-const PILULA_BASE =
-  "inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium transition-colors focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none";
-const PILULA_INATIVA = "border-border text-muted-foreground hover:bg-muted";
 
 function StatusDot({ status }: { status: StatusOds }) {
   return (
@@ -264,7 +260,7 @@ export function AbaOds() {
               className={cn(
                 PILULA_BASE,
                 eixos.length === 0
-                  ? "border-foreground bg-foreground text-background"
+                  ? PILULA_ATIVA
                   : PILULA_INATIVA,
               )}
             >
@@ -305,7 +301,7 @@ export function AbaOds() {
               className={cn(
                 PILULA_BASE,
                 status.length === 0
-                  ? "border-foreground bg-foreground text-background"
+                  ? PILULA_ATIVA
                   : PILULA_INATIVA,
               )}
             >
@@ -322,7 +318,7 @@ export function AbaOds() {
                   className={cn(
                     PILULA_BASE,
                     ativo
-                      ? "border-foreground bg-foreground text-background"
+                      ? PILULA_ATIVA
                       : PILULA_INATIVA,
                   )}
                 >

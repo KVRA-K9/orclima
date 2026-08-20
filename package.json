@@ -9,6 +9,7 @@
     "lint": "eslint",
     "ingest": "node scripts/ingest.ts",
     "ingest:orcamentos-programas": "node scripts/ingest-orcamentos-programas.ts",
+    "ingest:fontes": "node scripts/ingest-fontes.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

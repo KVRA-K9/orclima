@@ -76,6 +76,7 @@ export function linhasMicrodados(
         : [
             {
               aplicacao: "",
+              codigo: "",
               tipo: "Não Exclusivo",
               dotacao: orgao.eixos[String(numero)],
             },

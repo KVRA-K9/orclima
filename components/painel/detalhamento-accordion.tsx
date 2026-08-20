@@ -13,33 +13,53 @@ import { EIXOS } from "@/data/eixos";
 import { formatBRL } from "@/lib/format";
 import type { Aplicacao, Orgao } from "@/lib/types";
 
-export function DetalhamentoAccordion() {
-  const { orgaosFiltrados, filtros, aplicacoesDe } = useFiltros();
+export function DetalhamentoAccordion({
+  orgaos: entrada,
+  aplicacoesDe,
+  fonte,
+}: {
+  /** Órgãos já recortados pela fonte, quando há uma selecionada. */
+  orgaos: Orgao[];
+  aplicacoesDe: (orgao: string) => Record<string, Aplicacao[]>;
+  fonte: string | null;
+}) {
+  const { filtros } = useFiltros();
 
   const orgaos = useMemo(
-    () => [...orgaosFiltrados].sort((a, b) => b.total - a.total),
-    [orgaosFiltrados],
+    () => [...entrada].sort((a, b) => b.total - a.total),
+    [entrada],
   );
 
   if (orgaos.length === 0) {
     return (
       <p className="py-14 text-center text-sm text-muted-foreground">
-        Nenhum órgão corresponde aos filtros selecionados.
+        {fonte
+          ? `Nenhum órgão tem ação na fonte ${fonte} dentro dos filtros selecionados.`
+          : "Nenhum órgão corresponde aos filtros selecionados."}
       </p>
     );
   }
 
   return (
-    <Accordion type="multiple">
-      {orgaos.map((orgao) => (
-        <ItemOrgao
-          key={orgao.nome}
-          orgao={orgao}
-          filtroEixo={filtros.eixo}
-          aplicacoes={aplicacoesDe(orgao.nome)}
-        />
-      ))}
-    </Accordion>
+    <>
+      <Accordion type="multiple">
+        {orgaos.map((orgao) => (
+          <ItemOrgao
+            key={orgao.nome}
+            orgao={orgao}
+            filtroEixo={filtros.eixo}
+            aplicacoes={aplicacoesDe(orgao.nome)}
+          />
+        ))}
+      </Accordion>
+
+      {fonte ? (
+        <p className="mt-4 text-xs text-muted-foreground">
+          Valores rateados pela participação da fonte {fonte} na dotação inicial de
+          cada ação no QDD.
+        </p>
+      ) : null}
+    </>
   );
 }
 

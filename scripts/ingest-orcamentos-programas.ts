@@ -88,11 +88,14 @@ function main() {
 
   /* --- camada 3: aplicacoes.json --- */
 
-  const aplicacoesPorOrgao: Record<string, Record<string, { aplicacao: string; dotacao: number; tipo: string }[]>> = {};
+  const aplicacoesPorOrgao: Record<string, Record<string, { aplicacao: string; codigo: string; dotacao: number; tipo: string }[]>> = {};
   for (const a of aplicacoes) {
     const porEixo = (aplicacoesPorOrgao[a.orgao] ??= {});
     (porEixo[String(a.eixoNumero)] ??= []).push({
       aplicacao: a.aplicacao,
+      // O código projeto/atividade é a chave de `data/fontes.json` — junto com
+      // o código do órgão, é o que liga a aplicação às suas fontes de recurso.
+      codigo: a.codigo,
       dotacao: r2(a.dotacao),
       tipo: a.classificacao,
     });

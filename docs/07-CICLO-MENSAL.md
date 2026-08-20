@@ -53,6 +53,18 @@ node cruzar-qdd.mjs caminho/para/QDD_<mes>.xlsx --escrever
 Sem `--escrever` o script só relata. O mês e o exercício são lidos do próprio
 cabeçalho do QDD — não há o que configurar.
 
+No painel, a mesma chave alimenta o filtro por **fonte de recursos** da visão
+Detalhado. Quando o QDD for atualizado, regere também:
+
+```bash
+cd "…/Projeto_Orclima"
+npm run ingest:fontes          # QDD_Orclim.xlsx -> data/fontes.json
+```
+
+O script aborta sem escrever se alguma das 200 aplicações ficar sem lastro no
+QDD — a mesma disciplina da cascata de integridade. Ver
+`docs/02-ARQUITETURA-DE-DADOS.md`, "Camada 4".
+
 ## Resultado sobre o QDD de abril/2026
 
 Já sobre a dotação corrigida (§05, item 1b — dupla contagem removida):

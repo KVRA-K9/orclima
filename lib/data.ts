@@ -1,7 +1,9 @@
 import bruto from "@/data/orcamento.json";
 import aplicacoesBruto from "@/data/aplicacoes.json";
+import fontesBruto from "@/data/fontes.json";
 import { EIXOS, eixoPorNumero } from "@/data/eixos";
 import type {
+  Aplicacao,
   Aplicacoes,
   Filtros,
   Orcamento,
@@ -15,6 +17,13 @@ import type {
 export const ORCAMENTO = bruto as unknown as Orcamento;
 export const ORGAOS = ORCAMENTO.orgaos;
 export const APLICACOES = aplicacoesBruto as unknown as Aplicacoes;
+
+/**
+ * Participação de cada fonte de recurso na dotação de uma ação, indexada por
+ * `"código do órgão|código projeto-atividade"`. Gerada por
+ * `scripts/ingest-fontes.ts` a partir do QDD — ver docs/02-ARQUITETURA-DE-DADOS.md.
+ */
+export const FONTES = fontesBruto as Record<string, Record<string, number>>;
 
 /**
  * Exercícios disponíveis. Hoje a fonte traz um único exercício; a assinatura já
@@ -260,4 +269,149 @@ export function agruparOrgaos(orgaos: Orgao[]): Orgao[] {
       };
     })
     .sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
+}
+
+/* ------------------------------------------------------------------ *
+ * Fonte de recursos
+ *
+ * A planilha do Orçamento Climático não traz a fonte; ela vem do QDD, e
+ * `data/fontes.json` guarda a PARTICIPAÇÃO de cada fonte na dotação de cada
+ * ação. Filtrar por fonte, portanto, não é só esconder linhas: o valor de
+ * cada ação passa a ser a parcela daquela fonte — o mesmo rateio proporcional
+ * que `aplicarFiltros` já faz por eixo.
+ * ------------------------------------------------------------------ */
+
+/** Participações por fonte de uma ação; `{}` quando ela não tem lastro no QDD. */
+export function fontesDe(codigoOrgao: string, codigo: string): Record<string, number> {
+  return FONTES[`${codigoOrgao}|${codigo}`] ?? {};
+}
+
+/**
+ * Reduz uma lista de aplicações a uma única fonte, com a dotação rateada pela
+ * participação daquela fonte. Sem fonte, devolve a lista intacta.
+ */
+export function ratearPorFonte(
+  aplicacoes: Aplicacao[],
+  codigoOrgao: string,
+  fonte: string | null,
+): Aplicacao[] {
+  if (!fonte) return aplicacoes;
+
+  return aplicacoes.reduce<Aplicacao[]>((acc, aplicacao) => {
+    const participacao = fontesDe(codigoOrgao, aplicacao.codigo)[fonte];
+    if (!participacao) return acc;
+    acc.push({ ...aplicacao, dotacao: arredonda(aplicacao.dotacao * participacao) });
+    return acc;
+  }, []);
+}
+
+/** `ratearPorFonte` sobre o mapa eixo -> aplicações, descartando eixos vazios. */
+export function ratearAplicacoes(
+  porEixo: Record<string, Aplicacao[]>,
+  codigoOrgao: string,
+  fonte: string | null,
+): Record<string, Aplicacao[]> {
+  if (!fonte) return porEixo;
+
+  const saida: Record<string, Aplicacao[]> = {};
+  for (const [eixo, aplicacoes] of Object.entries(porEixo)) {
+    const rateadas = ratearPorFonte(aplicacoes, codigoOrgao, fonte);
+    if (rateadas.length) saida[eixo] = rateadas;
+  }
+  return saida;
+}
+
+/**
+ * Reescreve os totais de um órgão a partir das aplicações que sobraram — os
+ * de `Orgao` são sempre os cheios. Devolve `null` quando o órgão não tem
+ * nenhuma ação no recorte.
+ */
+export function orgaoDeAplicacoes(
+  orgao: Orgao,
+  porEixo: Record<string, Aplicacao[]>,
+): Orgao | null {
+  const listas = Object.entries(porEixo);
+  if (!listas.length) return null;
+
+  const eixos: Record<string, number> = {};
+  let exclusivo = 0;
+  let naoExclusivo = 0;
+
+  for (const [eixo, aplicacoes] of listas) {
+    for (const aplicacao of aplicacoes) {
+      eixos[eixo] = arredonda((eixos[eixo] ?? 0) + aplicacao.dotacao);
+      if (aplicacao.tipo === "Exclusivo") exclusivo += aplicacao.dotacao;
+      else naoExclusivo += aplicacao.dotacao;
+    }
+  }
+
+  exclusivo = arredonda(exclusivo);
+  naoExclusivo = arredonda(naoExclusivo);
+  const total = arredonda(exclusivo + naoExclusivo);
+  const pct = total === 0 ? 0 : Math.round((exclusivo / total) * 100);
+
+  return {
+    ...orgao,
+    total,
+    exclusivo,
+    naoExclusivo,
+    tipo: exclusivo >= naoExclusivo ? "Exclusivo" : "Não Exclusivo",
+    intensidade: `Exclusivo (${pct}%) / Não Exclusivo (${100 - pct}%)`,
+    eixos,
+  };
+}
+
+/**
+ * Recorta órgãos e aplicações a uma fonte de recurso, devolvendo o mesmo par
+ * `(órgãos, aplicacoesDe)` que a tela e a exportação consomem — assim as duas
+ * partem exatamente do mesmo cálculo. Sem fonte, devolve a entrada intacta.
+ */
+export function aplicarFonte(
+  orgaos: Orgao[],
+  aplicacoesDe: (orgao: string) => Record<string, Aplicacao[]>,
+  fonte: string | null,
+): { orgaos: Orgao[]; aplicacoesDe: (orgao: string) => Record<string, Aplicacao[]> } {
+  if (!fonte) return { orgaos, aplicacoesDe };
+
+  const porOrgao = new Map<string, Record<string, Aplicacao[]>>();
+  const recortados = orgaos.reduce<Orgao[]>((acc, orgao) => {
+    const porEixo = ratearAplicacoes(aplicacoesDe(orgao.nome), orgao.codigo, fonte);
+    const recortado = orgaoDeAplicacoes(orgao, porEixo);
+    if (!recortado) return acc;
+    porOrgao.set(orgao.nome, porEixo);
+    acc.push(recortado);
+    return acc;
+  }, []);
+
+  return { orgaos: recortados, aplicacoesDe: (orgao) => porOrgao.get(orgao) ?? {} };
+}
+
+/**
+ * Fontes presentes num conjunto de órgãos, com o valor climático que cada uma
+ * responde ali, da maior para a menor — as opções do filtro por fonte.
+ */
+export function fontesDisponiveis(
+  orgaos: Orgao[],
+  aplicacoesDe: (orgao: string) => Record<string, Aplicacao[]>,
+): { fonte: string; valor: number; acoes: number }[] {
+  const acumulado = new Map<string, { valor: number; acoes: number }>();
+
+  for (const orgao of orgaos) {
+    for (const aplicacoes of Object.values(aplicacoesDe(orgao.nome))) {
+      for (const aplicacao of aplicacoes) {
+        for (const [fonte, participacao] of Object.entries(
+          fontesDe(orgao.codigo, aplicacao.codigo),
+        )) {
+          const atual = acumulado.get(fonte) ?? { valor: 0, acoes: 0 };
+          atual.valor += aplicacao.dotacao * participacao;
+          atual.acoes += 1;
+          acumulado.set(fonte, atual);
+        }
+      }
+    }
+  }
+
+  return [...acumulado.entries()]
+    .map(([fonte, { valor, acoes }]) => ({ fonte, valor: arredonda(valor), acoes }))
+    .sort((a, b) => b.valor - a.valor || a.fonte.localeCompare(b.fonte));
 }

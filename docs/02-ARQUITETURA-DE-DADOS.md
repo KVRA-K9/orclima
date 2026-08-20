@@ -85,6 +85,43 @@ climático já convertido — se Não Exclusivo, **já com o percentual aplicado
 
 ---
 
+## Camada 4 — Fontes de recurso (`data/fontes.json`)
+
+A planilha oficial do Orçamento Climático **não traz a fonte de recursos**. Ela
+existe só no QDD (`QDD_Orclim.xlsx`, coluna "Fonte"), e `scripts/ingest-fontes.ts`
+liga os dois pela chave `órgão/unidade|código projeto-atividade` — a mesma chave
+usada pelas evidências de `correcoes-orcamentos-programas.ts`. As 200 aplicações
+casam com o QDD, em 192 chaves distintas (8 aplicações aparecem em dois eixos).
+
+```jsonc
+{
+  "715/199|22290000": { "15000100": 1 },
+  "753/001|10790000": { "15000100": 0.263817, "17540502": 0.26074, "…": 0 }
+}
+```
+
+O arquivo guarda **participações, não valores**. O motivo: a dotação de uma
+aplicação Não Exclusiva é a fatia climática, menor que a dotação do QDD — então
+o valor por fonte não pode ser lido direto do QDD, tem de ser rateado. Guardando
+a proporção, o arquivo continua válido se o valor climático for revisto sem que
+o QDD mude. As proporções de cada chave somam exatamente 1 (a maior fonte fica
+com o complemento do arredondamento).
+
+Para que a aplicação encontre sua chave, a camada 3 grava também o `codigo` do
+projeto/atividade. No painel, `aplicarFonte` (em `lib/data.ts`) recorta órgãos e
+aplicações a uma fonte, multiplicando cada dotação pela participação — é o que
+alimenta o filtro por fonte da visão **Detalhado**.
+
+> **Somar todas as fontes dá R$ 978.779.440,41, quatro centavos acima do total.**
+> É resíduo de arredondar cada parcela a 2 casas nas 65 chaves multi-fonte. O
+> painel exibe uma fonte por vez, então o desvio nunca aparece na tela; ele
+> também não entra na cascata abaixo, que roda sobre a camada 3 intacta.
+
+O QDD é um **snapshot mensal**. Regere `data/fontes.json` junto com o ciclo de
+`docs/07-CICLO-MENSAL.md`, sempre que o QDD for atualizado.
+
+---
+
 ## A cascata de integridade
 
 É a regra que garante que nenhuma dotação suma nem seja contada duas vezes:
