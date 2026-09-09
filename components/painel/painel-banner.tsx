@@ -26,7 +26,7 @@ const SECOES: Record<string, { titulo: string; descricao: string }> = {
   historico: {
     titulo: "Histórico",
     descricao:
-      "A legislação ambiental e climática do Acre desde 1965, reunida por tipo de norma. Nos PPAs e nas LDOs, a contagem dos termos climáticos no texto; nas LOAs, quanto coube aos órgãos ambientais em cada exercício.",
+      "A legislação ambiental e climática do Acre desde 1965, com a ementa e o link para o texto oficial de cada norma. Os planos plurianuais e as leis de diretrizes trazem quantas vezes cada termo climático aparece no texto, e as leis orçamentárias mostram quanto coube aos órgãos ambientais em cada exercício.",
   },
   ods: {
     titulo: "ODS",

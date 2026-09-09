@@ -20,6 +20,13 @@ import {
 } from "@/lib/normas";
 import { cn } from "@/lib/utils";
 
+/**
+ * Os tipos cuja aba da planilha traz a contagem de descritores. Nos outros
+ * quatro a coluna não existe, e a ausência não significa que o texto da norma
+ * não use os termos — significa que ninguém contou.
+ */
+const TEM_DESCRITORES = new Set<TipoNorma>(["PPA", "LDO"]);
+
 /* ---------- seletor de tipo ---------- */
 
 export function SeletorNormas({
@@ -45,7 +52,7 @@ export function SeletorNormas({
             onClick={() => aoSelecionar(ativo ? null : tipo)}
             style={{ "--tinta": tinta(tipo, 25) } as React.CSSProperties}
             className={cn(
-              "flex flex-col items-center gap-2 rounded-xl bg-(--tinta) p-3 text-center ring-1 transition-all",
+              "relative flex flex-col items-center justify-center gap-1 overflow-hidden rounded-xl bg-(--tinta) p-3 text-center ring-1 transition-all",
               "focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none",
               "motion-reduce:transition-none",
               ativo
@@ -53,11 +60,21 @@ export function SeletorNormas({
                 : "ring-transparent hover:scale-105 hover:ring-foreground/20",
             )}
           >
-            <span className="flex size-10 items-center justify-center rounded-full bg-background/70">
-              <Icone className="size-5" strokeWidth={1.75} />
+            {/* Marca-d'água no canto, sangrando para fora e cortada pelo
+                arredondamento — o mesmo recurso dos cartões de indicador
+                logo acima. */}
+            <Icone
+              aria-hidden
+              className="pointer-events-none absolute -right-3 -bottom-3 size-20 opacity-20"
+              style={{ color: CORES_NORMA[tipo] }}
+              strokeWidth={1.25}
+            />
+            {/* `relative` nos dois: sem isso o ícone, por estar posicionado,
+                pintaria por cima do texto. */}
+            <span className="relative text-sm leading-tight font-medium">
+              {tipo}
             </span>
-            <span className="text-xs leading-tight font-medium">{tipo}</span>
-            <span className="text-xs text-muted-foreground tabular-nums">
+            <span className="relative text-xs text-muted-foreground tabular-nums">
               {totais[tipo]}
             </span>
           </button>
@@ -225,10 +242,22 @@ function CartaoNorma({ norma, destacado }: { norma: Norma; destacado: boolean })
             </Detalhe>
           ) : null}
 
-          {norma.citacoes.length ? (
-            <Detalhe rotulo="Descritores climáticos no texto">
-              <Citacoes citacoes={norma.citacoes} />
-            </Detalhe>
+          {/* Só o PPA e a LDO têm colunas de descritores na planilha. Nos
+              demais tipos o bloco nem aparece: dizer "não identificados" num
+              decreto afirmaria algo que o levantamento não chegou a medir. */}
+          {TEM_DESCRITORES.has(norma.tipo) ? (
+            norma.citacoes.length ? (
+              <Detalhe rotulo="Descritores climáticos no texto">
+                <Citacoes citacoes={norma.citacoes} />
+              </Detalhe>
+            ) : (
+              // Sem rótulo aqui: a própria frase já começa por "Descritores
+              // climáticos", e o título repetiria a expressão duas vezes
+              // seguidas.
+              <p className="text-sm text-muted-foreground">
+                Descritores climáticos não identificados no levantamento.
+              </p>
+            )
           ) : null}
 
           {norma.loa ? (
@@ -275,32 +304,34 @@ function Detalhe({
  * Quantas vezes cada termo climático aparece no texto da norma — o
  * levantamento é palavra por palavra, feito à mão sobre o PPA e a LDO.
  *
- * Barras em HTML, e não um gráfico: a escala é relativa ao maior termo da
- * própria norma, e o que importa é a ordem entre eles, não o valor absoluto.
+ * Etiquetas em ordem decrescente, sem escala visual: o que importa é quais
+ * termos o texto usa e quantas vezes, e a barra que havia aqui dava ao bloco
+ * cara de gráfico. Assim também encurta muito o cartão aberto — um PPA cheio
+ * tem dezesseis termos, que ocupavam dezesseis linhas.
  */
 function Citacoes({ citacoes }: { citacoes: Citacao[] }) {
-  const ordenadas = [...citacoes].sort((a, b) => b.total - a.total);
-  const maior = ordenadas[0]?.total ?? 1;
+  const ordenadas = [...citacoes].sort(
+    (a, b) => b.total - a.total || a.descritor.localeCompare(b.descritor, "pt-BR"),
+  );
 
   return (
-    <ul className="space-y-1">
+    <ul className="flex flex-wrap gap-1.5">
       {ordenadas.map((c) => (
-        <li key={c.descritor} className="flex items-center gap-2">
-          {/* Larga o bastante para o maior rótulo, "Biodiversidade/bioeconomia",
-              caber inteiro no texto de 14px. */}
-          <span className="w-52 shrink-0 truncate text-muted-foreground">
-            {c.descritor}
+        // O termo ganha superfície própria, e o ponto separa a contagem. Sobre
+        // a tinta do cartão, `bg-background` destaca a etiqueta melhor que o
+        // cinza translúcido que havia aqui, e o anel lhe dá contorno nos dois
+        // temas.
+        <li
+          key={c.descritor}
+          className="inline-flex items-baseline gap-1.5 rounded-full bg-background/80 px-2.5 py-1 ring-1 ring-foreground/10"
+        >
+          <span>{c.descritor}</span>
+          {/* Decorativo: sem `aria-hidden`, o leitor de tela anunciaria
+              "marcador" entre o termo e o número. */}
+          <span aria-hidden className="text-muted-foreground">
+            •
           </span>
-          <span className="h-2.5 min-w-0 flex-1 overflow-hidden rounded-full bg-foreground/10">
-            <span
-              className="block h-full rounded-full"
-              style={{
-                width: `${Math.max(4, (c.total / maior) * 100)}%`,
-                backgroundColor: "var(--eixo-3)",
-              }}
-            />
-          </span>
-          <span className="w-8 shrink-0 text-right font-medium tabular-nums">
+          <span className="font-semibold tabular-nums">
             {formatNumero(c.total)}
           </span>
         </li>

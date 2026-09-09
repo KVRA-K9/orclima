@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  ArrowLeft,
   CalendarRange,
   ChevronLeft,
   ChevronRight,
@@ -190,7 +189,7 @@ export function AbaHistorico() {
           icone={Scale}
           titulo="Normas mapeadas"
           valor={String(META_LEIS.normas)}
-          subtitulo="atos estaduais com recorte ambiental e climático"
+          subtitulo="leis, decretos e planos com recorte ambiental e climático"
         />
         <Indicador
           icone={CalendarRange}
@@ -214,9 +213,9 @@ export function AbaHistorico() {
             <h2 className="text-base font-semibold">Acervo normativo</h2>
             <p className="mt-1 text-sm text-muted-foreground">
               Escolha um tipo de norma para percorrer o acervo. O levantamento
-              procura, no texto de cada ato, descritores como &ldquo;mudanças
-              climáticas&rdquo;, &ldquo;carbono&rdquo;, &ldquo;povos
-              indígenas&rdquo; e &ldquo;bioeconomia&rdquo;.
+              partiu de descritores como &ldquo;mudanças climáticas&rdquo;,
+              &ldquo;carbono&rdquo;, &ldquo;povos indígenas&rdquo; e
+              &ldquo;bioeconomia&rdquo; para achar cada norma.
             </p>
           </div>
 
@@ -234,17 +233,28 @@ export function AbaHistorico() {
               do cartão: sem isso o padding do Card deixaria uma tira branca
               acima dela. */}
           <Card className="gap-0 overflow-hidden py-0">
+            {/* `overflow-hidden` próprio, e não só o do Card: sem ele a
+                marca-d'água vazaria da faixa para o corpo branco de baixo. */}
             <div
-              className="flex flex-col gap-1.5 p-4"
+              className="relative flex flex-col gap-1.5 overflow-hidden p-4"
               style={{
                 background: `color-mix(in oklab, ${CORES_NORMA[tipo]} 20%, var(--card))`,
               }}
             >
-              <div className="flex items-center justify-between gap-2">
+              {/* Marca-d'água no canto direito, por trás do "Fechar". Fica
+                  centrada na vertical e não sangra pelo canto como a dos
+                  botões do seletor: a faixa tem 90px de altura, e um ícone
+                  grande o bastante para vazar mostraria só uma tira do meio. */}
+              {IconeTipo ? (
+                <IconeTipo
+                  aria-hidden
+                  className="pointer-events-none absolute top-1/2 -right-3 size-20 -translate-y-1/2 opacity-20"
+                  style={{ color: CORES_NORMA[tipo] }}
+                  strokeWidth={1.25}
+                />
+              ) : null}
+              <div className="relative flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  {IconeTipo ? (
-                    <IconeTipo aria-hidden className="size-5" strokeWidth={1.75} />
-                  ) : null}
                   <h3 className="text-base font-semibold">{tipo}</h3>
                 </div>
                 <Button
@@ -253,11 +263,11 @@ export function AbaHistorico() {
                   onClick={() => escolherTipo(null)}
                   className="shrink-0"
                 >
-                  <ArrowLeft className="size-4" />
-                  Voltar
+                  <X className="size-4" />
+                  Fechar
                 </Button>
               </div>
-              <p className="text-sm text-muted-foreground">
+              <p className="relative text-sm text-muted-foreground">
                 {DESCRICOES_NORMA[tipo]}
               </p>
             </div>
@@ -430,7 +440,7 @@ export function AbaHistorico() {
       <Card data-revelar>
         <CardContent>
           <p className="text-xs leading-relaxed text-muted-foreground">
-            Fonte: {META_LEIS.origem}, a partir da base do{" "}
+            Fonte: {META_LEIS.origem} sobre a base do{" "}
             <a
               href="https://legis.ac.gov.br"
               target="_blank"

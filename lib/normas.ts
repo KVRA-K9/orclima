@@ -39,24 +39,14 @@ export const ICONES_NORMA: Record<TipoNorma, LucideIcon> = {
 
 export const DESCRICOES_NORMA: Record<TipoNorma, string> = {
   "Lei Ordinária":
-    "Leis aprovadas pela Assembleia Legislativa em matéria ambiental e climática: fundos, programas e políticas do setor.",
+    "Leis aprovadas pela Assembleia Legislativa sobre meio ambiente e clima. As que criam ou reorganizam órgãos ficam em Estrutura Administrativa.",
   Decreto:
-    "Atos do governador que regulamentam as leis, instituem comitês e declaram situações de emergência ambiental.",
+    "Atos do governador. Regulamentam as leis ambientais, criam comitês e planos, declaram situações de emergência.",
   "Estrutura Administrativa":
     "Leis que criam e reorganizam os órgãos ambientais do Estado e as carreiras de seus servidores.",
-  PPA: "Plano Plurianual. Define os programas e as metas do Estado para um período de quatro anos.",
-  LDO: "Lei de Diretrizes Orçamentárias. Fixa as prioridades que a lei orçamentária do ano seguinte deve atender.",
-  LOA: "Lei Orçamentária Anual. Estima a receita e fixa a despesa de cada órgão no exercício.",
-};
-
-/** Rótulo curto para o plural, usado nos contadores do seletor. */
-export const PLURAL_NORMA: Record<TipoNorma, string> = {
-  "Lei Ordinária": "leis",
-  Decreto: "decretos",
-  "Estrutura Administrativa": "leis",
-  PPA: "planos",
-  LDO: "leis",
-  LOA: "leis",
+  PPA: "Plano Plurianual. Define os programas e as metas do Estado para quatro anos, e é a base da LDO e da LOA.",
+  LDO: "Lei de Diretrizes Orçamentárias. Fixa, a cada ano, as prioridades que a lei orçamentária do ano seguinte deve atender.",
+  LOA: "Lei Orçamentária Anual. Estima a receita e fixa a despesa de cada órgão para o exercício.",
 };
 
 /** "19/01/2026" a partir do ISO gravado pelo script de ingestão. */

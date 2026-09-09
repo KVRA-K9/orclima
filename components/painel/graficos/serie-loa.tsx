@@ -39,7 +39,7 @@ const ROTULOS = {
 const PANDEMIA_INICIO = 2020;
 const PANDEMIA_FIM = 2024;
 const PANDEMIA_TEXTO =
-  "Emergência declarada em março de 2020, encerrada no Brasil em maio de 2022 (Portaria GM/MS nº 913/2022) e pela OMS em maio de 2023. O recorte vai até 2024 pelos efeitos orçamentários, que sobrevivem ao fim da emergência.";
+  "A emergência foi declarada em março de 2020. O Brasil a encerrou em maio de 2022 (Portaria GM/MS nº 913/2022) e a OMS, em maio de 2023. O recorte vai até 2024 porque os efeitos orçamentários sobrevivem ao fim da emergência.";
 const PANDEMIA_TITULO = `Pandemia de COVID-19 nos exercícios de ${PANDEMIA_INICIO} a ${PANDEMIA_FIM}`;
 
 /** Espaço reservado acima da moldura para o rótulo "COVID-19". */
@@ -224,8 +224,8 @@ export function GraficoSerieLOA({
             {EXERCICIOS_EM_CRUZEIRO[EXERCICIOS_EM_CRUZEIRO.length - 1]} foram
             orçados em cruzeiro e ficaram de fora do gráfico. Converter aqueles
             valores para real por um fator fixo daria um número sem sentido,
-            porque a inflação da época corroía o dinheiro mês a mês. Eles estão
-            na lista abaixo, na moeda em que foram escritos.
+            porque a inflação da época corroía o dinheiro mês a mês. Essas leis
+            estão na lista abaixo, com o valor na moeda de então.
           </p>
           <p className="text-xs leading-relaxed text-muted-foreground">
             Esta série soma o que coube aos órgãos e fundos da área ambiental em
