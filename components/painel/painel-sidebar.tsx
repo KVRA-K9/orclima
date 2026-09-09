@@ -2,6 +2,7 @@
 
 import {
   Home,
+  Landmark,
   LayoutGrid,
   Menu,
   PanelLeftClose,
@@ -86,6 +87,7 @@ const ITENS: Item[] = [
   { aba: "analises", rotulo: "Visão Geral", icone: LayoutGrid },
   { aba: "acoes", rotulo: "Tabela Detalhada", icone: Table },
   { aba: "instrumentos", rotulo: "Instrumentos Legais", icone: Scale },
+  { aba: "historico", rotulo: "Histórico", icone: Landmark },
   { aba: "ods", rotulo: "ODS", icone: Target },
 ];
 

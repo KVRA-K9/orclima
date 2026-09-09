@@ -2,6 +2,7 @@
 
 import { AbaAnalises } from "@/components/painel/aba-analises";
 import { AbaDetalhamento } from "@/components/painel/aba-detalhamento";
+import { AbaHistorico } from "@/components/painel/aba-historico";
 import { AbaInstrumentos } from "@/components/painel/aba-instrumentos";
 import { AbaOds } from "@/components/painel/aba-ods";
 import { useFiltros } from "@/components/painel/filtros-context";
@@ -18,6 +19,8 @@ export function PainelConteudo() {
       return <AbaDetalhamento />;
     case "instrumentos":
       return <AbaInstrumentos />;
+    case "historico":
+      return <AbaHistorico />;
     case "ods":
       return <AbaOds />;
     default:

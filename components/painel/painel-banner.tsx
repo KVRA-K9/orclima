@@ -23,6 +23,11 @@ const SECOES: Record<string, { titulo: string; descricao: string }> = {
     descricao:
       "Base normativa do Orçamento Climático do Estado do Acre: leis, decretos, planos e documentos técnicos que sustentam a metodologia.",
   },
+  historico: {
+    titulo: "Histórico",
+    descricao:
+      "A legislação ambiental e climática do Acre desde 1965, reunida por tipo de norma. Nos PPAs e nas LDOs, a contagem dos termos climáticos no texto; nas LOAs, quanto coube aos órgãos ambientais em cada exercício.",
+  },
   ods: {
     titulo: "ODS",
     descricao:

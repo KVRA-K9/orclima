@@ -59,10 +59,11 @@ export function Filtros() {
     return () => clearTimeout(id);
   }, [busca, definir, filtros.busca]);
 
-  // Instrumentos legais e ODS não têm o que recortar por órgão ou classificação,
-  // então o cartão sai de cena nessas duas abas. O retorno vem depois dos
-  // hooks acima, que não podem ficar atrás de uma condição.
-  if (aba === "instrumentos" || aba === "ods") return null;
+  // Instrumentos legais, Histórico e ODS não têm o que recortar por órgão ou
+  // classificação — o Histórico traz filtros próprios, do acervo de leis —,
+  // então o cartão sai de cena nessas abas. O retorno vem depois dos hooks
+  // acima, que não podem ficar atrás de uma condição.
+  if (aba === "instrumentos" || aba === "historico" || aba === "ods") return null;
 
   return (
     // Primeira dobra do painel: entra por tempo, logo depois do banner.
