@@ -88,11 +88,37 @@ status`** com diffs de formatação.
 
 ## Ingestão (o passo que falta automatizar)
 
-> No painel Orclima há hoje dois ingestores nativos de XLSX:
+> No painel Orclima há hoje três ingestores nativos de XLSX:
 > `npm run ingest:orcamentos-programas` (planilha oficial -> `data/orcamento.json`
-> + `data/aplicacoes.json`) e `npm run ingest:fontes` (QDD -> `data/fontes.json`,
-> as fontes de recurso). Os dois abortam sem escrever quando a integridade não
-> fecha.
+> + `data/aplicacoes.json`), `npm run ingest:fontes` (QDD -> `data/fontes.json`,
+> as fontes de recurso) e `npm run historico:leis` (o acervo normativo — veja
+> abaixo). Os três abortam sem escrever quando a conferência não fecha.
+
+### O acervo normativo — `npm run historico:leis`
+
+Fonte: `Histórico/HISTÓRICO DE LEIS ORÇAMENTO CLIMÁTICO.xlsx`, o levantamento
+manual das normas estaduais com recorte climático (seis abas: Lei Ordinária,
+Decreto, Estrutura básica da adm, PPA, LDO, LOA). Saída:
+`data/historico-leis.json` e `data/historico-leis.meta.json`, consumidos pela
+aba **Histórico** do painel através de `data/historico-leis.ts`.
+
+Este ingestor é o único que **não** usa `scripts/lib-xlsx.ts`: os links para o
+`legis.ac.gov.br` existem só como hyperlink de célula, que o leitor caseiro não
+extrai. Ele usa `exceljs`, que expõe `cell.hyperlink`.
+
+Ao atualizar a planilha, o número de normas por aba muda — e o script aborta,
+de propósito, quando a contagem lida diverge da esperada. Ajuste o campo
+`esperado` de `ABAS`, em `scripts/gerar-historico-leis.ts`, para o novo total de
+cada aba: a conferência existe para que uma linha perdida na leitura apareça
+como erro em vez de sumir em silêncio.
+
+O script também recusa a gravação se algum link sair fora do domínio
+`legis.ac.gov.br` ou se alguma norma vier sem ementa. Normas repetidas — dentro
+de uma aba ou entre abas — são unidas pelo link, ficando a cópia mais completa.
+
+Duas informações da planilha ficam de fora, deliberadamente: a marcação de
+norma revogada (que está em cor de célula, sem consistência garantida) e a
+conversão dos exercícios em cruzeiro (1991–1994) para real.
 
 
 Hoje `dados/` é atualizado a partir da planilha por fora do kit — não há

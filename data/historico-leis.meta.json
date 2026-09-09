@@ -1,0 +1,57 @@
+{
+  "arquivoFonte": "Histórico/HISTÓRICO DE LEIS ORÇAMENTO CLIMÁTICO.xlsx",
+  "origem": "Histórico de leis do Orçamento Climático, levantamento manual da SEPLAN",
+  "geradoEm": "2026-09-09",
+  "normas": 353,
+  "porTipo": {
+    "Lei Ordinária": 137,
+    "Decreto": 106,
+    "Estrutura Administrativa": 24,
+    "PPA": 14,
+    "LDO": 36,
+    "LOA": 36
+  },
+  "atualizacoes": [
+    {
+      "aba": "Lei Ordinária",
+      "atualizadoEm": null
+    },
+    {
+      "aba": "Decreto",
+      "atualizadoEm": null
+    },
+    {
+      "aba": "Estrutura básica da adm",
+      "atualizadoEm": null
+    },
+    {
+      "aba": "PPA",
+      "atualizadoEm": "2026-08-31"
+    },
+    {
+      "aba": "LDO",
+      "atualizadoEm": "2026-08-27"
+    },
+    {
+      "aba": "LOA",
+      "atualizadoEm": "2026-09-04"
+    }
+  ],
+  "descritores": {
+    "PPA": {
+      "de": 4,
+      "ate": 20,
+      "cabecalho": 7
+    },
+    "LDO": {
+      "de": 6,
+      "ate": 23,
+      "cabecalho": 4
+    }
+  },
+  "observacoes": [
+    "As normas foram levantadas por busca dos descritores climáticos no texto de cada ato. O acervo cobre o recorte ambiental e climático, não toda a legislação estadual.",
+    "Os valores das LOAs somam as dotações dos órgãos ambientais de cada exercício. Os exercícios anteriores a 1995 estão em cruzeiro e não foram convertidos.",
+    "A planilha marca normas revogadas por cor de célula; essa informação não é lida por este script."
+  ]
+}

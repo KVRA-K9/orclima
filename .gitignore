@@ -46,3 +46,6 @@ next-env.d.ts
 # cópia idêntica dos 18 PNGs que já estão em public/ods/.
 # Só a subpasta: ODS/ contém também um .xlsx que deve ser versionado.
 /ODS/ODS/
+
+# arquivos de trava do Excel
+~$*
