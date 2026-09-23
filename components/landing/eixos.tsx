@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import { NotaAno } from "@/components/landing/nota-ano";
 import { Card, CardContent } from "@/components/ui/card";
 import { EIXOS } from "@/data/eixos";
 import { ORGAOS, totaisPorEixo } from "@/lib/data";
@@ -86,13 +87,14 @@ export function Eixos() {
                     </p>
 
                     {total ? (
-                      <p className="border-t border-border/60 pt-3 text-sm">
+                      <p className="flex flex-wrap items-center gap-x-1.5 gap-y-1 border-t border-border/60 pt-3 text-sm">
                         <span className="font-semibold">
                           {formatCompactoBRL(total.valor)}
-                        </span>{" "}
+                        </span>
                         <span className="text-muted-foreground">
                           · {formatPercentual(total.participacao)} do total
                         </span>
+                        <NotaAno />
                       </p>
                     ) : null}
                   </CardContent>

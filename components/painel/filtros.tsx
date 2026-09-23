@@ -23,7 +23,6 @@ import { EXERCICIOS, NOMES_ORGAOS } from "@/lib/data";
 import type { TipoDotacao } from "@/lib/types";
 
 const esquema = z.object({
-  exercicio: z.string(),
   eixo: z.string(),
   orgao: z.string(),
   tipo: z.string(),
@@ -42,7 +41,6 @@ export function Filtros() {
   const form = useForm<Formulario>({
     resolver: zodResolver(esquema),
     values: {
-      exercicio: filtros.exercicio ? String(filtros.exercicio) : TODOS,
       eixo: filtros.eixo ? String(filtros.eixo) : TODOS,
       orgao: filtros.orgao ?? TODOS,
       tipo: filtros.tipo ?? TODOS,
@@ -92,26 +90,10 @@ export function Filtros() {
           onSubmit={(e) => e.preventDefault()}
         >
           <div className="space-y-2">
-            <Label htmlFor="filtro-ano">Ano</Label>
-            <Select
-              value={form.watch("exercicio")}
-              onValueChange={(valor) => {
-                form.setValue("exercicio", valor);
-                definir({ exercicio: valor === TODOS ? null : Number(valor) });
-              }}
-            >
-              <SelectTrigger id="filtro-ano" className="w-full">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value={TODOS}>Todos os anos</SelectItem>
-                {EXERCICIOS.map((ano) => (
-                  <SelectItem key={ano} value={String(ano)}>
-                    {ano}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <Label>Ano</Label>
+            <div className="flex h-9 w-full items-center rounded-md border border-input bg-transparent px-3 py-2 text-sm whitespace-nowrap shadow-xs dark:bg-input/30">
+              {EXERCICIOS[0]}
+            </div>
           </div>
 
           <div className="space-y-2">
