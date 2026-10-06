@@ -8,12 +8,6 @@ import { normalizar } from "@/lib/texto";
  */
 export type StatusOds = "produzido" | "construcao" | "sem-dados";
 
-export const STATUS_ROTULO: Record<StatusOds, string> = {
-  produzido: "Produzido",
-  construcao: "Em construção",
-  "sem-dados": "Sem dados",
-};
-
 /** Classe da bolinha de status. Verde/âmbar/laranja, do pronto ao ausente. */
 export const STATUS_COR: Record<StatusOds, string> = {
   produzido: "bg-emerald-500",
@@ -29,6 +23,13 @@ export type IndicadorDerivado = IndicadorOds & {
   /** Texto sem o prefixo do código; igual a `texto` quando não há código. */
   descricao: string;
   status: StatusOds;
+  /**
+   * Ficha do indicador no portal ODS Brasil — só os produzidos têm: o padrão
+   * (`/objetivo{N}/indicador{código sem pontos}`) é o mesmo que o próprio
+   * portal monta em `scripts/objetivo.js`, que também não linka os indicadores
+   * não produzidos.
+   */
+  url: string | null;
 };
 
 export type OdsDerivado = Omit<Ods, "indicadores"> & {
@@ -51,12 +52,29 @@ function derivarIndicador(indicador: IndicadorOds): IndicadorDerivado {
   const codigo = corte > 0 ? indicador.texto.slice(0, corte).trim() : null;
   const descricao =
     corte > 0 ? indicador.texto.slice(corte + 1).trim() : indicador.texto.trim();
+  const status = statusDoIndicador(indicador.texto);
+
+  // "Indicador C15.1.c" -> código "C15.1.c" — o "C" inicial existe, é parte do
+  // código no portal. Objetivo = primeiro segmento sem letras ("C15" -> "15");
+  // ficha = segmentos sem os pontos, letras mantidas ("C151c", "4a1") — o
+  // mesmo que o scripts/objetivo.js do portal monta. Só os produzidos têm.
+  let url: string | null = null;
+  if (codigo != null && status === "produzido") {
+    const numero = codigo.match(/[Cc]?\d+(?:\.[0-9A-Za-z]+)+/)?.[0];
+    const objetivo = numero?.split(".")[0].replace(/[a-zA-Z]/g, "");
+    if (numero && objetivo) {
+      url = `https://odsbrasil.gov.br/objetivo${objetivo}/indicador${numero
+        .split(".")
+        .join("")}`;
+    }
+  }
 
   return {
     ...indicador,
     codigo,
     descricao,
-    status: statusDoIndicador(indicador.texto),
+    status,
+    url,
   };
 }
 

@@ -6,23 +6,29 @@ import { useFiltros } from "@/components/painel/filtros-context";
 import { CorpoDica } from "@/components/painel/graficos/dica";
 import { MolduraGrafico } from "@/components/painel/graficos/moldura";
 import { exclusivoPorEixo } from "@/lib/data";
+import { useI18n } from "@/lib/i18n/cliente";
+import { tituloDoEixo } from "@/lib/i18n/conteudo";
 import { formatCompacto } from "@/lib/format";
 
 // Tokens semânticos, não `--eixo-1`/`--eixo-2` direto — ver comentário em
 // globals.css sobre por que o par binário usa os extremos da rampa.
-const SERIES = [
-  { chave: "exclusivo" as const, rotulo: "Exclusivo", cor: "var(--exclusivo)" },
-  { chave: "naoExclusivo" as const, rotulo: "Não exclusivo", cor: "var(--nao-exclusivo)" },
-];
 
 export function GraficoExclusivoPorEixo() {
   const { orgaosFiltrados } = useFiltros();
+  const { t, lang } = useI18n();
+  const textos = t.painel.graficos.exclusivoPorEixo;
+
+  const SERIES = [
+    { chave: "exclusivo" as const, rotulo: textos.exclusivo, cor: "var(--exclusivo)" },
+    { chave: "naoExclusivo" as const, rotulo: textos.naoExclusivo, cor: "var(--nao-exclusivo)" },
+  ];
+
   const dados = exclusivoPorEixo(orgaosFiltrados);
 
   return (
     <MolduraGrafico
-      titulo="Exclusivo × Não exclusivo por eixo"
-      descricao="Divisão estimada em cada eixo — a fonte informa a classificação no nível do órgão, rateada aqui pela fatia do eixo."
+      titulo={textos.titulo}
+      descricao={textos.descricao}
       altura={320}
       className="lg:col-span-3"
       rodape={
@@ -53,7 +59,7 @@ export function GraficoExclusivoPorEixo() {
           axisLine={false}
           width={76}
           tick={{ fill: "var(--muted-foreground)", fontSize: 12 }}
-          tickFormatter={(valor: number) => formatCompacto(valor)}
+          tickFormatter={(valor: number) => formatCompacto(valor, lang)}
         />
         <Tooltip
           cursor={{ fill: "var(--surface-hover)" }}
@@ -62,7 +68,7 @@ export function GraficoExclusivoPorEixo() {
             const eixo = payload[0].payload as (typeof dados)[number];
             return (
               <CorpoDica
-                titulo={`${eixo.romano} — ${eixo.titulo}`}
+                titulo={`${eixo.romano} — ${tituloDoEixo(eixo.numero, eixo.titulo, lang)}`}
                 itens={SERIES.map((serie) => ({
                   rotulo: serie.rotulo,
                   valor: eixo[serie.chave],

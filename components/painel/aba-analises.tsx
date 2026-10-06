@@ -7,15 +7,17 @@ import { GraficoPorEixo } from "@/components/painel/graficos/por-eixo";
 import { GraficoPorOrgao } from "@/components/painel/graficos/por-orgao";
 import { KpiCards } from "@/components/painel/kpi-cards";
 import { Card, CardContent } from "@/components/ui/card";
+import { useI18n } from "@/lib/i18n/cliente";
 
 export function AbaAnalises() {
   const { orgaosFiltrados } = useFiltros();
+  const { t } = useI18n();
 
   if (orgaosFiltrados.length === 0) {
     return (
       <Card>
         <CardContent className="py-16 text-center text-muted-foreground">
-          Nenhum órgão corresponde aos filtros selecionados.
+          {t.painel.semOrgaos}
         </CardContent>
       </Card>
     );

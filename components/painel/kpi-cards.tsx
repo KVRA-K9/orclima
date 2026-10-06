@@ -10,6 +10,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useI18n } from "@/lib/i18n/cliente";
 import { contarAcoes } from "@/lib/data";
 import { formatCompactoBRL, formatNumero, formatPercentual } from "@/lib/format";
 
@@ -33,6 +34,8 @@ type Kpi = {
  * precisa ser alcançável no toque, e tooltip depende de hover.
  */
 function NotaKpi({ nota, titulo }: { nota: string; titulo: string }) {
+  const { t } = useI18n();
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -44,7 +47,7 @@ function NotaKpi({ nota, titulo }: { nota: string; titulo: string }) {
             único não atenderia aos dois. */}
         <button
           type="button"
-          aria-label={`${nota} — sobre ${titulo}`}
+          aria-label={t.painel.kpis.notaAria(nota, titulo)}
           className="flex size-5 shrink-0 items-center justify-center rounded-full bg-amber-500/15 text-[11px] font-semibold text-amber-800 ring-1 ring-amber-500/30 transition-colors hover:bg-amber-500/25 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none dark:bg-amber-400/15 dark:text-amber-400 dark:ring-amber-400/30 dark:hover:bg-amber-400/25"
         >
           i
@@ -62,6 +65,7 @@ function NotaKpi({ nota, titulo }: { nota: string; titulo: string }) {
 
 export function KpiCards() {
   const { resumo, filtros } = useFiltros();
+  const { t, lang } = useI18n();
   const acoes = contarAcoes(filtros);
 
   const participacaoExclusiva =
@@ -69,36 +73,36 @@ export function KpiCards() {
 
   const kpis: Kpi[] = [
     {
-      titulo: "Órgãos Atuantes",
-      valor: formatNumero(resumo.numeroOrgaosAtuantes),
-      subtitulo: "Identificados",
+      titulo: t.painel.kpis.atuantes.titulo,
+      valor: formatNumero(resumo.numeroOrgaosAtuantes, lang),
+      subtitulo: t.painel.kpis.atuantes.subtitulo,
       icone: Building2,
     },
     {
-      titulo: "Orçamento Climático Exclusivo Planejado",
-      valor: formatCompactoBRL(resumo.gastoExclusivo),
-      subtitulo: `${formatPercentual(participacaoExclusiva)} do total`,
+      titulo: t.painel.kpis.exclusivoPlanejado.titulo,
+      valor: formatCompactoBRL(resumo.gastoExclusivo, lang),
+      subtitulo: `${formatPercentual(participacaoExclusiva, 1, lang)} ${t.painel.kpis.exclusivoPlanejado.doTotal}`,
       icone: Leaf,
     },
     {
-      titulo: "Dotação Exclusiva",
-      valor: formatNumero(acoes.exclusivas),
-      rotuloValor: "Aplicações programadas",
-      subtitulo: formatCompactoBRL(resumo.gastoExclusivo),
+      titulo: t.painel.kpis.dotacaoExclusiva.titulo,
+      valor: formatNumero(acoes.exclusivas, lang),
+      rotuloValor: t.painel.kpis.dotacaoExclusiva.rotuloValor,
+      subtitulo: formatCompactoBRL(resumo.gastoExclusivo, lang),
       icone: Wallet,
     },
     {
-      titulo: "Dotação Não Exclusiva",
-      valor: formatNumero(acoes.naoExclusivas),
-      rotuloValor: "Aplicações programadas",
-      subtitulo: formatCompactoBRL(resumo.gastoNaoExclusivo),
+      titulo: t.painel.kpis.dotacaoNaoExclusiva.titulo,
+      valor: formatNumero(acoes.naoExclusivas, lang),
+      rotuloValor: t.painel.kpis.dotacaoNaoExclusiva.rotuloValor,
+      subtitulo: formatCompactoBRL(resumo.gastoNaoExclusivo, lang),
       icone: Layers,
       // Literal de docs/03-PADROES-UI.md, que herda o marcador do dashboard
       // anterior e manda mantê-lo enquanto a validação setorial não terminar.
       // Sem prosa em volta: o Roteiro Operativo (fonte primária) não afirma em
       // lugar nenhum que a validação está pendente — isso é conclusão do
       // docs/01-METODOLOGIA.md, e não cabe reproduzir como se fosse citação.
-      nota: "Em fase de validação",
+      nota: t.painel.kpis.notaValidacao,
     },
   ];
 

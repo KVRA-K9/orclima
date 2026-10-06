@@ -36,27 +36,3 @@ export const ICONES_NORMA: Record<TipoNorma, LucideIcon> = {
   LDO: ListChecks,
   LOA: Landmark,
 };
-
-export const DESCRICOES_NORMA: Record<TipoNorma, string> = {
-  "Lei Ordinária":
-    "Leis aprovadas pela Assembleia Legislativa sobre meio ambiente e clima. As que criam ou reorganizam órgãos ficam em Estrutura Administrativa.",
-  Decreto:
-    "Atos do governador. Regulamentam as leis ambientais, criam comitês e planos, declaram situações de emergência.",
-  "Estrutura Administrativa":
-    "Leis que criam e reorganizam os órgãos ambientais do Estado e as carreiras de seus servidores.",
-  PPA: "Plano Plurianual. Define os programas e as metas do Estado para quatro anos, e é a base da LDO e da LOA.",
-  LDO: "Lei de Diretrizes Orçamentárias. Fixa, a cada ano, as prioridades que a lei orçamentária do ano seguinte deve atender.",
-  LOA: "Lei Orçamentária Anual. Estima a receita e fixa a despesa de cada órgão para o exercício.",
-};
-
-/** "19/01/2026" a partir do ISO gravado pelo script de ingestão. */
-export function dataBR(iso: string | null): string | null {
-  if (!iso) return null;
-  const [ano, mes, dia] = iso.split("-");
-  return dia && mes && ano ? `${dia}/${mes}/${ano}` : null;
-}
-
-/** "Lei nº 4.679" — a Constituição não tem número e fica só com a espécie. */
-export function titulo(especie: string, numero: string): string {
-  return numero === "—" ? especie : `${especie} nº ${numero}`;
-}

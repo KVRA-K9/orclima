@@ -3,7 +3,10 @@ import type { CellHookData, RowInput } from "jspdf-autotable";
 import { EIXOS } from "@/data/eixos";
 import { ORCAMENTO } from "@/lib/data";
 import { formatBRL } from "@/lib/format";
-import type { Aplicacao, Orgao } from "@/lib/types";
+import { dataLocale, rotuloDoEixo } from "@/lib/i18n/conteudo";
+import { getDictionary } from "@/lib/i18n";
+import type { Locale } from "@/lib/i18n";
+import type { Aplicacao, Orgao, TipoDotacao } from "@/lib/types";
 
 type AplicacoesDe = (orgao: string) => Record<string, Aplicacao[]>;
 type Rgb = [number, number, number];
@@ -32,7 +35,6 @@ const CORES = {
 const LOGO = { src: "/seplan-horizontal-branco.png", proporcao: 3113 / 439 };
 
 const dataArquivo = () => new Date().toISOString().slice(0, 10);
-const dataBR = () => new Date().toLocaleDateString("pt-BR");
 
 function baixar(conteudo: Blob, nome: string) {
   const url = URL.createObjectURL(conteudo);
@@ -61,6 +63,8 @@ const numerosDeEixo = (orgao: Orgao) =>
 export function linhasMicrodados(
   orgaos: Orgao[],
   aplicacoesDe: AplicacoesDe,
+  lang: Locale,
+  tipoRotulo: Record<TipoDotacao, string>,
 ): (string | number)[][] {
   const linhas: (string | number)[][] = [];
 
@@ -88,10 +92,10 @@ export function linhasMicrodados(
           orgao.codigo,
           orgao.sigla,
           orgao.nome,
-          eixo?.rotulo ?? String(numero),
+          rotuloDoEixo(numero, eixo?.rotulo ?? String(numero), lang),
           eixo?.romano ?? String(numero),
           item.aplicacao,
-          detalhado ? item.tipo : "",
+          detalhado ? tipoRotulo[item.tipo] : "",
           item.dotacao,
         ]);
       }
@@ -101,27 +105,34 @@ export function linhasMicrodados(
   return linhas;
 }
 
-export async function exportarXlsx(orgaos: Orgao[], aplicacoesDe: AplicacoesDe) {
+export async function exportarXlsx(
+  orgaos: Orgao[],
+  aplicacoesDe: AplicacoesDe,
+  lang: Locale,
+) {
   // O ExcelJS pesa bastante: só entra no bundle quando alguém exporta.
   const ExcelJS = await import("exceljs");
+  const d = await getDictionary(lang);
+  const t = d.export;
 
   const wb = new ExcelJS.Workbook();
-  const ws = wb.addWorksheet("Microdados");
+  const ws = wb.addWorksheet(t.xlsx.aba);
 
   ws.columns = [
-    { header: "exercicio", width: 10 },
-    { header: "codigo_orgao", width: 14 },
-    { header: "orgao", width: 40 },
-    { header: "orgao_completo", width: 50 },
-    { header: "eixo", width: 50 },
-    { header: "eixo_numero", width: 12 },
-    { header: "aplicacao_programada", width: 70 },
-    { header: "classificacao", width: 16 },
-    { header: "dotacao", width: 18 },
+    { header: t.xlsx.colunas.exercicio, width: 10 },
+    { header: t.xlsx.colunas.codigoOrgao, width: 14 },
+    { header: t.xlsx.colunas.orgao, width: 40 },
+    { header: t.xlsx.colunas.orgaoCompleto, width: 50 },
+    { header: t.xlsx.colunas.eixo, width: 50 },
+    { header: t.xlsx.colunas.eixoNumero, width: 12 },
+    { header: t.xlsx.colunas.aplicacao, width: 70 },
+    { header: t.xlsx.colunas.classificacao, width: 16 },
+    { header: t.xlsx.colunas.dotacao, width: 18 },
   ];
   ws.getRow(1).font = { bold: true };
 
-  for (const linha of linhasMicrodados(orgaos, aplicacoesDe)) ws.addRow(linha);
+  for (const linha of linhasMicrodados(orgaos, aplicacoesDe, lang, d.dados.tipoDotacao))
+    ws.addRow(linha);
 
   ws.getColumn(9).numFmt = "#,##0.00";
   // Cabeçalho congelado: a planilha tem uma linha por aplicação e fica longa.
@@ -132,7 +143,7 @@ export async function exportarXlsx(orgaos: Orgao[], aplicacoesDe: AplicacoesDe) 
     new Blob([buffer], {
       type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     }),
-    `microdados_orcamento_climatico_${dataArquivo()}.xlsx`,
+    t.xlsx.arquivo(dataArquivo()),
   );
 }
 
@@ -151,12 +162,18 @@ async function carregarLogo(): Promise<string | null> {
   }
 }
 
-export async function exportarPdf(orgaos: Orgao[], aplicacoesDe: AplicacoesDe) {
+export async function exportarPdf(
+  orgaos: Orgao[],
+  aplicacoesDe: AplicacoesDe,
+  lang: Locale,
+) {
   // jsPDF pesa ~350 KB: só entra no bundle quando o usuário clica em exportar.
   const [{ jsPDF }, { default: autoTable }] = await Promise.all([
     import("jspdf"),
     import("jspdf-autotable"),
   ]);
+  const d = await getDictionary(lang);
+  const t = d.export;
 
   const doc = new jsPDF({ orientation: "portrait", unit: "pt", format: "a4" });
   const largura = doc.internal.pageSize.getWidth();
@@ -186,19 +203,15 @@ export async function exportarPdf(orgaos: Orgao[], aplicacoesDe: AplicacoesDe) {
     doc.setTextColor(...CORES.branco);
     doc.setFont("helvetica", "bold");
     doc.setFontSize(14);
-    doc.text("Orçamento Climático – Detalhamento por Órgão", MARGEM, 35);
+    doc.text(t.pdf.titulo, MARGEM, 35);
 
     doc.setFont("helvetica", "normal");
     doc.setFontSize(10);
-    doc.text(
-      "Departamento de Estudos e Planejamento Orçamentário – DEPPO/SEPLAN",
-      MARGEM,
-      52,
-    );
+    doc.text(t.pdf.subtitulo, MARGEM, 52);
 
     doc.setFontSize(9);
     doc.text(
-      `Exercício: ${ORCAMENTO.exercicio}     Exportado em: ${dataBR()}     Página ${pg}`,
+      `${t.pdf.exercicio} ${ORCAMENTO.exercicio}     ${t.pdf.exportadoEm} ${dataLocale(new Date().toISOString().slice(0, 10), lang)}     ${t.pdf.pagina} ${pg}`,
       MARGEM,
       68,
     );
@@ -225,12 +238,7 @@ export async function exportarPdf(orgaos: Orgao[], aplicacoesDe: AplicacoesDe) {
     doc.setTextColor(...CORES.cinzaMedio);
     doc.setFont("helvetica", "normal");
     doc.setFontSize(8);
-    doc.text(
-      "Secretaria de Estado de Planejamento – SEPLAN | Governo do Estado do Acre",
-      largura / 2,
-      altura - 22,
-      { align: "center" },
-    );
+    doc.text(t.pdf.rodape, largura / 2, altura - 22, { align: "center" });
 
     doc.setTextColor(0, 0, 0);
   };
@@ -277,15 +285,15 @@ export async function exportarPdf(orgaos: Orgao[], aplicacoesDe: AplicacoesDe) {
     totalNaoExclusivo += orgao.naoExclusivo;
 
     const rotulosEixos = numeros
-      .map((n) => eixoDe(n)?.rotulo ?? String(n))
+      .map((n) => rotuloDoEixo(n, eixoDe(n)?.rotulo ?? String(n), lang))
       .join(" | ");
 
     const corpo: RowInput[] = [];
     if (numeros.length === 0) {
-      corpo.push(["Sem aplicações programadas", "", ""]);
+      corpo.push([t.pdf.semAplicacoes, "", ""]);
     } else {
       for (const numero of numeros) {
-        const rotulo = eixoDe(numero)?.rotulo ?? String(numero);
+        const rotulo = rotuloDoEixo(numero, eixoDe(numero)?.rotulo ?? String(numero), lang);
         const aplicacoes = porEixo[String(numero)] ?? [];
         if (aplicacoes.length === 0) {
           corpo.push([`[${rotulo}]`, "", ""]);
@@ -294,7 +302,7 @@ export async function exportarPdf(orgaos: Orgao[], aplicacoesDe: AplicacoesDe) {
             corpo.push([
               `${app.aplicacao} (${rotulo})`,
               {
-                content: app.tipo,
+                content: d.dados.tipoDotacao[app.tipo],
                 styles: {
                   textColor:
                     app.tipo === "Exclusivo"
@@ -302,7 +310,7 @@ export async function exportarPdf(orgaos: Orgao[], aplicacoesDe: AplicacoesDe) {
                       : CORES.cinzaNaoExclusivo,
                 },
               },
-              formatBRL(app.dotacao),
+              formatBRL(app.dotacao, lang),
             ]);
           }
         }
@@ -343,7 +351,7 @@ export async function exportarPdf(orgaos: Orgao[], aplicacoesDe: AplicacoesDe) {
       startY: y,
       margin: { left: MARGEM, right: MARGEM, top: TOPO, bottom: BASE },
       tableWidth: largura - MARGEM * 2,
-      head: [["Aplicação Programada", "Classificação", "Dotação (R$)"]],
+      head: [t.pdf.colunas],
       body: corpo,
       theme: "plain",
       headStyles: {
@@ -403,15 +411,15 @@ export async function exportarPdf(orgaos: Orgao[], aplicacoesDe: AplicacoesDe) {
       body: [
         [
           {
-            content: `Exclusivo: ${formatBRL(orgao.exclusivo)}`,
+            content: `${t.pdf.exclusivo} ${formatBRL(orgao.exclusivo, lang)}`,
             styles: { fontStyle: "bold", textColor: CORES.azulExclusivo },
           },
           {
-            content: `Não Exclusivo: ${formatBRL(orgao.naoExclusivo)}`,
+            content: `${t.pdf.naoExclusivo} ${formatBRL(orgao.naoExclusivo, lang)}`,
             styles: { fontStyle: "bold", textColor: CORES.cinzaTexto },
           },
           {
-            content: `TOTAL: ${formatBRL(orgao.total)}`,
+            content: `${t.pdf.total} ${formatBRL(orgao.total, lang)}`,
             styles: {
               fontStyle: "bold",
               textColor: CORES.verdeEscuro,
@@ -447,16 +455,13 @@ export async function exportarPdf(orgaos: Orgao[], aplicacoesDe: AplicacoesDe) {
   doc.setTextColor(...CORES.branco);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(16);
-  doc.text("TOTAL GERAL", largura / 2, y + 25, { align: "center" });
+  doc.text(t.pdf.totalGeral, largura / 2, y + 25, { align: "center" });
 
   doc.setFont("helvetica", "normal");
   doc.setFontSize(11);
-  doc.text(
-    `(${orgaos.length} ${orgaos.length === 1 ? "órgão" : "órgãos"})`,
-    largura / 2,
-    y + 42,
-    { align: "center" },
-  );
+  doc.text(t.pdf.nOrgaos(orgaos.length), largura / 2, y + 42, {
+    align: "center",
+  });
 
   doc.setDrawColor(...CORES.branco);
   doc.setLineWidth(1);
@@ -464,37 +469,27 @@ export async function exportarPdf(orgaos: Orgao[], aplicacoesDe: AplicacoesDe) {
 
   doc.setFontSize(10);
   const coluna = (largura - 120) / 3;
-  doc.text("Exclusivo", 60 + coluna * 0.5, y + 68, { align: "center" });
-  doc.text("Não Exclusivo", 60 + coluna * 1.5, y + 68, { align: "center" });
-  doc.text("Total", 60 + coluna * 2.5, y + 68, { align: "center" });
+  doc.text(t.pdf.boxExclusivo, 60 + coluna * 0.5, y + 68, { align: "center" });
+  doc.text(t.pdf.boxNaoExclusivo, 60 + coluna * 1.5, y + 68, { align: "center" });
+  doc.text(t.pdf.boxTotal, 60 + coluna * 2.5, y + 68, { align: "center" });
 
   doc.setFont("helvetica", "bold");
   doc.setFontSize(13);
-  doc.text(formatBRL(totalExclusivo), 60 + coluna * 0.5, y + 88, { align: "center" });
-  doc.text(formatBRL(totalNaoExclusivo), 60 + coluna * 1.5, y + 88, {
+  doc.text(formatBRL(totalExclusivo, lang), 60 + coluna * 0.5, y + 88, { align: "center" });
+  doc.text(formatBRL(totalNaoExclusivo, lang), 60 + coluna * 1.5, y + 88, {
     align: "center",
   });
-  doc.text(formatBRL(totalGeral), 60 + coluna * 2.5, y + 88, { align: "center" });
+  doc.text(formatBRL(totalGeral, lang), 60 + coluna * 2.5, y + 88, { align: "center" });
 
   // Equipe técnica, logo acima do rodapé da última página.
   const yCreditos = altura - 55;
   doc.setTextColor(...CORES.cinzaTexto);
   doc.setFont("helvetica", "normal");
   doc.setFontSize(8);
-  doc.text(
-    "Coordenador: Denyscley Oliveira Bandeira (Gestor de Políticas Públicas) | Equipe Técnica: Ícaro Lebre Gundim (Economista),",
-    largura / 2,
-    yCreditos,
-    { align: "center" },
-  );
-  doc.text(
-    "Luísa Nascimento Ribeiro (Economista), Roseneide Sena (Especialista Executiva Administradora), Vinícius Carneiro de Farias (Economista)",
-    largura / 2,
-    yCreditos + 14,
-    { align: "center" },
-  );
+  doc.text(t.pdf.creditos[0], largura / 2, yCreditos, { align: "center" });
+  doc.text(t.pdf.creditos[1], largura / 2, yCreditos + 14, { align: "center" });
 
   rodape(doc.getNumberOfPages());
 
-  doc.save(`relatorio_orcamento_climatico_${dataArquivo()}.pdf`);
+  doc.save(t.pdf.arquivo(dataArquivo()));
 }

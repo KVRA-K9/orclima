@@ -6,6 +6,7 @@ import { CorpoDica } from "@/components/painel/graficos/dica";
 import { MolduraGrafico } from "@/components/painel/graficos/moldura";
 import { useFiltros } from "@/components/painel/filtros-context";
 import { composicao } from "@/lib/data";
+import { useI18n } from "@/lib/i18n/cliente";
 import { formatCompactoBRL, formatPercentual } from "@/lib/format";
 
 // Tokens semânticos, não `--eixo-1`/`--eixo-2` direto: os aliases apontam para
@@ -17,12 +18,20 @@ const CORES = {
 
 export function GraficoComposicao() {
   const { orgaosFiltrados, resumo } = useFiltros();
+  const { t, lang } = useI18n();
+  const textos = t.painel.graficos.composicao;
+
+  const rotuloDaFatia = (chave: keyof typeof CORES) =>
+    chave === "exclusivo"
+      ? t.dados.tipoDotacao["Exclusivo"]
+      : t.dados.tipoDotacao["Não Exclusivo"];
+
   const dados = composicao(orgaosFiltrados).filter((d) => d.valor > 0);
 
   return (
     <MolduraGrafico
-      titulo="Composição do Orçamento Climático"
-      descricao="Dotação exclusivamente climática frente à parcela que contribui de forma parcial."
+      titulo={textos.titulo}
+      descricao={textos.descricao}
       altura={260}
       rodape={
         <ul className="mt-4 space-y-2">
@@ -33,12 +42,12 @@ export function GraficoComposicao() {
                 className="size-2.5 shrink-0 rounded-[2px]"
                 style={{ backgroundColor: CORES[fatia.chave] }}
               />
-              <span>{fatia.nome}</span>
+              <span>{rotuloDaFatia(fatia.chave)}</span>
               <span className="ml-auto font-medium tabular-nums">
-                {formatCompactoBRL(fatia.valor)}
+                {formatCompactoBRL(fatia.valor, lang)}
               </span>
               <span className="w-14 text-right text-muted-foreground tabular-nums">
-                {formatPercentual(resumo.total > 0 ? fatia.valor / resumo.total : 0)}
+                {formatPercentual(resumo.total > 0 ? fatia.valor / resumo.total : 0, 1, lang)}
               </span>
             </li>
           ))}
@@ -71,10 +80,10 @@ export function GraficoComposicao() {
             const valor = Number(item.value ?? 0);
             return (
               <CorpoDica
-                titulo={String(item.name)}
+                titulo={rotuloDaFatia(chave)}
                 itens={[
                   {
-                    rotulo: "Valor",
+                    rotulo: textos.valor,
                     valor,
                     cor: CORES[chave],
                     participacao: resumo.total > 0 ? valor / resumo.total : 0,

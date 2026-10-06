@@ -83,10 +83,15 @@ export function RevelarAoRolar() {
 
     observadorDeNovos.observe(document.body, { childList: true, subtree: true });
 
+    // O cleanup não remove `revelar-pronto`: no StrictMode do dev o efeito
+    // monta, desmonta e monta de novo — a remoção abriria uma janela em que
+    // todos os blocos voltam a aparecer para sumirem logo em seguida, o que
+    // o olho lê como a página piscando. A classe só sai de cena se este
+    // componente deixasse de existir para sempre, o que não acontece: ele
+    // vive no layout raiz, e as remontagens o religam idempotentemente.
     return () => {
       observadorDeNovos.disconnect();
       observador.disconnect();
-      raiz.classList.remove("revelar-pronto");
     };
   }, []);
 

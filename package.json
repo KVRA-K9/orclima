@@ -11,6 +11,8 @@
     "ingest:orcamentos-programas": "node scripts/ingest-orcamentos-programas.ts",
     "ingest:fontes": "node scripts/ingest-fontes.ts",
     "historico:leis": "node scripts/gerar-historico-leis.ts",
+    "comunicado:pdf": "node scripts/gerar-pdf-comunicado.ts",
+    "ods:verificar": "node scripts/verificar-ods.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

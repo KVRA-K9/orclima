@@ -42,7 +42,7 @@ export const ODS: Ods[] = [
     titulo: "Saúde e bem-estar",
     img: "/ods/03_0.png",
     indicadores: [
-      { texto: "Indicador 3.9.1: Taxa de mortalidade por poluição ambiental (externa e doméstica) do ar (EM CONSTRUÇÃO)", eixo: 7 },
+      { texto: "Indicador 3.9.1: Taxa de mortalidade por poluição ambiental (externa e doméstica) do ar", eixo: 7 },
       { texto: "Indicador 3.9.2: Taxa de mortalidade atribuída a fontes de água inseguras, saneamento inseguro e falta de higiene", eixo: 7 },
       { texto: "Indicador 3.9.3: Taxa de mortalidade atribuída a intoxicação não intencional", eixo: 7 },
     ],
@@ -65,7 +65,7 @@ export const ODS: Ods[] = [
     titulo: "Igualdade de gênero",
     img: "/ods/05_0.png",
     indicadores: [
-      { texto: "Indicador 5.a.2: Proporção de países onde as estruturas legais (incluindo o direito consuetudinário) garantem às mulheres direitos iguais à propriedade e/ou controle da terra", eixo: 4 },
+      { texto: "Indicador 5.a.2: Proporção de países onde as estruturas legais (incluindo o direito consuetudinário) garantem às mulheres direitos iguais à propriedade e/ou controle da terra (SEM DADOS)", eixo: 4 },
     ],
   },
   {
@@ -149,7 +149,7 @@ export const ODS: Ods[] = [
       { texto: "Indicador 11.5.1: Número de mortes, pessoas desaparecidas e pessoas diretamente afetadas atribuído a desastres por 100 mil habitantes", eixo: 7 },
       { texto: "Indicador 11.5.2: Perdas econômicas diretas em relação ao PIB, incluindo danos causados por desastres em infraestruturas críticas e na interrupção de serviços básicos", eixo: 7 },
       { texto: "Indicador 11.6.1: Proporção de resíduos sólidos urbanos coletados e gerenciados em instalações controladas pelo total de resíduos urbanos gerados, por cidades", eixo: 5 },
-      { texto: "Indicador 11.6.2: Nível médio anual de partículas inaláveis (ex: com diâmetro inferior a 2,5 µm e 10 µm) nas cidades (população ponderada) (SEM DADOS)", eixo: 3 },
+      { texto: "Indicador 11.6.2: Nível médio anual de partículas inaláveis (ex: com diâmetro inferior a 2,5 µm e 10 µm) nas cidades (população ponderada)", eixo: 3 },
       { texto: "Indicador 11.a.1: Número de países que possuem políticas urbanas nacionais ou planos de desenvolvimento regional que (a) respondem à dinâmica populacional; (b) garantem um desenvolvimento territorial equilibrado; e (c) possuem responsabilidade fiscal", eixo: 6 },
       { texto: "Indicador 11.b.1: Número de países que adotam e implementam estratégias nacionais de redução de risco de desastres em linha com o Marco de Sendai para a Redução de Risco de Desastres 2015-2030", eixo: 7 },
       { texto: "Indicador 11.b.2: Proporção de governos locais que adotam e implementam estratégias locais de redução de risco de desastres em linha com as estratégias nacionais de redução de risco de desastres", eixo: 7 },

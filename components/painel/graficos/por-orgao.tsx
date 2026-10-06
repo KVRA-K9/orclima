@@ -13,12 +13,15 @@ import { useFiltros } from "@/components/painel/filtros-context";
 import { CorpoDica } from "@/components/painel/graficos/dica";
 import { MolduraGrafico } from "@/components/painel/graficos/moldura";
 import { totaisPorOrgao } from "@/lib/data";
+import { useI18n } from "@/lib/i18n/cliente";
 import { formatCompacto } from "@/lib/format";
 
 const ALTURA_BARRA = 26;
 
 export function GraficoPorOrgao() {
   const { orgaosFiltrados } = useFiltros();
+  const { t, lang } = useI18n();
+  const textos = t.painel.graficos.porOrgao;
   const dados = totaisPorOrgao(orgaosFiltrados);
 
   // Uma barra por órgão; com 58 unidades o cartão rola verticalmente em vez de
@@ -27,8 +30,8 @@ export function GraficoPorOrgao() {
 
   return (
     <MolduraGrafico
-      titulo="Orçamento por Secretaria"
-      descricao={`${dados.length} ${dados.length === 1 ? "órgão" : "órgãos"} no recorte atual, do maior para o menor.`}
+      titulo={textos.titulo}
+      descricao={textos.descricao(dados.length)}
       altura={altura}
       className="lg:col-span-3 [&_[data-slot=card-content]]:max-h-[28rem] [&_[data-slot=card-content]]:overflow-y-auto"
     >
@@ -44,7 +47,7 @@ export function GraficoPorOrgao() {
           tickLine={false}
           axisLine={false}
           tick={{ fill: "var(--muted-foreground)", fontSize: 11 }}
-          tickFormatter={(valor: number) => formatCompacto(valor)}
+          tickFormatter={(valor: number) => formatCompacto(valor, lang)}
         />
         <YAxis
           type="category"
@@ -69,9 +72,9 @@ export function GraficoPorOrgao() {
               <CorpoDica
                 titulo={orgao.nome}
                 itens={[
-                  { rotulo: "Exclusivo", valor: orgao.exclusivo, cor: "var(--exclusivo)" },
+                  { rotulo: textos.exclusivo, valor: orgao.exclusivo, cor: "var(--exclusivo)" },
                   {
-                    rotulo: "Não exclusivo",
+                    rotulo: textos.naoExclusivo,
                     valor: orgao.naoExclusivo,
                     cor: "var(--nao-exclusivo)",
                   },

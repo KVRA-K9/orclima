@@ -14,6 +14,7 @@ import {
 import { CorpoDica } from "@/components/painel/graficos/dica";
 import { MolduraGrafico } from "@/components/painel/graficos/moldura";
 import { EXERCICIOS_EM_CRUZEIRO, SERIE_LOA } from "@/data/historico-leis";
+import { useI18n } from "@/lib/i18n/cliente";
 import { formatCompacto } from "@/lib/format";
 
 // Os mesmos tokens semânticos usados na composição do painel: apontam para os
@@ -21,11 +22,6 @@ import { formatCompacto } from "@/lib/format";
 const CORES = {
   rp: "var(--exclusivo)",
   outrasFontes: "var(--nao-exclusivo)",
-} as const;
-
-const ROTULOS = {
-  rp: "Recursos próprios",
-  outrasFontes: "Outras fontes",
 } as const;
 
 /*
@@ -38,9 +34,6 @@ const ROTULOS = {
  */
 const PANDEMIA_INICIO = 2020;
 const PANDEMIA_FIM = 2024;
-const PANDEMIA_TEXTO =
-  "A emergência foi declarada em março de 2020. O Brasil a encerrou em maio de 2022 (Portaria GM/MS nº 913/2022) e a OMS, em maio de 2023. O recorte vai até 2024 porque os efeitos orçamentários sobrevivem ao fim da emergência.";
-const PANDEMIA_TITULO = `Pandemia de COVID-19 nos exercícios de ${PANDEMIA_INICIO} a ${PANDEMIA_FIM}`;
 
 /** Espaço reservado acima da moldura para o rótulo "COVID-19". */
 const PANDEMIA_FOLGA_TOPO = 18;
@@ -118,13 +111,17 @@ function MarcaPandemia({
   height?: number;
   camada: "mancha" | "contorno";
 }) {
+  const { t } = useI18n();
+  const titulo = t.painel.graficos.serieLoa.pandemiaTitulo(PANDEMIA_INICIO, PANDEMIA_FIM);
+  const texto = t.painel.graficos.serieLoa.pandemiaTexto;
+
   if (x == null || y == null || width == null || height == null) return null;
 
   const { meio, topo, ...moldura } = geometriaPandemia(x, y, width, height);
 
   return (
     <g role="img" style={{ pointerEvents: "none" }}>
-      <title>{`${PANDEMIA_TITULO}. ${PANDEMIA_TEXTO}`}</title>
+      <title>{`${titulo}. ${texto}`}</title>
       {camada === "mancha" ? (
         <rect {...moldura} fill="var(--destructive)" fillOpacity={0.07} />
       ) : (
@@ -161,13 +158,17 @@ export function GraficoSerieLOA({
   exercicioEmFoco: number | null;
   aoEscolherExercicio: (exercicio: number) => void;
 }) {
+  const { t, lang } = useI18n();
+  const textos = t.painel.graficos.serieLoa;
+  const rotulos = { rp: textos.rp, outrasFontes: textos.outrasFontes };
+
   const primeiro = SERIE_LOA[0]?.exercicio;
   const ultimo = SERIE_LOA[SERIE_LOA.length - 1]?.exercicio;
 
   return (
     <MolduraGrafico
-      titulo="A dotação dos órgãos ambientais, exercício a exercício"
-      descricao={`Soma das dotações dos órgãos ambientais em cada Lei Orçamentária Anual, de ${primeiro} a ${ultimo}. Clique numa barra para abrir a lei daquele exercício.`}
+      titulo={textos.titulo}
+      descricao={textos.descricao(primeiro, ultimo)}
       altura={340}
       rodape={
         <div className="mt-4 space-y-3">
@@ -179,7 +180,7 @@ export function GraficoSerieLOA({
                   className="size-2.5 shrink-0 rounded-[2px]"
                   style={{ backgroundColor: CORES[chave] }}
                 />
-                <span className="text-muted-foreground">{ROTULOS[chave]}</span>
+                <span className="text-muted-foreground">{rotulos[chave]}</span>
               </li>
             ))}
           </ul>
@@ -214,24 +215,19 @@ export function GraficoSerieLOA({
             </svg>
             <span>
               <span className="font-medium text-foreground">
-                {PANDEMIA_TITULO}.
+                {textos.pandemiaTitulo(PANDEMIA_INICIO, PANDEMIA_FIM)}.
               </span>{" "}
-              <span className="text-muted-foreground">{PANDEMIA_TEXTO}</span>
+              <span className="text-muted-foreground">{textos.pandemiaTexto}</span>
             </span>
           </p>
           <p className="text-xs leading-relaxed text-muted-foreground">
-            Os exercícios de {EXERCICIOS_EM_CRUZEIRO[0]} a{" "}
-            {EXERCICIOS_EM_CRUZEIRO[EXERCICIOS_EM_CRUZEIRO.length - 1]} foram
-            orçados em cruzeiro e ficaram de fora do gráfico. Converter aqueles
-            valores para real por um fator fixo daria um número sem sentido,
-            porque a inflação da época corroía o dinheiro mês a mês. Essas leis
-            estão na lista abaixo, com o valor na moeda de então.
+            {textos.notaCruzeiro(
+              EXERCICIOS_EM_CRUZEIRO[0],
+              EXERCICIOS_EM_CRUZEIRO[EXERCICIOS_EM_CRUZEIRO.length - 1],
+            )}
           </p>
           <p className="text-xs leading-relaxed text-muted-foreground">
-            Esta série soma o que coube aos órgãos e fundos da área ambiental em
-            cada exercício. O restante do painel usa outro recorte, por eixo
-            temático, que alcança dotações climáticas de qualquer secretaria.
-            Por isso os dois totais não batem.
+            {textos.notaRecorte}
           </p>
         </div>
       }
@@ -265,7 +261,7 @@ export function GraficoSerieLOA({
           stroke="var(--muted-foreground)"
         />
         <YAxis
-          tickFormatter={(valor: number) => formatCompacto(valor)}
+          tickFormatter={(valor: number) => formatCompacto(valor, lang)}
           tickLine={false}
           axisLine={false}
           // 64 não cabia "260,0 MI" numa linha só — o rótulo quebrava em duas.
@@ -280,11 +276,11 @@ export function GraficoSerieLOA({
             const ponto = payload[0].payload as (typeof SERIE_LOA)[number];
             return (
               <CorpoDica
-                titulo={`Exercício ${label}, Lei nº ${ponto.numero}`}
+                titulo={textos.dica(label ?? "", ponto.numero)}
                 itens={[
-                  { rotulo: ROTULOS.rp, valor: ponto.rp, cor: CORES.rp },
+                  { rotulo: rotulos.rp, valor: ponto.rp, cor: CORES.rp },
                   {
-                    rotulo: ROTULOS.outrasFontes,
+                    rotulo: rotulos.outrasFontes,
                     valor: ponto.outrasFontes,
                     cor: CORES.outrasFontes,
                   },
@@ -315,7 +311,7 @@ export function GraficoSerieLOA({
             key={chave}
             dataKey={chave}
             stackId="loa"
-            name={ROTULOS[chave]}
+            name={rotulos[chave]}
             radius={indice === 1 ? [4, 4, 0, 0] : undefined}
             animationDuration={800}
             animationEasing="ease-out"

@@ -17,12 +17,14 @@ import Link from "next/link";
 import { createContext, useContext, useMemo, useState } from "react";
 
 import { useFiltros } from "@/components/painel/filtros-context";
+import { LocaleToggle } from "@/components/locale-toggle";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { useI18n } from "@/lib/i18n/cliente";
 import { cn } from "@/lib/utils";
 
-type Item = { aba: string; rotulo: string; icone: LucideIcon };
+type Item = { aba: string; icone: LucideIcon };
 
 type ContextoSidebar = { recolhida: boolean; alternar: () => void };
 
@@ -61,6 +63,7 @@ const LARGURA = { aberta: 268, recolhida: 76 } as const;
  */
 export function SidebarToggle() {
   const { recolhida, alternar } = useSidebar();
+  const { t } = useI18n();
 
   // A seta aponta para onde o painel vai: para a esquerda quando o clique
   // fecha, para a direita quando abre.
@@ -73,7 +76,7 @@ export function SidebarToggle() {
       // z acima do cabeçalho (z-50), senão ele cobriria a metade direita.
       className="fixed top-4 z-60 hidden rounded-full shadow-sm transition-[left] duration-200 lg:inline-flex"
       style={{ left: (recolhida ? LARGURA.recolhida : LARGURA.aberta) - 16 }}
-      aria-label={recolhida ? "Expandir menu lateral" : "Recolher menu lateral"}
+      aria-label={recolhida ? t.painel.sidebar.expandir : t.painel.sidebar.recolher}
       aria-expanded={!recolhida}
       onClick={alternar}
     >
@@ -84,19 +87,21 @@ export function SidebarToggle() {
 
 /** Os valores de `aba` são os mesmos consumidos por `painel-conteudo.tsx`. */
 const ITENS: Item[] = [
-  { aba: "analises", rotulo: "Visão Geral", icone: LayoutGrid },
-  { aba: "acoes", rotulo: "Tabela Detalhada", icone: Table },
-  { aba: "instrumentos", rotulo: "Instrumentos Legais", icone: Scale },
-  { aba: "historico", rotulo: "Histórico", icone: Landmark },
-  { aba: "ods", rotulo: "ODS", icone: Target },
+  { aba: "analises", icone: LayoutGrid },
+  { aba: "acoes", icone: Table },
+  { aba: "instrumentos", icone: Scale },
+  { aba: "historico", icone: Landmark },
+  { aba: "ods", icone: Target },
 ];
 
 function Marca({ recolhida }: { recolhida: boolean }) {
+  const { t } = useI18n();
+
   return (
     <span className="flex min-w-0 items-center gap-2.5">
       <Image
         src="/bandeira-acre.png"
-        alt="Bandeira do Acre"
+        alt={t.painel.sidebar.altBandeira}
         width={44}
         height={31}
         className="shrink-0 rounded-[3px] shadow-sm"
@@ -106,8 +111,10 @@ function Marca({ recolhida }: { recolhida: boolean }) {
         <span className="min-w-0 leading-tight">
           {/* Sem `truncate`: "Orçamento Climático" mal cabe em uma linha na
               largura da sidebar, e quebrar lê melhor que reticências. */}
-          <span className="block text-sm font-semibold">Orçamento Climático</span>
-          <span className="block truncate text-xs text-muted-foreground">Estado do Acre</span>
+          <span className="block text-sm font-semibold">{t.comum.marca}</span>
+          <span className="block truncate text-xs text-muted-foreground">
+            {t.comum.marcaSubtitulo}
+          </span>
         </span>
       )}
     </span>
@@ -123,6 +130,12 @@ function Navegacao({
   aoNavegar?: () => void;
 }) {
   const { aba, definirAba } = useFiltros();
+  const { t, lang } = useI18n();
+
+  const itens = ITENS.map((item) => ({
+    ...item,
+    rotulo: t.painel.sidebar.itens[item.aba as keyof typeof t.painel.sidebar.itens],
+  }));
 
   const classe = (ativo: boolean) =>
     cn(
@@ -154,19 +167,19 @@ function Navegacao({
     "size-4.5 shrink-0 transition-[scale] duration-200 ease-out group-hover/nav:scale-110";
 
   return (
-    <nav aria-label="Seções do painel" className="flex flex-col gap-1">
+    <nav aria-label={t.painel.sidebar.secoes} className="flex flex-col gap-1">
       <Link
-        href="/"
+        href={`/${lang}`}
         className={classe(false)}
         style={atraso(0)}
-        title={recolhida ? "Voltar à Página Inicial" : undefined}
+        title={recolhida ? t.painel.sidebar.voltar : undefined}
         onClick={aoNavegar}
       >
         <Home className={classeIcone} strokeWidth={1.75} />
-        {recolhida ? null : "Voltar à Página Inicial"}
+        {recolhida ? null : t.painel.sidebar.voltar}
       </Link>
 
-      {ITENS.map((item, indice) => {
+      {itens.map((item, indice) => {
         const Icone = item.icone;
         const ativo = aba === item.aba;
         return (
@@ -222,6 +235,7 @@ export function PainelSidebar() {
 /** Gaveta com a mesma navegação, para telas menores que `lg`. */
 export function PainelSidebarMobile() {
   const [aberta, setAberta] = useState(false);
+  const { t } = useI18n();
 
   return (
     <Sheet open={aberta} onOpenChange={setAberta}>
@@ -232,7 +246,7 @@ export function PainelSidebarMobile() {
           variant="outline"
           size="icon"
           className="fixed top-4 left-4 z-50 shadow-sm lg:hidden"
-          aria-label="Abrir menu"
+          aria-label={t.painel.sidebar.abrirMenu}
         >
           <Menu className="size-4" />
         </Button>
@@ -241,7 +255,7 @@ export function PainelSidebarMobile() {
           substituiria o `bg-background` do componente (tailwind-merge resolve o
           conflito pelo último) e a gaveta ficaria translúcida sobre a página. */}
       <SheetContent side="left" className="w-[280px] gap-0 p-0">
-        <SheetTitle className="sr-only">Seções do painel</SheetTitle>
+        <SheetTitle className="sr-only">{t.painel.sidebar.secoes}</SheetTitle>
         <div className="flex h-full flex-col bg-primary/10">
           <div className="flex h-16 shrink-0 items-center px-4">
             <Marca recolhida={false} />
@@ -250,8 +264,9 @@ export function PainelSidebarMobile() {
             <Navegacao recolhida={false} aoNavegar={() => setAberta(false)} />
           </div>
           <div className="flex items-center gap-2 border-t border-border/60 px-3 py-3">
+            <LocaleToggle />
             <ThemeToggle />
-            <span className="text-xs text-muted-foreground">Tema claro / escuro</span>
+            <span className="text-xs text-muted-foreground">{t.painel.sidebar.tema}</span>
           </div>
         </div>
       </SheetContent>

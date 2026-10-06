@@ -1,6 +1,7 @@
 "use client";
 
 import { useFiltros } from "@/components/painel/filtros-context";
+import { useI18n } from "@/lib/i18n/cliente";
 import { ORCAMENTO } from "@/lib/data";
 
 /**
@@ -8,36 +9,37 @@ import { ORCAMENTO } from "@/lib/data";
  * frase, o que ela mostra. Os valores de `aba` são os mesmos da sidebar e de
  * `painel-conteudo.tsx`.
  */
-const SECOES: Record<string, { titulo: string; descricao: string }> = {
-  analises: {
-    titulo: "Visão Geral",
-    descricao: `Síntese da dotação climática do exercício ${ORCAMENTO.exercicio}, separando a despesa exclusiva — de finalidade integralmente climática — da não exclusiva, que contribui apenas em parte. Fonte: ${ORCAMENTO.fonte}.`,
-  },
-  acoes: {
-    titulo: "Tabela Detalhada",
-    descricao:
-      "Dotação climática por órgão, com a opção de abrir cada eixo temático até a aplicação programada. Exportável em CSV e PDF.",
-  },
-  instrumentos: {
-    titulo: "Instrumentos Legais",
-    descricao:
-      "Base normativa do Orçamento Climático do Estado do Acre: leis, decretos, planos e documentos técnicos que sustentam a metodologia.",
-  },
-  historico: {
-    titulo: "Histórico",
-    descricao:
-      "A legislação ambiental e climática do Acre desde 1965, com a ementa e o link para o texto oficial de cada norma. Os planos plurianuais e as leis de diretrizes trazem quantas vezes cada termo climático aparece no texto, e as leis orçamentárias mostram quanto coube aos órgãos ambientais em cada exercício.",
-  },
-  ods: {
-    titulo: "ODS",
-    descricao:
-      "Alinhamento do Orçamento Climático aos Objetivos de Desenvolvimento Sustentável da Agenda 2030, com o eixo temático a que cada indicador se relaciona.",
-  },
-};
-
 export function PainelBanner() {
   const { aba } = useFiltros();
-  const secao = SECOES[aba] ?? SECOES.analises;
+  const { t, lang } = useI18n();
+
+  const secoes = {
+    analises: {
+      titulo: t.painel.banner.secoes.analises.titulo,
+      descricao: t.painel.banner.secoes.analises.descricao(
+        ORCAMENTO.exercicio,
+        lang === "pt" ? ORCAMENTO.fonte : t.dados.fonteBanner,
+      ),
+    },
+    acoes: {
+      titulo: t.painel.banner.secoes.acoes.titulo,
+      descricao: t.painel.banner.secoes.acoes.descricao,
+    },
+    instrumentos: {
+      titulo: t.painel.banner.secoes.instrumentos.titulo,
+      descricao: t.painel.banner.secoes.instrumentos.descricao,
+    },
+    historico: {
+      titulo: t.painel.banner.secoes.historico.titulo,
+      descricao: t.painel.banner.secoes.historico.descricao,
+    },
+    ods: {
+      titulo: t.painel.banner.secoes.ods.titulo,
+      descricao: t.painel.banner.secoes.ods.descricao,
+    },
+  };
+
+  const secao = secoes[aba as keyof typeof secoes] ?? secoes.analises;
 
   return (
     <section className="revelar-entrada rounded-xl bg-accent px-6 py-4">

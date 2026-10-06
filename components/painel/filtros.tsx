@@ -20,6 +20,8 @@ import {
 } from "@/components/ui/select";
 import { EIXOS } from "@/data/eixos";
 import { EXERCICIOS, NOMES_ORGAOS } from "@/lib/data";
+import { useI18n } from "@/lib/i18n/cliente";
+import { tituloDoEixo } from "@/lib/i18n/conteudo";
 import type { TipoDotacao } from "@/lib/types";
 
 const esquema = z.object({
@@ -35,6 +37,8 @@ const TIPOS: TipoDotacao[] = ["Exclusivo", "Não Exclusivo"];
 
 export function Filtros() {
   const { aba, filtros, ativo, definir, limpar, orgaosFiltrados } = useFiltros();
+  const { t, lang } = useI18n();
+  const textos = t.painel.filtros;
 
   // A URL é a fonte de verdade; `values` mantém o formulário espelhando-a
   // (inclusive ao voltar/avançar no navegador ou ao clicar em "Limpar filtros").
@@ -69,7 +73,7 @@ export function Filtros() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-base">
           <SlidersHorizontal className="size-4 text-muted-foreground" />
-          Filtros
+          {textos.titulo}
         </CardTitle>
         {ativo ? (
           <Button
@@ -79,7 +83,7 @@ export function Filtros() {
             className="col-start-2 row-span-2 row-start-1 self-start justify-self-end"
           >
             <X className="size-4" />
-            Limpar filtros
+            {textos.limpar}
           </Button>
         ) : null}
       </CardHeader>
@@ -90,14 +94,14 @@ export function Filtros() {
           onSubmit={(e) => e.preventDefault()}
         >
           <div className="space-y-2">
-            <Label>Ano</Label>
+            <Label>{textos.ano}</Label>
             <div className="flex h-9 w-full items-center rounded-md border border-input bg-transparent px-3 py-2 text-sm whitespace-nowrap shadow-xs dark:bg-input/30">
               {EXERCICIOS[0]}
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="filtro-eixo">Eixo temático</Label>
+            <Label htmlFor="filtro-eixo">{textos.eixo}</Label>
             <Select
               value={form.watch("eixo")}
               onValueChange={(valor) => {
@@ -109,10 +113,10 @@ export function Filtros() {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value={TODOS}>Todos os eixos temáticos</SelectItem>
+                <SelectItem value={TODOS}>{textos.todosEixos}</SelectItem>
                 {EIXOS.map((eixo) => (
                   <SelectItem key={eixo.numero} value={String(eixo.numero)}>
-                    {eixo.romano} — {eixo.titulo}
+                    {eixo.romano} — {tituloDoEixo(eixo.numero, eixo.titulo, lang)}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -120,7 +124,7 @@ export function Filtros() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="filtro-orgao">Órgão</Label>
+            <Label htmlFor="filtro-orgao">{textos.orgao}</Label>
             <Select
               value={form.watch("orgao")}
               onValueChange={(valor) => {
@@ -132,7 +136,7 @@ export function Filtros() {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="max-h-72">
-                <SelectItem value={TODOS}>Todos os órgãos</SelectItem>
+                <SelectItem value={TODOS}>{textos.todosOrgaos}</SelectItem>
                 {NOMES_ORGAOS.map((nome) => (
                   <SelectItem key={nome} value={nome}>
                     {nome}
@@ -143,7 +147,7 @@ export function Filtros() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="filtro-tipo">Classificação</Label>
+            <Label htmlFor="filtro-tipo">{textos.classificacao}</Label>
             <Select
               value={form.watch("tipo")}
               onValueChange={(valor) => {
@@ -155,10 +159,10 @@ export function Filtros() {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value={TODOS}>Todas as classificações</SelectItem>
+                <SelectItem value={TODOS}>{textos.todasClassificacoes}</SelectItem>
                 {TIPOS.map((tipo) => (
                   <SelectItem key={tipo} value={tipo}>
-                    {tipo}
+                    {t.dados.tipoDotacao[tipo]}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -166,12 +170,12 @@ export function Filtros() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="filtro-busca">Pesquisar</Label>
+            <Label htmlFor="filtro-busca">{textos.pesquisar}</Label>
             <div className="relative">
               <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 id="filtro-busca"
-                placeholder="Pesquisar órgão..."
+                placeholder={textos.placeholder}
                 className="pl-9"
                 {...form.register("busca")}
               />
@@ -182,8 +186,8 @@ export function Filtros() {
         {ativo ? (
           <p className="mt-4 text-sm text-muted-foreground">
             {orgaosFiltrados.length === 0
-              ? "Nenhum órgão corresponde aos filtros."
-              : `${orgaosFiltrados.length} de ${NOMES_ORGAOS.length} órgãos no recorte atual.`}
+              ? textos.nenhum
+              : textos.nOrgaos(orgaosFiltrados.length, NOMES_ORGAOS.length)}
           </p>
         ) : null}
       </CardContent>

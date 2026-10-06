@@ -2,17 +2,11 @@ import { Check, ExternalLink } from "lucide-react";
 import Image from "next/image";
 
 import { Card, CardContent } from "@/components/ui/card";
+import type { Dicionario } from "@/lib/i18n";
 
 const LEI_ORCAMENTO_CLIMATICO = "https://legis.ac.gov.br/detalhar/6600";
 
-const OBJETIVOS = [
-  "Reduzir os impactos das mudanças climáticas (mitigação);",
-  "Preparar o Estado para enfrentar esses impactos (adaptação);",
-  "Proteger populações e territórios vulneráveis;",
-  "Valorizar os recursos naturais e culturais da Amazônia.",
-];
-
-export function Sobre() {
+export function Sobre({ textos }: { textos: Dicionario["landing"]["sobre"] }) {
   return (
     <section id="sobre" className="relative isolate min-h-svh">
       {/* Mesma camada sticky do hero: a foto trava na viewport enquanto o texto
@@ -41,35 +35,28 @@ export function Sobre() {
       <div className="-mt-[100svh] flex min-h-svh flex-col justify-center px-4 py-24 sm:px-6">
         <div className="mx-auto w-full max-w-6xl text-white [text-shadow:0_1px_4px_rgb(0_0_0/0.7)]">
           <h2 data-revelar className="text-3xl font-semibold tracking-tight sm:text-4xl">
-            O que é o Orçamento Climático?
+            {textos.titulo}
           </h2>
 
           <div className="mt-10 grid gap-10 lg:grid-cols-[1.5fr_1fr]">
             <div data-revelar className="space-y-5 text-base leading-relaxed text-white/90">
               <p>
-                O Orçamento Climático é uma ferramenta inédita no Estado do Acre, criada
-                para organizar e acompanhar os gastos públicos destinados à proteção
-                ambiental e ao enfrentamento das mudanças climáticas, conforme estabelece
-                a{" "}
+                {textos.p1a}{" "}
                 <a
                   href={LEI_ORCAMENTO_CLIMATICO}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-semibold text-white underline underline-offset-4 decoration-white/50 hover:decoration-white"
                 >
-                  Lei nº 4.679, de 10 de novembro de 2025
+                  {textos.lei}
                   <ExternalLink className="ml-1 inline size-3.5 align-[-0.1em]" />
                 </a>
                 .
               </p>
-              <p>
-                Mais do que um instrumento contábil, trata-se de um modelo inovador de
-                gestão, que permite identificar, monitorar e avaliar todas as ações
-                governamentais que contribuem para:
-              </p>
+              <p>{textos.p2}</p>
 
               <ul className="space-y-3">
-                {OBJETIVOS.map((objetivo) => (
+                {textos.objetivos.map((objetivo) => (
                   <li key={objetivo} className="flex gap-3">
                     <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-white/20 text-white">
                       <Check className="size-3" strokeWidth={3} />
@@ -79,12 +66,7 @@ export function Sobre() {
                 ))}
               </ul>
 
-              <p>
-                Com essa ferramenta, o Acre busca mensurar com precisão quanto investe em
-                ações climáticas, avaliar a efetividade dos projetos, atrair recursos
-                nacionais e internacionais e fortalecer políticas públicas voltadas à
-                sustentabilidade.
-              </p>
+              <p>{textos.p3}</p>
             </div>
 
             {/* O bg-primary/5 original era translúcido demais para ficar sobre
@@ -92,18 +74,15 @@ export function Sobre() {
             <Card data-revelar className="h-fit border-white/25 bg-black/40 text-white backdrop-blur-sm">
               <CardContent className="space-y-3">
                 <h3 className="text-sm font-semibold tracking-wide uppercase">
-                  Em outras palavras
+                  {textos.cartaoTitulo}
                 </h3>
                 <p className="text-base leading-relaxed">
-                  É a resposta à pergunta{" "}
-                  <strong className="font-semibold">
-                    &ldquo;quanto o Estado do Acre investe, de fato, em clima?&rdquo;
-                  </strong>{" "}
-                  — separando o que é despesa exclusivamente climática do que contribui
-                  de forma parcial, em todas as áreas do governo.
+                  {textos.cartaoA}{" "}
+                  <strong className="font-semibold">{textos.cartaoForte}</strong>{" "}
+                  {textos.cartaoB}
                 </p>
-              </CardContent>
-            </Card>
+            </CardContent>
+          </Card>
           </div>
         </div>
       </div>
@@ -111,7 +90,7 @@ export function Sobre() {
       {/* Crédito da foto, no mesmo canto e no mesmo tratamento do hero: sem
           fundo, a legibilidade vem do branco com sombra sobre a foto. */}
       <p className="absolute right-4 bottom-3 z-10 text-[11px] font-medium text-white/95 [text-shadow:0_1px_4px_rgb(0_0_0/0.85)] sm:right-6">
-        Fotografia: Arison Jardim - SECOM/AC
+        {textos.credito}
       </p>
     </section>
   );

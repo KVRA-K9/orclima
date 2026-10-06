@@ -1,5 +1,6 @@
 "use client";
 
+import { useI18n } from "@/lib/i18n/cliente";
 import { formatBRL, formatPercentual } from "@/lib/format";
 
 export type ItemDica = {
@@ -22,6 +23,8 @@ export function CorpoDica({
   itens: ItemDica[];
   total?: number;
 }) {
+  const { t, lang } = useI18n();
+
   return (
     <div className="min-w-52 rounded-lg border border-border bg-popover px-3 py-2.5 text-popover-foreground shadow-md">
       <p className="text-sm leading-snug font-medium">{titulo}</p>
@@ -35,20 +38,21 @@ export function CorpoDica({
             />
             <span className="text-muted-foreground">{item.rotulo}</span>
             <span className="ml-auto font-medium tabular-nums">
-              {formatBRL(item.valor)}
+              {formatBRL(item.valor, lang)}
             </span>
           </li>
         ))}
       </ul>
       {total !== undefined && itens.length > 1 ? (
         <p className="mt-2 flex justify-between border-t border-border pt-2 text-sm">
-          <span className="text-muted-foreground">Total</span>
-          <span className="font-semibold tabular-nums">{formatBRL(total)}</span>
+          <span className="text-muted-foreground">{t.painel.graficos.dica.total}</span>
+          <span className="font-semibold tabular-nums">{formatBRL(total, lang)}</span>
         </p>
       ) : null}
       {itens.length === 1 && itens[0].participacao !== undefined ? (
         <p className="mt-1.5 text-xs text-muted-foreground">
-          {formatPercentual(itens[0].participacao)} do recorte atual
+          {formatPercentual(itens[0].participacao, 1, lang)}{" "}
+          {t.painel.graficos.dica.doRecorte}
         </p>
       ) : null}
     </div>

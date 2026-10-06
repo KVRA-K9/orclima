@@ -4,6 +4,7 @@ import { Suspense } from "react";
 
 import { FiltrosProvider } from "@/components/painel/filtros-context";
 import { Filtros } from "@/components/painel/filtros";
+import { LocaleToggle } from "@/components/locale-toggle";
 import { PainelBanner } from "@/components/painel/painel-banner";
 import { PainelConteudo } from "@/components/painel/painel-conteudo";
 import {
@@ -14,12 +15,19 @@ import {
 } from "@/components/painel/painel-sidebar";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Skeleton } from "@/components/ui/skeleton";
+import { getDictionary, hasLocale } from "@/lib/i18n";
 
-export const metadata: Metadata = {
-  title: "Painel de dados",
-  description:
-    "Painel interativo do Orçamento Climático do Estado do Acre: dotação por eixo temático, por órgão e por Objetivo de Desenvolvimento Sustentável.",
-};
+export async function generateMetadata({
+  params,
+}: PageProps<"/[lang]/painel">): Promise<Metadata> {
+  const { lang } = await params;
+  const t = await getDictionary(hasLocale(lang) ? lang : "pt");
+
+  return {
+    title: t.meta.painelTitulo,
+    description: t.meta.painelDescricao,
+  };
+}
 
 export default function PainelPage() {
   return (
@@ -33,15 +41,16 @@ export default function PainelPage() {
             <PainelSidebar />
             {/* Fora do <aside>: flutua sobre a borda entre painel e conteúdo. */}
             <SidebarToggle />
-            {/* Alternador de tema no canto superior direito da área de
-                conteúdo — que é colada à direita da viewport, então `fixed`
+            {/* Alternadores de tema e idioma no canto superior direito da área
+                de conteúdo — que é colada à direita da viewport, então `fixed`
                 resolve sem depender da largura da sidebar. A gaveta do mobile
-                mantém o alternador dela; este só existe de `lg` para cima. */}
-            <div className="fixed top-4 right-4 z-60 hidden lg:block">
+                mantém os alternadores dela; estes só existem de `lg` para cima. */}
+            <div className="fixed top-4 right-4 z-60 hidden items-center gap-2 lg:flex">
+              <LocaleToggle className="rounded-full bg-background/80 p-0.5 shadow-sm backdrop-blur" />
               <ThemeToggle
                 variant="outline"
                 size="icon-sm"
-                className="rounded-full shadow-sm"
+                className="rounded-full bg-background/80 shadow-sm backdrop-blur"
               />
             </div>
             {/* Abaixo de `lg` a sidebar some; este é o acesso à navegação. */}

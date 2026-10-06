@@ -15,17 +15,21 @@ import { useFiltros } from "@/components/painel/filtros-context";
 import { CorpoDica } from "@/components/painel/graficos/dica";
 import { MolduraGrafico } from "@/components/painel/graficos/moldura";
 import { totaisPorEixo } from "@/lib/data";
+import { useI18n } from "@/lib/i18n/cliente";
+import { tituloDoEixo } from "@/lib/i18n/conteudo";
 import { formatCompacto } from "@/lib/format";
 
 export function GraficoPorEixo() {
   const { orgaosFiltrados } = useFiltros();
+  const { t, lang } = useI18n();
+  const textos = t.painel.graficos.porEixo;
   const dados = totaisPorEixo(orgaosFiltrados);
   const total = dados.reduce((soma, eixo) => soma + eixo.valor, 0);
 
   return (
     <MolduraGrafico
-      titulo="Orçamento por Eixo"
-      descricao="Dotação climática planejada em cada eixo temático."
+      titulo={textos.titulo}
+      descricao={textos.descricao}
       altura={320}
       className="lg:col-span-2"
       rodape={
@@ -38,7 +42,7 @@ export function GraficoPorEixo() {
                 style={{ backgroundColor: eixo.cor }}
               />
               <span className="text-muted-foreground">
-                {eixo.romano} — {eixo.titulo}
+                {eixo.romano} — {tituloDoEixo(eixo.numero, eixo.titulo, lang)}
               </span>
             </li>
           ))}
@@ -58,7 +62,7 @@ export function GraficoPorEixo() {
           axisLine={false}
           width={76}
           tick={{ fill: "var(--muted-foreground)", fontSize: 12 }}
-          tickFormatter={(valor: number) => formatCompacto(valor)}
+          tickFormatter={(valor: number) => formatCompacto(valor, lang)}
         />
         <Tooltip
           cursor={{ fill: "var(--surface-hover)" }}
@@ -67,10 +71,10 @@ export function GraficoPorEixo() {
             const eixo = payload[0].payload as (typeof dados)[number];
             return (
               <CorpoDica
-                titulo={`${eixo.romano} — ${eixo.titulo}`}
+                titulo={`${eixo.romano} — ${tituloDoEixo(eixo.numero, eixo.titulo, lang)}`}
                 itens={[
                   {
-                    rotulo: "Dotação",
+                    rotulo: textos.dotacao,
                     valor: eixo.valor,
                     cor: eixo.cor,
                     participacao: eixo.participacao,
@@ -104,7 +108,7 @@ export function GraficoPorEixo() {
             // contexto. Sem "R$" — o eixo Y já estabelece a unidade.
             formatter={(valor) => {
               const n = Number(valor ?? 0);
-              return total > 0 && n / total >= 0.05 ? formatCompacto(n) : "";
+              return total > 0 && n / total >= 0.05 ? formatCompacto(n, lang) : "";
             }}
           />
         </Bar>

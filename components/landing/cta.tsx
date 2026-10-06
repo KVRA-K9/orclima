@@ -2,9 +2,19 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { Informativo } from "@/components/landing/informativo";
 import { Button } from "@/components/ui/button";
+import type { Dicionario, Locale } from "@/lib/i18n";
 
-export function CtaPainel() {
+export function CtaPainel({
+  textos,
+  informativo,
+  lang,
+}: {
+  textos: Dicionario["landing"]["cta"];
+  informativo: Dicionario["landing"]["informativo"];
+  lang: Locale;
+}) {
   return (
     <section className="relative isolate min-h-svh">
       {/* Mesma camada sticky das seções anteriores: a foto trava na viewport
@@ -36,24 +46,24 @@ export function CtaPainel() {
             "Em outras palavras" da seção Sobre. */}
         <div data-revelar className="mx-auto w-full max-w-6xl rounded-2xl border border-white/25 bg-black/40 px-6 py-14 text-center text-white backdrop-blur-sm [text-shadow:0_1px_4px_rgb(0_0_0/0.7)] sm:px-12">
           <h2 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-            Explore os dados do Orçamento Climático
+            {textos.titulo}
           </h2>
           <p className="mx-auto mt-4 max-w-2xl leading-relaxed text-balance text-white/85">
-            Consulte a dotação por eixo temático, por órgão e por Objetivo de
-            Desenvolvimento Sustentável, com filtros e exportação dos resultados.
+            {textos.paragrafo}
           </p>
           <Button asChild size="lg" className="mt-8">
-            <Link href="/painel">
-              Acessar dados
+            <Link href={`/${lang}/painel`}>
+              {textos.botao}
               <ArrowRight className="size-4" />
             </Link>
           </Button>
         </div>
+        <Informativo textos={informativo} lang={lang} />
       </div>
 
       {/* Crédito da foto, no mesmo canto e no mesmo tratamento das demais. */}
       <p className="absolute right-4 bottom-3 z-10 text-[11px] font-medium text-white/95 [text-shadow:0_1px_4px_rgb(0_0_0/0.85)] sm:right-6">
-        Fotografia: Agência de Notícias do Acre
+        {textos.credito}
       </p>
     </section>
   );

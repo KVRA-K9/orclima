@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useCallback, useMemo, useState } from "react";
 import {
+  ExternalLink,
   ListChecks,
   MousePointerClick,
   Search,
@@ -18,11 +19,18 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { EIXOS, eixoPorNumero } from "@/data/eixos";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { useI18n } from "@/lib/i18n/cliente";
+import {
+  codDoOds,
+  descricaoDoIndicador,
+  rotuloDoEixo,
+  tituloDoOds,
+} from "@/lib/i18n/conteudo";
 import { formatNumero } from "@/lib/format";
 import {
   STATUS_COR,
   STATUS_ORDEM,
-  STATUS_ROTULO,
   TOTAL_ODS,
   filtrarOds,
   type IndicadorDerivado,
@@ -41,39 +49,58 @@ function StatusDot({ status }: { status: StatusOds }) {
 }
 
 function BadgeEixo({ numero }: { numero: number | null }) {
+  const { t, lang } = useI18n();
   const eixo = numero != null ? eixoPorNumero.get(numero) : undefined;
 
   if (!eixo) {
     return (
       <Badge variant="outline" className="text-muted-foreground">
-        Sem eixo mapeado
+        {t.painel.ods.semEixoMapeado}
       </Badge>
     );
   }
 
   return (
-    <Badge variant="outline" title={eixo.rotulo} className="gap-1.5">
+    <Badge variant="outline" title={rotuloDoEixo(eixo.numero, eixo.rotulo, lang)} className="gap-1.5">
       <span
         aria-hidden
         className="size-2 shrink-0 rounded-[2px]"
         style={{ backgroundColor: eixo.cor }}
       />
-      Eixo {eixo.romano}
+      {t.painel.ods.eixoRotulo(eixo.romano)}
     </Badge>
   );
 }
 
 function IndicadorCard({ indicador }: { indicador: IndicadorDerivado }) {
+  const { t, lang } = useI18n();
+
   return (
     <div className="flex flex-col gap-1.5 rounded-lg bg-muted/40 p-2.5 ring-1 ring-foreground/5">
       <div className="flex items-center gap-1.5">
         <StatusDot status={indicador.status} />
-        <span className="text-xs font-semibold tabular-nums">
-          {indicador.codigo ?? STATUS_ROTULO[indicador.status]}
-        </span>
+        {/* Só o indicador produzido tem para onde ir: a ficha no portal ODS
+            Brasil. Os outros ficam como estão — link para coisa sem dado
+            publicada seria promessa furada. */}
+        {indicador.url ? (
+          <a
+            href={indicador.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={t.painel.ods.verFicha(indicador.codigo ?? "")}
+            className="text-xs font-semibold tabular-nums underline-offset-4 hover:text-primary hover:underline"
+          >
+            {indicador.codigo}
+            <ExternalLink className="ml-1 inline size-3 align-[-0.05em]" />
+          </a>
+        ) : (
+          <span className="text-xs font-semibold tabular-nums">
+            {indicador.codigo ?? t.dados.status[indicador.status]}
+          </span>
+        )}
       </div>
       <p className="text-[11px] leading-snug text-muted-foreground">
-        {indicador.descricao}
+        {descricaoDoIndicador(indicador.codigo, indicador.descricao, lang)}
       </p>
       <div className="mt-auto flex flex-wrap gap-1 pt-0.5">
         <BadgeEixo numero={indicador.eixo} />
@@ -82,7 +109,48 @@ function IndicadorCard({ indicador }: { indicador: IndicadorDerivado }) {
   );
 }
 
+/**
+ * Botão "i" do aviso sobre os links: só os produzidos têm ficha no portal ODS
+ * Brasil para abrir — os demais o Governo Federal (IBGE) ainda não produziu.
+ * Popover, e não Tooltip, pelo mesmo motivo do NotaKpi: a nota precisa ser
+ * alcançável no toque, e tooltip depende de hover.
+ */
+function NotaIndicadores() {
+  const { t } = useI18n();
+  const textos = t.painel.ods.nota;
+
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <button
+          type="button"
+          aria-label={textos.aria}
+          className="flex size-5 shrink-0 items-center justify-center rounded-full bg-amber-500/15 text-[11px] font-semibold text-amber-800 ring-1 ring-amber-500/30 transition-colors hover:bg-amber-500/25 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none dark:bg-amber-400/15 dark:text-amber-400 dark:ring-amber-400/30 dark:hover:bg-amber-400/25"
+        >
+          i
+        </button>
+      </PopoverTrigger>
+      <PopoverContent align="end" className="w-80 p-3">
+        <p className="flex items-center gap-1.5 text-sm font-medium">
+          <TriangleAlert
+            aria-hidden
+            className="size-3.5 shrink-0 text-amber-500"
+          />
+          {textos.titulo}
+        </p>
+        <div className="mt-1.5 space-y-1.5 text-xs leading-relaxed text-muted-foreground">
+          <p>{textos.p1}</p>
+          <p>{textos.p2}</p>
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
 function PainelOds({ ods, onFechar }: { ods: OdsDerivado; onFechar: () => void }) {
+  const { t, lang } = useI18n();
+  const cod = codDoOds(ods.cod, lang);
+
   return (
     <div className="flex animate-in flex-col gap-3 rounded-xl bg-card ring-1 ring-foreground/10 fade-in-0 slide-in-from-bottom-4">
       <div className="flex flex-col gap-2 rounded-t-xl bg-primary/5 p-3">
@@ -96,19 +164,24 @@ function PainelOds({ ods, onFechar }: { ods: OdsDerivado; onFechar: () => void }
               className="size-11 shrink-0 rounded-md object-contain"
             />
             <div>
-              <span className="block text-xs text-muted-foreground">{ods.cod}</span>
-              <h3 className="text-sm leading-tight font-semibold">{ods.titulo}</h3>
+              <span className="block text-xs text-muted-foreground">{cod}</span>
+              <h3 className="text-sm leading-tight font-semibold">
+                {tituloDoOds(ods.numero, ods.titulo, lang)}
+              </h3>
             </div>
           </div>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onFechar}
-            className="shrink-0"
-            aria-label={`Fechar ${ods.cod}`}
-          >
-            Fechar
-          </Button>
+          <div className="flex shrink-0 items-center gap-1">
+            <NotaIndicadores />
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onFechar}
+              className="shrink-0"
+              aria-label={t.comum.fecharX(cod)}
+            >
+              {t.comum.fechar}
+            </Button>
+          </div>
         </div>
 
         {ods.eixosRelacionados.length > 0 ? (
@@ -123,7 +196,7 @@ function PainelOds({ ods, onFechar }: { ods: OdsDerivado; onFechar: () => void }
       <div className="grid auto-rows-fr grid-cols-1 gap-2 p-3 pt-0 sm:grid-cols-2 xl:grid-cols-3">
         {ods.indicadores.length === 0 ? (
           <p className="col-span-full px-1 py-6 text-center text-xs text-muted-foreground">
-            Nenhum indicador deste ODS corresponde aos filtros ativos.
+            {t.painel.ods.vazio}
           </p>
         ) : (
           ods.indicadores.map((indicador) => (
@@ -137,6 +210,8 @@ function PainelOds({ ods, onFechar }: { ods: OdsDerivado; onFechar: () => void }
 
 export function AbaOds() {
   const { filtros } = useFiltros();
+  const { t, lang } = useI18n();
+  const textos = t.painel.ods;
   // Aqui o eixo é multi-seleção, e o `eixo` da query string guarda um só
   // (`Filtros.eixo` é `number | null`, e é assim que as outras abas o leem).
   // Então a lista mora em estado local, semeada com o que veio da URL: quem
@@ -195,21 +270,21 @@ export function AbaOds() {
 
   const tiles: { titulo: string; valor: string; subtitulo: string; icone: LucideIcon }[] = [
     {
-      titulo: "Indicadores mapeados",
-      valor: formatNumero(resumo.indicadores),
-      subtitulo: "Correspondem aos filtros",
+      titulo: textos.tiles.mapeados.titulo,
+      valor: formatNumero(resumo.indicadores, lang),
+      subtitulo: textos.tiles.mapeados.subtitulo,
       icone: ListChecks,
     },
     {
-      titulo: "ODS contemplados",
+      titulo: textos.tiles.contemplados.titulo,
       valor: `${resumo.contemplados}/${TOTAL_ODS}`,
-      subtitulo: "Com ao menos um indicador",
+      subtitulo: textos.tiles.contemplados.subtitulo,
       icone: Target,
     },
     {
-      titulo: "Em construção ou sem dados",
-      valor: formatNumero(resumo.pendentes),
-      subtitulo: "Indicadores ainda não produzidos",
+      titulo: textos.tiles.pendentes.titulo,
+      valor: formatNumero(resumo.pendentes, lang),
+      subtitulo: textos.tiles.pendentes.subtitulo,
       icone: TriangleAlert,
     },
   ];
@@ -252,7 +327,7 @@ export function AbaOds() {
               devolve null aqui —, então este é o controle de eixo desta aba.
               Multi-seleção: vários eixos somam seus indicadores. */}
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-sm font-medium text-muted-foreground">Eixo:</span>
+            <span className="text-sm font-medium text-muted-foreground">{textos.eixo}</span>
             <button
               type="button"
               onClick={() => setEixos([])}
@@ -264,7 +339,7 @@ export function AbaOds() {
                   : PILULA_INATIVA,
               )}
             >
-              Todos
+              {textos.todos}
             </button>
             {EIXOS.map((eixo) => {
               const ativo = eixos.includes(eixo.numero);
@@ -274,7 +349,7 @@ export function AbaOds() {
                   type="button"
                   onClick={() => alternarEixo(eixo.numero)}
                   aria-pressed={ativo}
-                  title={eixo.rotulo}
+                  title={rotuloDoEixo(eixo.numero, eixo.rotulo, lang)}
                   className={cn(
                     PILULA_BASE,
                     ativo ? "border-transparent text-white" : PILULA_INATIVA,
@@ -286,14 +361,14 @@ export function AbaOds() {
                     className="size-2 shrink-0 rounded-[2px]"
                     style={{ backgroundColor: ativo ? "currentColor" : eixo.cor }}
                   />
-                  Eixo {eixo.romano}
+                  {textos.eixoOpcao(eixo.romano)}
                 </button>
               );
             })}
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-sm font-medium text-muted-foreground">Situação:</span>
+            <span className="text-sm font-medium text-muted-foreground">{textos.situacao}</span>
             <button
               type="button"
               onClick={() => setStatus([])}
@@ -305,7 +380,7 @@ export function AbaOds() {
                   : PILULA_INATIVA,
               )}
             >
-              Todas
+              {textos.todas}
             </button>
             {STATUS_ORDEM.map((valor) => {
               const ativo = status.includes(valor);
@@ -323,7 +398,7 @@ export function AbaOds() {
                   )}
                 >
                   <StatusDot status={valor} />
-                  {STATUS_ROTULO[valor]}
+                  {t.dados.status[valor]}
                 </button>
               );
             })}
@@ -335,8 +410,8 @@ export function AbaOds() {
               type="search"
               value={busca}
               onChange={(evento) => setBusca(evento.target.value)}
-              placeholder="Buscar por ODS, código ou texto do indicador..."
-              aria-label="Buscar indicadores dos ODS"
+              placeholder={textos.placeholder}
+              aria-label={textos.ariaBusca}
               className="pl-9"
             />
           </div>
@@ -361,9 +436,9 @@ export function AbaOds() {
               key={ods.numero}
               type="button"
               onClick={() => alternarOds(ods.numero)}
-              aria-label={`${ods.cod} — ${ods.titulo}`}
+              aria-label={`${codDoOds(ods.cod, lang)} — ${tituloDoOds(ods.numero, ods.titulo, lang)}`}
               aria-pressed={selecionado}
-              title={`${ods.cod} — ${ods.titulo}`}
+              title={`${codDoOds(ods.cod, lang)} — ${tituloDoOds(ods.numero, ods.titulo, lang)}`}
               style={{
                 animationDelay: `${indice * 40}ms`,
                 animationFillMode: "backwards",
@@ -397,7 +472,7 @@ export function AbaOds() {
           {selecionados.length > 1 ? (
             <div className="flex items-center justify-between gap-3 text-white/80 [text-shadow:0_1px_3px_rgb(0_0_0/0.5)]">
               <span className="text-sm">
-                {selecionados.length} ODS selecionados
+                {textos.nSelecionados(selecionados.length)}
               </span>
               <Button
                 variant="ghost"
@@ -405,7 +480,7 @@ export function AbaOds() {
                 onClick={() => setOdsSelecionados([])}
                 className="text-white/80 hover:bg-white/10 hover:text-white"
               >
-                Fechar todos
+                {textos.fecharTodos}
               </Button>
             </div>
           ) : null}
@@ -424,9 +499,7 @@ export function AbaOds() {
         // sombra curta — e não de um cartão, que pesaria demais para um aviso.
         <div className="flex items-center justify-center gap-2 px-4 py-6 text-center text-white/80 [text-shadow:0_1px_3px_rgb(0_0_0/0.5)]">
           <MousePointerClick aria-hidden className="size-4 shrink-0" />
-          <p className="text-sm">
-            Clique nos ODS acima para ver seus indicadores — pode escolher mais de um.
-          </p>
+          <p className="text-sm">{textos.dica}</p>
         </div>
       )}
     </div>

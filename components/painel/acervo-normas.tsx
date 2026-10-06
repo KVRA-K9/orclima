@@ -10,14 +10,10 @@ import {
   type TipoNorma,
   type ValoresLOA,
 } from "@/data/historico-leis";
+import { useI18n } from "@/lib/i18n/cliente";
+import { dataLocale, numeroNorma } from "@/lib/i18n/conteudo";
 import { formatBRL, formatCompactoBRL, formatNumero } from "@/lib/format";
-import {
-  CORES_NORMA,
-  DESCRICOES_NORMA,
-  ICONES_NORMA,
-  dataBR,
-  titulo,
-} from "@/lib/normas";
+import { CORES_NORMA, ICONES_NORMA } from "@/lib/normas";
 import { cn } from "@/lib/utils";
 
 /**
@@ -38,6 +34,8 @@ export function SeletorNormas({
   totais: Record<TipoNorma, number>;
   aoSelecionar: (tipo: TipoNorma | null) => void;
 }) {
+  const { t } = useI18n();
+
   return (
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
       {TIPOS_NORMA.map((tipo) => {
@@ -48,7 +46,7 @@ export function SeletorNormas({
             key={tipo}
             type="button"
             aria-pressed={ativo}
-            title={DESCRICOES_NORMA[tipo]}
+            title={t.dados.tiposNorma[tipo].descricao}
             onClick={() => aoSelecionar(ativo ? null : tipo)}
             style={{ "--tinta": tinta(tipo, 25) } as React.CSSProperties}
             className={cn(
@@ -72,7 +70,7 @@ export function SeletorNormas({
             {/* `relative` nos dois: sem isso o ícone, por estar posicionado,
                 pintaria por cima do texto. */}
             <span className="relative text-sm leading-tight font-medium">
-              {tipo}
+              {t.dados.tiposNorma[tipo].rotulo}
             </span>
             <span className="relative text-xs text-muted-foreground tabular-nums">
               {totais[tipo]}
@@ -93,6 +91,8 @@ export function ListaNormas({
   normas: Norma[];
   normaFoco?: string | null;
 }) {
+  const { t } = useI18n();
+
   // O cartão em foco vem do clique numa barra do gráfico e pode estar fora da
   // janela — rolar até ele é o que fecha o gesto.
   useEffect(() => {
@@ -111,7 +111,7 @@ export function ListaNormas({
   if (normas.length === 0) {
     return (
       <p className="rounded-lg border border-dashed border-border px-4 py-8 text-center text-sm text-muted-foreground">
-        Nenhuma norma corresponde a esta busca.
+        {t.painel.acervo.vazio}
       </p>
     );
   }
@@ -136,6 +136,8 @@ export function ListaNormas({
 
 function CartaoNorma({ norma, destacado }: { norma: Norma; destacado: boolean }) {
   const [aberto, setAberto] = useState(destacado);
+  const { t, lang } = useI18n();
+  const textos = t.painel.acervo;
 
   // Sincroniza o cartão com o foco vindo do gráfico durante o render, sem
   // efeito: quem chega pelo gráfico encontra o cartão já aberto.
@@ -145,16 +147,20 @@ function CartaoNorma({ norma, destacado }: { norma: Norma; destacado: boolean })
     setAberto(destacado);
   }
 
-  const nome = titulo(norma.especie, norma.numero);
+  const rotuloEspecie = t.dados.especieNorma[norma.especie] ?? norma.especie;
+  const nome =
+    norma.numero === "—"
+      ? rotuloEspecie
+      : `${rotuloEspecie} ${t.dados.numeroLei} ${numeroNorma(norma.numero, lang)}`;
 
   // Data de assinatura e período, corridos ao lado do número em vez de em
   // etiquetas. O período é o que a norma orça, e não se confunde com a data:
   // uma LOA de dezembro de 2025 é a do exercício de 2026.
   const secundarios = [
-    dataBR(norma.data),
-    norma.exercicio ? `Exercício ${norma.exercicio}` : null,
+    dataLocale(norma.data, lang),
+    norma.exercicio ? textos.exercicio(norma.exercicio) : null,
     norma.quadrienio
-      ? `Quadriênio ${norma.quadrienio[0]}–${norma.quadrienio[1]}`
+      ? textos.quadrienio(norma.quadrienio[0], norma.quadrienio[1])
       : null,
   ].filter(Boolean);
 
@@ -215,11 +221,13 @@ function CartaoNorma({ norma, destacado }: { norma: Norma; destacado: boolean })
       {aberto ? (
         <div className="space-y-3.5 border-t border-foreground/10 px-4 pt-3.5 pb-4">
           {norma.publicacao ? (
-            <Detalhe rotulo="Publicação no DOE">{dataBR(norma.publicacao)}</Detalhe>
+            <Detalhe rotulo={textos.detalhe.publicacao}>
+              {dataLocale(norma.publicacao, lang)}
+            </Detalhe>
           ) : null}
 
           {norma.link ? (
-            <Detalhe rotulo="Texto da norma">
+            <Detalhe rotulo={textos.detalhe.texto}>
               {/* O próprio endereço como rótulo, sem o protocolo: quem lê já
                   vê para onde vai antes de clicar. */}
               <a
@@ -234,10 +242,10 @@ function CartaoNorma({ norma, destacado }: { norma: Norma; destacado: boolean })
             </Detalhe>
           ) : null}
 
-          {norma.orgaos ? <Detalhe rotulo="Órgão">{norma.orgaos}</Detalhe> : null}
+          {norma.orgaos ? <Detalhe rotulo={textos.detalhe.orgao}>{norma.orgaos}</Detalhe> : null}
 
           {norma.abas.length > 1 ? (
-            <Detalhe rotulo="Também consta em">
+            <Detalhe rotulo={textos.detalhe.tambem}>
               {norma.abas.filter((a) => a !== norma.tipo).join(", ")}
             </Detalhe>
           ) : null}
@@ -247,7 +255,7 @@ function CartaoNorma({ norma, destacado }: { norma: Norma; destacado: boolean })
               decreto afirmaria algo que o levantamento não chegou a medir. */}
           {TEM_DESCRITORES.has(norma.tipo) ? (
             norma.citacoes.length ? (
-              <Detalhe rotulo="Descritores climáticos no texto">
+              <Detalhe rotulo={textos.detalhe.descritores}>
                 <Citacoes citacoes={norma.citacoes} />
               </Detalhe>
             ) : (
@@ -255,19 +263,19 @@ function CartaoNorma({ norma, destacado }: { norma: Norma; destacado: boolean })
               // climáticos", e o título repetiria a expressão duas vezes
               // seguidas.
               <p className="text-sm text-muted-foreground">
-                Descritores climáticos não identificados no levantamento.
+                {textos.detalhe.descritoresVazio}
               </p>
             )
           ) : null}
 
           {norma.loa ? (
-            <Detalhe rotulo="Dotação dos órgãos ambientais">
+            <Detalhe rotulo={textos.detalhe.dotacao}>
               <ValoresDaLOA loa={norma.loa} />
             </Detalhe>
           ) : null}
 
           {norma.metas.length ? (
-            <Detalhe rotulo="Metas e prioridades">
+            <Detalhe rotulo={textos.detalhe.metas}>
               <ul className="space-y-1.5">
                 {norma.metas.map((meta, i) => (
                   <li key={i} className="leading-relaxed">
@@ -310,6 +318,7 @@ function Detalhe({
  * tem dezesseis termos, que ocupavam dezesseis linhas.
  */
 function Citacoes({ citacoes }: { citacoes: Citacao[] }) {
+  const { lang } = useI18n();
   const ordenadas = [...citacoes].sort(
     (a, b) => b.total - a.total || a.descritor.localeCompare(b.descritor, "pt-BR"),
   );
@@ -332,7 +341,7 @@ function Citacoes({ citacoes }: { citacoes: Citacao[] }) {
             •
           </span>
           <span className="font-semibold tabular-nums">
-            {formatNumero(c.total)}
+            {formatNumero(c.total, lang)}
           </span>
         </li>
       ))}
@@ -343,28 +352,27 @@ function Citacoes({ citacoes }: { citacoes: Citacao[] }) {
 /* ---------- valores da LOA ---------- */
 
 function ValoresDaLOA({ loa }: { loa: ValoresLOA }) {
+  const { t, lang } = useI18n();
+  const textos = t.painel.acervo;
   const real = loa.moeda === "R$";
   const valor = (n: number) =>
-    real ? formatBRL(n) : `Cr$ ${formatNumero(n)}`;
+    real ? formatBRL(n, lang) : `Cr$ ${formatNumero(n, lang)}`;
 
   return (
     <div className="space-y-2">
       <dl className="space-y-1">
-        <Linha rotulo="Recursos próprios">{valor(loa.rp)}</Linha>
-        <Linha rotulo="Outras fontes">{valor(loa.outrasFontes)}</Linha>
-        <Linha rotulo="Total" forte>
+        <Linha rotulo={textos.valores.rp}>{valor(loa.rp)}</Linha>
+        <Linha rotulo={textos.valores.outras}>{valor(loa.outrasFontes)}</Linha>
+        <Linha rotulo={textos.valores.total} forte>
           {valor(loa.total)}
         </Linha>
       </dl>
       {!real ? (
-        <p className="text-muted-foreground">
-          Exercício anterior ao real: os valores ficam na moeda da época e não
-          entram no gráfico.
-        </p>
+        <p className="text-muted-foreground">{textos.moedaEpoca}</p>
       ) : null}
       <details className="group">
         <summary className="cursor-pointer text-muted-foreground underline-offset-4 hover:underline">
-          {loa.orgaos.length} {loa.orgaos.length === 1 ? "órgão" : "órgãos"}
+          {textos.nOrgaos(loa.orgaos.length)}
         </summary>
         <ul className="mt-1.5 space-y-1">
           {[...loa.orgaos]
@@ -376,7 +384,7 @@ function ValoresDaLOA({ loa }: { loa: ValoresLOA }) {
                   {orgao.nome}
                 </span>
                 <span className="shrink-0 tabular-nums">
-                  {real ? formatCompactoBRL(orgao.total) : formatNumero(orgao.total)}
+                  {real ? formatCompactoBRL(orgao.total, lang) : formatNumero(orgao.total, lang)}
                 </span>
               </li>
             ))}

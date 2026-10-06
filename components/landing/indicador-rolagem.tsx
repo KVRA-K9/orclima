@@ -1,15 +1,23 @@
 import Link from "next/link";
 
+import type { Dicionario } from "@/lib/i18n";
+
 /**
  * Convite de rolagem do hero: linha vertical com um traço descendo em loop e o
  * rótulo em caixa alta. Fica sempre visível e sempre animando — não reage ao
  * scroll, então não precisa de JavaScript no cliente: hover e foco são CSS.
  */
-export function IndicadorRolagem({ destino }: { destino: string }) {
+export function IndicadorRolagem({
+  destino,
+  textos,
+}: {
+  destino: string;
+  textos: Dicionario["landing"]["rolagem"];
+}) {
   return (
     <Link
       href={destino}
-      aria-label="Rolar para a próxima seção"
+      aria-label={textos.aria}
       className="group absolute inset-x-0 bottom-8 z-10 mx-auto flex w-fit flex-col items-center gap-3 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-white/70"
     >
       {/* Trilho da linha: o traço claro é recortado por ele, e por isso parece
@@ -23,7 +31,7 @@ export function IndicadorRolagem({ destino }: { destino: string }) {
       {/* Sombra em vez de fundo: abaixo do rótulo está sempre a foto, escura
           nos dois temas, então a cor fixa em branco é a que funciona. */}
       <span className="text-[11px] font-medium tracking-[0.25em] text-white/75 uppercase [text-shadow:0_1px_4px_rgb(0_0_0/0.85)] transition-colors group-hover:text-white group-focus-visible:text-white">
-        Role para baixo
+        {textos.rotulo}
       </span>
     </Link>
   );

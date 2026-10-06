@@ -35,7 +35,9 @@ import {
   type Norma,
   type TipoNorma,
 } from "@/data/historico-leis";
-import { CORES_NORMA, DESCRICOES_NORMA, ICONES_NORMA } from "@/lib/normas";
+import { CORES_NORMA, ICONES_NORMA } from "@/lib/normas";
+import { useI18n } from "@/lib/i18n/cliente";
+import { dataLocale } from "@/lib/i18n/conteudo";
 import { cn } from "@/lib/utils";
 
 /**
@@ -50,12 +52,7 @@ import { cn } from "@/lib/utils";
 const anoReferencia = (norma: Norma) =>
   norma.exercicio ?? norma.quadrienio?.[0] ?? norma.ano;
 
-const ORDENS = {
-  recentes: "Mais recentes",
-  antigas: "Mais antigas",
-  numero: "Número da norma",
-} as const;
-type Ordem = keyof typeof ORDENS;
+type Ordem = "recentes" | "antigas" | "numero";
 
 /** Doze fecham seis cartões em cada coluna do `xl:columns-2`. */
 const TAMANHO_PAGINA = 12;
@@ -70,6 +67,14 @@ const TAMANHO_PAGINA = 12;
  * que o usuário montou nas outras abas.
  */
 export function AbaHistorico() {
+  const { t, lang } = useI18n();
+  const textos = t.painel.historico;
+  const ordens: Record<Ordem, string> = {
+    recentes: textos.ordens.recentes,
+    antigas: textos.ordens.antigas,
+    numero: textos.ordens.numero,
+  };
+
   const [tipo, setTipo] = useState<TipoNorma | null>(null);
   const [busca, setBusca] = useState("");
   const [decada, setDecada] = useState<string>(TODOS);
@@ -187,35 +192,32 @@ export function AbaHistorico() {
       <div className="grid gap-4 sm:grid-cols-3">
         <Indicador
           icone={Scale}
-          titulo="Normas mapeadas"
+          titulo={textos.indicadores.normas.titulo}
           valor={String(META_LEIS.normas)}
-          subtitulo="leis, decretos e planos com recorte ambiental e climático"
+          subtitulo={textos.indicadores.normas.subtitulo}
         />
         <Indicador
           icone={CalendarRange}
-          titulo="Período coberto"
+          titulo={textos.indicadores.periodo.titulo}
           valor={`${anoMaisAntigo}–${anoMaisNovo}`}
-          subtitulo={`${anoMaisNovo - anoMaisAntigo} anos de legislação`}
+          subtitulo={textos.indicadores.periodo.subtitulo(anoMaisNovo - anoMaisAntigo)}
         />
         <Indicador
           icone={Landmark}
-          titulo="Instrumentos de planejamento"
+          titulo={textos.indicadores.instrumentos.titulo}
           valor={String(
             TOTAL_POR_TIPO.PPA + TOTAL_POR_TIPO.LDO + TOTAL_POR_TIPO.LOA,
           )}
-          subtitulo="entre PPAs, LDOs e LOAs"
+          subtitulo={textos.indicadores.instrumentos.subtitulo}
         />
       </div>
 
       <Card data-revelar>
         <CardContent className="space-y-4">
           <div>
-            <h2 className="text-base font-semibold">Acervo normativo</h2>
+            <h2 className="text-base font-semibold">{textos.acervoTitulo}</h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              Escolha um tipo de norma para percorrer o acervo. O levantamento
-              partiu de descritores como &ldquo;mudanças climáticas&rdquo;,
-              &ldquo;carbono&rdquo;, &ldquo;povos indígenas&rdquo; e
-              &ldquo;bioeconomia&rdquo; para achar cada norma.
+              {textos.acervoTexto}
             </p>
           </div>
 
@@ -255,7 +257,9 @@ export function AbaHistorico() {
               ) : null}
               <div className="relative flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  <h3 className="text-base font-semibold">{tipo}</h3>
+                  <h3 className="text-base font-semibold">
+                    {t.dados.tiposNorma[tipo].rotulo}
+                  </h3>
                 </div>
                 <Button
                   variant="ghost"
@@ -264,11 +268,11 @@ export function AbaHistorico() {
                   className="shrink-0"
                 >
                   <X className="size-4" />
-                  Fechar
+                  {t.comum.fechar}
                 </Button>
               </div>
               <p className="relative text-sm text-muted-foreground">
-                {DESCRICOES_NORMA[tipo]}
+                {t.dados.tiposNorma[tipo].descricao}
               </p>
             </div>
 
@@ -278,7 +282,7 @@ export function AbaHistorico() {
                 onSubmit={(e) => e.preventDefault()}
               >
                 <div className="space-y-2 lg:col-span-2">
-                  <Label htmlFor="busca-normas">Buscar</Label>
+                  <Label htmlFor="busca-normas">{textos.buscar}</Label>
                   <div className="relative">
                     <Search
                       aria-hidden
@@ -292,13 +296,13 @@ export function AbaHistorico() {
                         setPagina(0);
                         setBusca(e.target.value);
                       }}
-                      placeholder="Ementa, número, órgão…"
+                      placeholder={textos.placeholderBusca}
                       className="px-9"
                     />
                     {busca ? (
                       <button
                         type="button"
-                        aria-label="Limpar busca"
+                        aria-label={textos.limparBusca}
                         onClick={() => {
                           setPagina(0);
                           setBusca("");
@@ -312,7 +316,7 @@ export function AbaHistorico() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="decada-normas">Década</Label>
+                  <Label htmlFor="decada-normas">{textos.decada}</Label>
                   <Select
                     value={decada}
                     onValueChange={(valor) => {
@@ -326,7 +330,7 @@ export function AbaHistorico() {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value={TODOS}>
-                        Todas as décadas ({doTipo.length})
+                        {textos.todasDecadas(doTipo.length)}
                       </SelectItem>
                       {decadas.map(([inicio, total]) => (
                         <SelectItem key={inicio} value={String(inicio)}>
@@ -338,7 +342,7 @@ export function AbaHistorico() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="ordem-normas">Ordenar por</Label>
+                  <Label htmlFor="ordem-normas">{textos.ordenarPor}</Label>
                   <Select
                     value={ordem}
                     onValueChange={(valor) => {
@@ -351,7 +355,7 @@ export function AbaHistorico() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      {Object.entries(ORDENS).map(([chave, rotulo]) => (
+                      {Object.entries(ordens).map(([chave, rotulo]) => (
                         <SelectItem key={chave} value={chave}>
                           {rotulo}
                         </SelectItem>
@@ -368,7 +372,7 @@ export function AbaHistorico() {
                 <div className="flex items-center justify-end">
                   <Button variant="ghost" size="sm" onClick={limparFiltros}>
                     <X className="size-4" />
-                    Limpar filtros
+                    {textos.limparFiltros}
                   </Button>
                 </div>
               ) : null}
@@ -391,16 +395,16 @@ export function AbaHistorico() {
           <div className="flex items-center justify-between gap-3 rounded-xl border bg-card px-4 py-2.5 text-sm text-muted-foreground shadow-sm">
             <span>
               {filtradas.length === 0 ? (
-                "Nenhuma norma"
+                textos.rodape.nenhuma
               ) : (
                 <>
-                  Mostrando{" "}
-                  <span className="tabular-nums">
-                    {inicio + 1}–{fim}
-                  </span>{" "}
-                  de <span className="tabular-nums">{filtradas.length}</span>{" "}
-                  {filtradas.length === 1 ? "norma" : "normas"}
-                  {filtroAtivo ? ` (de ${doTipo.length} no total)` : ""}
+                  {textos.rodape.mostrando(
+                    inicio + 1,
+                    fim,
+                    filtradas.length,
+                    textos.rodape.palavra(filtradas.length),
+                  )}
+                  {filtroAtivo ? textos.rodape.deTotal(doTipo.length) : ""}
                 </>
               )}
             </span>
@@ -409,7 +413,7 @@ export function AbaHistorico() {
                 <Button
                   variant="outline"
                   size="icon-sm"
-                  aria-label="Página anterior"
+                  aria-label={t.comum.paginaAnterior}
                   disabled={paginaAtual === 0}
                   onClick={() => irParaPagina(paginaAtual - 1)}
                 >
@@ -421,7 +425,7 @@ export function AbaHistorico() {
                 <Button
                   variant="outline"
                   size="icon-sm"
-                  aria-label="Próxima página"
+                  aria-label={t.comum.proximaPagina}
                   disabled={paginaAtual >= totalPaginas - 1}
                   onClick={() => irParaPagina(paginaAtual + 1)}
                 >
@@ -440,7 +444,7 @@ export function AbaHistorico() {
       <Card data-revelar>
         <CardContent>
           <p className="text-xs leading-relaxed text-muted-foreground">
-            Fonte: {META_LEIS.origem} sobre a base do{" "}
+            {textos.notaFonteA(lang === "pt" ? META_LEIS.origem : t.dados.origemHistorico)}
             <a
               href="https://legis.ac.gov.br"
               target="_blank"
@@ -449,16 +453,17 @@ export function AbaHistorico() {
             >
               legis.ac.gov.br
             </a>
-            . São {META_LEIS.normas} normas, atualizadas em{" "}
-            {META_LEIS.atualizacoes
-              .map((a) => a.atualizadoEm)
-              .filter(Boolean)
-              .sort()
-              .at(-1)
-              ?.split("-")
-              .reverse()
-              .join("/") ?? "—"}
-            .
+            {textos.notaFonteB(
+              META_LEIS.normas,
+              dataLocale(
+                META_LEIS.atualizacoes
+                  .map((a) => a.atualizadoEm)
+                  .filter(Boolean)
+                  .sort()
+                  .at(-1) ?? null,
+                lang,
+              ) ?? "—",
+            )}
           </p>
         </CardContent>
       </Card>

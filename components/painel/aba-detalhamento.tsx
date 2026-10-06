@@ -37,6 +37,8 @@ import { EIXOS } from "@/data/eixos";
 import { aplicarFonte, fontesDisponiveis, resumoDe } from "@/lib/data";
 import { normalizar } from "@/lib/texto";
 import { exportarPdf, exportarXlsx } from "@/lib/export";
+import { useI18n } from "@/lib/i18n/cliente";
+import { rotuloDoEixo, rotuloIntensidade } from "@/lib/i18n/conteudo";
 import {
   formatBRL,
   formatCompactoBRL,
@@ -54,15 +56,6 @@ type Coluna = {
   numerica?: boolean;
 };
 
-const COLUNAS: Coluna[] = [
-  { chave: "nome", rotulo: "Órgão" },
-  { chave: "total", rotulo: "Dotação total", numerica: true },
-  { chave: "exclusivo", rotulo: "Exclusivo", numerica: true },
-  { chave: "naoExclusivo", rotulo: "Não exclusivo", numerica: true },
-  { chave: "tipo", rotulo: "Classificação" },
-  { chave: "eixos", rotulo: "Eixos" },
-];
-
 /** Linhas por página, como na tabela do OCAD. */
 const TAMANHO_PAGINA = 10;
 
@@ -78,6 +71,18 @@ const VAZIO: string[] = [];
 
 export function AbaDetalhamento() {
   const { orgaosFiltrados, resumo, aplicacoesDe } = useFiltros();
+  const { t, lang } = useI18n();
+  const textos = t.painel.detalhamento;
+
+  const colunas: Coluna[] = [
+    { chave: "nome", rotulo: textos.colunas.nome },
+    { chave: "total", rotulo: textos.colunas.total, numerica: true },
+    { chave: "exclusivo", rotulo: textos.colunas.exclusivo, numerica: true },
+    { chave: "naoExclusivo", rotulo: textos.colunas.naoExclusivo, numerica: true },
+    { chave: "tipo", rotulo: textos.colunas.tipo },
+    { chave: "eixos", rotulo: textos.colunas.eixos },
+  ];
+
   const [visao, setVisao] = useState<Visao>("tabela");
   const [fontesEscolhidas, setFontesEscolhidas] = useState<string[]>([]);
   const [ordem, setOrdem] = useState<{ chave: Coluna["chave"]; desc: boolean }>({
@@ -171,7 +176,7 @@ export function AbaDetalhamento() {
   async function baixarXlsx() {
     setGerandoXlsx(true);
     try {
-      await exportarXlsx(linhas, recorte.aplicacoesDe);
+      await exportarXlsx(linhas, recorte.aplicacoesDe, lang);
     } finally {
       setGerandoXlsx(false);
     }
@@ -180,7 +185,7 @@ export function AbaDetalhamento() {
   async function baixarPdf() {
     setGerandoPdf(true);
     try {
-      await exportarPdf(linhas, recorte.aplicacoesDe);
+      await exportarPdf(linhas, recorte.aplicacoesDe, lang);
     } finally {
       setGerandoPdf(false);
     }
@@ -189,7 +194,7 @@ export function AbaDetalhamento() {
   return (
     <Card data-revelar>
       <CardHeader>
-        <CardTitle className="text-base">Tabela detalhada</CardTitle>
+        <CardTitle className="text-base">{textos.titulo}</CardTitle>
         <div className="col-start-2 row-span-2 row-start-1 flex flex-wrap items-start gap-2 self-start justify-self-end">
           {/* A fonte de recursos só existe no grão da ação, então o filtro
               acompanha a visão detalhada. É um botão só: as 43 fontes moram
@@ -222,14 +227,14 @@ export function AbaDetalhamento() {
                 setFontesEscolhidas(VAZIO);
               }}
             >
-              Tabela
+              {textos.visao.tabela}
             </Button>
             <Button
               variant={visao === "detalhado" ? "default" : "ghost"}
               size="sm"
               onClick={() => setVisao("detalhado")}
             >
-              Detalhado
+              {textos.visao.detalhado}
             </Button>
           </div>
 
@@ -244,7 +249,7 @@ export function AbaDetalhamento() {
               disabled={linhas.length === 0 || gerandoXlsx}
             >
               <FileSpreadsheet className="size-4" />
-              {gerandoXlsx ? "Gerando…" : "XLSX"}
+              {gerandoXlsx ? textos.gerando : "XLSX"}
             </Button>
             <Button
               variant="ghost"
@@ -253,7 +258,7 @@ export function AbaDetalhamento() {
               disabled={linhas.length === 0 || gerandoPdf}
             >
               <FileText className="size-4" />
-              {gerandoPdf ? "Gerando…" : "PDF"}
+              {gerandoPdf ? textos.gerando : "PDF"}
             </Button>
           </div>
         </div>
@@ -297,7 +302,7 @@ export function AbaDetalhamento() {
               {/* Faixa de fundo no cabeçalho, e o hover neutralizado para ela
                   não reagir como as linhas de dados. */}
               <TableRow className="bg-muted/40 hover:bg-muted/40">
-                {COLUNAS.map((coluna) => {
+                {colunas.map((coluna) => {
                   const ativa = ordem.chave === coluna.chave;
                   return (
                     <TableHead
@@ -307,7 +312,7 @@ export function AbaDetalhamento() {
                       <button
                         type="button"
                         onClick={() => alternar(coluna.chave)}
-                        aria-label={`Ordenar por ${coluna.rotulo}`}
+                        aria-label={textos.ordenarPor(coluna.rotulo)}
                         className={cn(
                           "inline-flex items-center gap-1 text-xs font-medium tracking-wide text-muted-foreground uppercase transition-colors hover:text-foreground",
                           // Nas colunas de valor o ícone vai para a esquerda do
@@ -337,10 +342,10 @@ export function AbaDetalhamento() {
               {paginaDados.length === 0 ? (
                 <TableRow className="hover:bg-transparent">
                   <TableCell
-                    colSpan={COLUNAS.length}
+                    colSpan={colunas.length}
                     className="h-24 text-center text-muted-foreground"
                   >
-                    Nenhum órgão corresponde aos filtros selecionados.
+                    {t.painel.semOrgaos}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -349,28 +354,30 @@ export function AbaDetalhamento() {
                     <TableCell className="max-w-80">
                       <span className="block font-medium">{orgao.sigla}</span>
                       <span className="block text-xs text-muted-foreground">
-                        {orgao.codigo} · {orgao.intensidade}
+                        {orgao.codigo} · {rotuloIntensidade(orgao.intensidade, t.dados)}
                       </span>
                     </TableCell>
                     <TableCell className="text-right font-medium tabular-nums">
-                      {formatBRL(orgao.total)}
+                      {formatBRL(orgao.total, lang)}
                       <span className="block text-xs font-normal text-muted-foreground">
                         {formatPercentual(
                           resumo.total > 0 ? orgao.total / resumo.total : 0,
+                          1,
+                          lang,
                         )}
                       </span>
                     </TableCell>
                     <TableCell className="text-right tabular-nums">
-                      {formatBRL(orgao.exclusivo)}
+                      {formatBRL(orgao.exclusivo, lang)}
                     </TableCell>
                     <TableCell className="text-right tabular-nums">
-                      {formatBRL(orgao.naoExclusivo)}
+                      {formatBRL(orgao.naoExclusivo, lang)}
                     </TableCell>
                     <TableCell>
                       <Badge
                         variant={orgao.tipo === "Exclusivo" ? "default" : "secondary"}
                       >
-                        {orgao.tipo}
+                        {t.dados.tipoDotacao[orgao.tipo]}
                       </Badge>
                     </TableCell>
                     <TableCell>
@@ -383,7 +390,7 @@ export function AbaDetalhamento() {
                             return (
                               <span
                                 key={numero}
-                                title={eixo?.rotulo}
+                                title={rotuloDoEixo(numero, eixo?.rotulo ?? "", lang)}
                                 className="inline-flex items-center gap-1 rounded border border-border px-1.5 py-0.5 text-xs"
                               >
                                 <span
@@ -410,13 +417,17 @@ export function AbaDetalhamento() {
         <div className="flex items-center justify-between gap-2 text-sm text-muted-foreground">
           <span>
             {linhas.length === 0 ? (
-              "Nenhum órgão"
+              textos.rodape.nenhum
             ) : (
               <>
-                Mostrando {inicio + 1}–{fim} de {linhas.length}{" "}
-                {linhas.length === 1 ? "órgão" : "órgãos"} · total{" "}
+                {textos.rodape.mostrando(
+                  inicio + 1,
+                  fim,
+                  linhas.length,
+                  textos.rodape.palavra(linhas.length),
+                )}{" "}
                 <span className="font-medium text-foreground tabular-nums">
-                  {formatBRL(resumo.total)}
+                  {formatBRL(resumo.total, lang)}
                 </span>
               </>
             )}
@@ -425,7 +436,7 @@ export function AbaDetalhamento() {
             <Button
               variant="outline"
               size="icon-sm"
-              aria-label="Página anterior"
+              aria-label={t.comum.paginaAnterior}
               disabled={paginaAtual === 0}
               onClick={() => setPagina(paginaAtual - 1)}
             >
@@ -437,7 +448,7 @@ export function AbaDetalhamento() {
             <Button
               variant="outline"
               size="icon-sm"
-              aria-label="Próxima página"
+              aria-label={t.comum.proximaPagina}
               disabled={paginaAtual >= totalPaginas - 1}
               onClick={() => setPagina(paginaAtual + 1)}
             >
@@ -473,6 +484,9 @@ function FichaFonte({
   aplicacoesDe: (orgao: string) => Record<string, Aplicacao[]>;
   total: number;
 }) {
+  const { t, lang } = useI18n();
+  const textos = t.painel.detalhamento.fichaFonte;
+
   // O agregado sai do recorte, e não da soma dos valores por fonte: uma ação
   // custeada por duas fontes selecionadas seria contada duas vezes.
   const { valor, acoes } = useMemo(() => {
@@ -488,7 +502,7 @@ function FichaFonte({
   return (
     <div className="rounded-lg border-l-2 border-primary/40 bg-primary/15 p-3 dark:bg-primary/10">
       <p className="text-xs font-medium tracking-wide text-muted-foreground tabular-nums">
-        {varias ? `${opcoes.length} fontes selecionadas` : `Fonte ${opcoes[0].fonte}`}
+        {varias ? textos.varias(opcoes.length) : textos.uma(opcoes[0].fonte)}
       </p>
 
       {varias ? null : (
@@ -497,10 +511,10 @@ function FichaFonte({
 
       <p className="mt-2 text-xs text-muted-foreground">
         <span className="font-medium text-foreground tabular-nums">
-          {formatBRL(valor)}
+          {formatBRL(valor, lang)}
         </span>{" "}
-        · {formatParticipacao(total > 0 ? valor / total : 0)} do recorte · {acoes}{" "}
-        {acoes === 1 ? "ação" : "ações"}
+        · {formatParticipacao(total > 0 ? valor / total : 0, 1, lang)}{" "}
+        {textos.doRecorte} · {acoes} {textos.acoes(acoes)}
       </p>
 
       {varias ? (
@@ -515,7 +529,7 @@ function FichaFonte({
                 <span className="text-muted-foreground">{opcao.nome}</span>
               </span>
               <span className="shrink-0 text-muted-foreground tabular-nums">
-                {formatCompactoBRL(opcao.valor)}
+                {formatCompactoBRL(opcao.valor, lang)}
               </span>
             </li>
           ))}
@@ -523,8 +537,7 @@ function FichaFonte({
       ) : null}
 
       <p className="mt-2 text-xs text-muted-foreground">
-        Valores rateados pela participação {varias ? "das fontes" : "da fonte"} na
-        dotação inicial de cada ação no QDD.
+        {varias ? textos.rateioVaria : textos.rateioUma}
       </p>
     </div>
   );
@@ -554,6 +567,8 @@ function FiltroFonte({
 }) {
   const [aberto, setAberto] = useState(false);
   const [busca, setBusca] = useState("");
+  const { t } = useI18n();
+  const textos = t.painel.detalhamento.filtroFonte;
 
   // A seção de cada fonte vem do posto no orçamento inteiro, e não da posição
   // entre os resultados: senão buscar "fundo" listaria o Fundo Amazônia (2,8%)
@@ -568,15 +583,15 @@ function FiltroFonte({
     termo ? lista.filter((o) => normalizar(`${o.fonte} ${o.nome}`).includes(termo)) : lista;
 
   const secoes = [
-    { titulo: "Maiores", itens: casa(maiores) },
-    { titulo: "Demais", itens: casa(demais) },
+    { titulo: textos.maiores, itens: casa(maiores) },
+    { titulo: textos.demais, itens: casa(demais) },
   ].filter((secao) => secao.itens.length > 0);
 
   return (
     <Popover open={aberto} onOpenChange={setAberto}>
       <PopoverTrigger asChild>
-        <Button variant="ghost" size="sm" aria-label="Filtrar por fonte de recursos">
-          Fonte
+        <Button variant="ghost" size="sm" aria-label={textos.aria}>
+          {textos.botao}
           {escolhidas.length > 0 ? (
             <span className="tabular-nums">· {escolhidas.length}</span>
           ) : null}
@@ -590,24 +605,21 @@ function FiltroFonte({
             type="search"
             value={busca}
             onChange={(evento) => setBusca(evento.target.value)}
-            placeholder="Buscar por código ou nome..."
-            aria-label="Buscar fonte de recursos"
+            placeholder={textos.placeholder}
+            aria-label={textos.ariaBusca}
             className="pl-9"
           />
         </div>
 
         {escolhidas.length > 0 ? (
           <div className="mt-2 flex items-center justify-between gap-2 px-2 text-xs text-muted-foreground">
-            <span>
-              {escolhidas.length}{" "}
-              {escolhidas.length === 1 ? "selecionada" : "selecionadas"}
-            </span>
+            <span>{textos.selecionadas(escolhidas.length)}</span>
             <button
               type="button"
               onClick={limpar}
               className="font-medium text-foreground underline-offset-2 hover:underline"
             >
-              Limpar
+              {textos.limpar}
             </button>
           </div>
         ) : null}
@@ -615,7 +627,7 @@ function FiltroFonte({
         <div className="mt-2 max-h-80 overflow-y-auto">
           {secoes.length === 0 ? (
             <p className="px-2 py-6 text-center text-sm text-muted-foreground">
-              Nenhuma fonte com esse código ou nome.
+              {textos.vazio}
             </p>
           ) : (
             secoes.map((secao) => (
@@ -695,6 +707,7 @@ function LinhaFonte({
   marcada: boolean;
   onClick: () => void;
 }) {
+  const { lang } = useI18n();
   // Um piso de 2% de largura mantém visível a barra das menores fontes, que de
   // outro modo desapareceriam: nesta lista a maior vale 4.243× a menor.
   const largura = teto > 0 ? Math.max((opcao.valor / teto) * 100, 2) : 0;
@@ -723,8 +736,8 @@ function LinhaFonte({
             {opcao.fonte}
           </span>
           <span className="shrink-0 text-xs text-muted-foreground tabular-nums">
-            {formatCompactoBRL(opcao.valor)} ·{" "}
-            {formatParticipacao(total > 0 ? opcao.valor / total : 0)}
+            {formatCompactoBRL(opcao.valor, lang)} ·{" "}
+            {formatParticipacao(total > 0 ? opcao.valor / total : 0, 1, lang)}
           </span>
         </span>
 

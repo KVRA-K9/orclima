@@ -3,22 +3,32 @@ import Link from "next/link";
 import { MapPin } from "lucide-react";
 
 import { Separator } from "@/components/ui/separator";
+import type { Dicionario, Locale } from "@/lib/i18n";
 
-const INSTITUCIONAL = [
-  { rotulo: "SEPLAN", href: "https://seplan.ac.gov.br" },
-  { rotulo: "Diário Oficial do Acre", href: "https://www.diario.ac.gov.br/" },
-  { rotulo: "Legislação estadual", href: "https://legis.ac.gov.br/" },
-  { rotulo: "Portal da Transparência", href: "https://transparencia.ac.gov.br/#/dashboard" },
-];
+export function SiteFooter({
+  textos,
+  lang,
+}: {
+  textos: Dicionario["footer"];
+  lang: Locale;
+}) {
+  const navegacao = [
+    { rotulo: textos.itens.sobre, href: `/${lang}/#sobre` },
+    { rotulo: textos.itens.eixos, href: `/${lang}/#eixos` },
+    { rotulo: textos.itens.instrumentos, href: `/${lang}/painel?aba=instrumentos` },
+    { rotulo: textos.itens.painel, href: `/${lang}/painel` },
+  ];
 
-const NAVEGACAO = [
-  { rotulo: "Sobre", href: "/#sobre" },
-  { rotulo: "Eixos temáticos", href: "/#eixos" },
-  { rotulo: "Instrumentos legais", href: "/painel?aba=instrumentos" },
-  { rotulo: "Painel de dados", href: "/painel" },
-];
+  const institucional = [
+    { rotulo: textos.institucionalItens.seplan, href: "https://seplan.ac.gov.br" },
+    { rotulo: textos.institucionalItens.diario, href: "https://www.diario.ac.gov.br/" },
+    { rotulo: textos.institucionalItens.legislacao, href: "https://legis.ac.gov.br/" },
+    {
+      rotulo: textos.institucionalItens.transparencia,
+      href: "https://transparencia.ac.gov.br/#/dashboard",
+    },
+  ];
 
-export function SiteFooter() {
   return (
     <footer className="relative mt-auto overflow-hidden border-t bg-background">
       <div className="relative z-10 mx-auto w-full max-w-7xl px-4 py-12 md:px-6">
@@ -30,25 +40,25 @@ export function SiteFooter() {
                 então não há troca visível depois da hidratação. */}
             <Image
               src="/logo-governo-acre.png"
-              alt="Governo do Estado do Acre 2023-2026"
+              alt={textos.altLogo}
               width={2086}
               height={987}
               className="h-32 w-auto self-start dark:hidden"
             />
             <Image
               src="/logo-governo-acre-branco.png"
-              alt="Governo do Estado do Acre 2023-2026"
+              alt={textos.altLogo}
               width={2058}
               height={987}
               className="hidden h-32 w-auto self-start dark:block"
             />
           </div>
 
-          <nav aria-label="Navegação" className="flex flex-col gap-2">
+          <nav aria-label={textos.navegacao} className="flex flex-col gap-2">
             <h2 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
-              Navegação
+              {textos.navegacao}
             </h2>
-            {NAVEGACAO.map((item) => (
+            {navegacao.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
@@ -59,11 +69,11 @@ export function SiteFooter() {
             ))}
           </nav>
 
-          <nav aria-label="Institucional" className="flex flex-col gap-2">
+          <nav aria-label={textos.institucional} className="flex flex-col gap-2">
             <h2 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
-              Institucional
+              {textos.institucional}
             </h2>
-            {INSTITUCIONAL.map((item) => (
+            {institucional.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
@@ -81,26 +91,16 @@ export function SiteFooter() {
 
         <div className="flex flex-col gap-3 text-xs text-muted-foreground">
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-            <p>
-              © {new Date().getFullYear()} Governo do Estado do Acre · Secretaria de
-              Estado de Planejamento do Acre - Departamento de Estudos e Planejamento
-              Orçamentário - DEPPO/SEPLAN
-            </p>
+            <p>{textos.copyright(new Date().getFullYear())}</p>
             <p className="flex items-center gap-1.5">
               <MapPin className="size-3.5" />
-              Av. Getúlio Vargas, 232 · Centro · Rio Branco · Acre · CEP 69900-060
+              {textos.endereco}
             </p>
           </div>
           <Separator className="my-2" />
           {/* Equipe conforme o expediente do "Roteiro Operativo para Orçamento
               Climático" (docs/fonte), não a do projeto vizinho. */}
-          <p className="leading-relaxed">
-            Coordenação: Denyscley Oliveira Bandeira (Departamento de Estudos e
-            Planejamento Orçamentário); Equipe Técnica: Ícaro Lebre Gundim (Economista),
-            Luísa Nascimento Ribeiro (Economista), Roseneide Mendonça de Sena Caldera
-            (Especialista Executiva – Administração), Vinicius Carneiro de Farias
-            (Economista).
-          </p>
+          <p className="leading-relaxed">{textos.creditos}</p>
         </div>
       </div>
     </footer>

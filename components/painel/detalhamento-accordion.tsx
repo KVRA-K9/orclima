@@ -10,6 +10,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { EIXOS } from "@/data/eixos";
+import { useI18n } from "@/lib/i18n/cliente";
+import { rotuloDoEixo } from "@/lib/i18n/conteudo";
 import { formatBRL } from "@/lib/format";
 import type { Aplicacao, Orgao } from "@/lib/types";
 
@@ -24,6 +26,8 @@ export function DetalhamentoAccordion({
   fontes: string[];
 }) {
   const { filtros } = useFiltros();
+  const { t } = useI18n();
+  const textos = t.painel.accordion;
 
   const orgaos = useMemo(
     () => [...entrada].sort((a, b) => b.total - a.total),
@@ -34,10 +38,10 @@ export function DetalhamentoAccordion({
     return (
       <p className="py-14 text-center text-sm text-muted-foreground">
         {fontes.length === 0
-          ? "Nenhum órgão corresponde aos filtros selecionados."
+          ? t.painel.semOrgaos
           : fontes.length === 1
-            ? `Nenhum órgão tem ação na fonte ${fontes[0]} dentro dos filtros selecionados.`
-            : `Nenhum órgão tem ação nas ${fontes.length} fontes selecionadas dentro dos filtros selecionados.`}
+            ? textos.vazioUmaFonte(fontes[0])
+            : textos.vazioVariasFontes(fontes.length)}
       </p>
     );
   }
@@ -67,14 +71,19 @@ function ItemOrgao({
   filtroEixo: number | null;
   aplicacoes: Record<string, Aplicacao[]>;
 }) {
+  const { t, lang } = useI18n();
+  const textos = t.painel.accordion;
+
   const eixosPresentes = Object.keys(orgao.eixos)
     .map(Number)
     .sort((a, b) => a - b);
 
   const rotuloTotal =
     filtroEixo != null
-      ? `Total por Eixo Temático (Eixo ${EIXOS.find((e) => e.numero === filtroEixo)?.romano ?? filtroEixo})`
-      : "Total Orçamentário";
+      ? textos.totalPorEixo(
+          EIXOS.find((e) => e.numero === filtroEixo)?.romano ?? String(filtroEixo),
+        )
+      : textos.totalOrcamentario;
 
   return (
     <AccordionItem value={orgao.nome}>
@@ -91,7 +100,7 @@ function ItemOrgao({
                 return (
                   <span
                     key={numero}
-                    title={eixo?.rotulo}
+                    title={rotuloDoEixo(numero, eixo?.rotulo ?? "", lang)}
                     className="inline-flex items-center gap-1 rounded border border-border px-1.5 py-0.5 text-xs"
                   >
                     <span
@@ -104,7 +113,7 @@ function ItemOrgao({
                 );
               })}
             </span>
-            <span className="font-medium tabular-nums">{formatBRL(orgao.total)}</span>
+            <span className="font-medium tabular-nums">{formatBRL(orgao.total, lang)}</span>
           </span>
         </span>
       </AccordionTrigger>
@@ -122,9 +131,13 @@ function ItemOrgao({
               <AccordionItem key={numero} value={`${orgao.nome}|${numero}`}>
                 <AccordionTrigger className="hover:no-underline">
                   <span className="flex flex-1 items-center justify-between gap-2 pr-2 text-sm">
-                    <span className="text-left">{eixo?.rotulo ?? `Eixo ${numero}`}</span>
+                    <span className="text-left">
+                      {eixo
+                        ? rotuloDoEixo(numero, eixo.rotulo, lang)
+                        : textos.eixoN(numero)}
+                    </span>
                     <span className="tabular-nums text-muted-foreground">
-                      {formatBRL(orgao.eixos[String(numero)] ?? 0)}
+                      {formatBRL(orgao.eixos[String(numero)] ?? 0, lang)}
                     </span>
                   </span>
                 </AccordionTrigger>
@@ -146,7 +159,7 @@ function ItemOrgao({
                           {item.aplicacao}
                         </span>
                         <span className="shrink-0 tabular-nums text-muted-foreground">
-                          {formatBRL(item.dotacao)}
+                          {formatBRL(item.dotacao, lang)}
                         </span>
                       </li>
                     ))}
@@ -159,16 +172,16 @@ function ItemOrgao({
 
         <div className="mt-3 flex flex-wrap gap-x-6 gap-y-1 text-xs text-muted-foreground">
           <span>
-            Orçamento Exclusivo:{" "}
-            <strong className="text-foreground">{formatBRL(orgao.exclusivo)}</strong>
+            {textos.exclusivo}{" "}
+            <strong className="text-foreground">{formatBRL(orgao.exclusivo, lang)}</strong>
           </span>
           <span>
-            Orçamento Não Exclusivo:{" "}
-            <strong className="text-foreground">{formatBRL(orgao.naoExclusivo)}</strong>
+            {textos.naoExclusivo}{" "}
+            <strong className="text-foreground">{formatBRL(orgao.naoExclusivo, lang)}</strong>
           </span>
           <span>
             {rotuloTotal}:{" "}
-            <strong className="text-foreground">{formatBRL(orgao.total)}</strong>
+            <strong className="text-foreground">{formatBRL(orgao.total, lang)}</strong>
           </span>
         </div>
       </AccordionContent>

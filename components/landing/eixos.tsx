@@ -4,9 +4,17 @@ import { NotaAno } from "@/components/landing/nota-ano";
 import { Card, CardContent } from "@/components/ui/card";
 import { EIXOS } from "@/data/eixos";
 import { ORGAOS, totaisPorEixo } from "@/lib/data";
+import { descricaoDoEixo, tituloDoEixo } from "@/lib/i18n/conteudo";
+import type { Dicionario, Locale } from "@/lib/i18n";
 import { formatCompactoBRL, formatPercentual } from "@/lib/format";
 
-export function Eixos() {
+export function Eixos({
+  textos,
+  lang,
+}: {
+  textos: Dicionario["landing"]["eixos"];
+  lang: Locale;
+}) {
   const totais = new Map(totaisPorEixo(ORGAOS).map((t) => [t.numero, t]));
 
   return (
@@ -36,12 +44,10 @@ export function Eixos() {
               tema, que é opaco e já se sustenta sozinho. */}
           <div data-revelar className="text-white [text-shadow:0_1px_4px_rgb(0_0_0/0.7)]">
             <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-              Eixos temáticos
+              {textos.titulo}
             </h2>
             <p className="mt-4 max-w-3xl leading-relaxed text-white/85">
-              Aplicado de forma transversal e integrada a todas as áreas do governo — como
-              saúde, educação, infraestrutura, agricultura, meio ambiente e assistência
-              social — o Orçamento Climático estrutura-se em sete eixos temáticos:
+              {textos.subtitulo}
             </p>
           </div>
 
@@ -81,18 +87,20 @@ export function Eixos() {
                       {String(eixo.numero).padStart(2, "0")}
                     </span>
 
-                    <h3 className="leading-snug font-semibold">{eixo.titulo}</h3>
+                    <h3 className="leading-snug font-semibold">
+                      {tituloDoEixo(eixo.numero, eixo.titulo, lang)}
+                    </h3>
                     <p className="text-sm leading-relaxed text-muted-foreground">
-                      {eixo.descricao}
+                      {descricaoDoEixo(eixo, lang)}
                     </p>
 
                     {total ? (
                       <p className="flex flex-wrap items-center gap-x-1.5 gap-y-1 border-t border-border/60 pt-3 text-sm">
                         <span className="font-semibold">
-                          {formatCompactoBRL(total.valor)}
+                          {formatCompactoBRL(total.valor, lang)}
                         </span>
                         <span className="text-muted-foreground">
-                          · {formatPercentual(total.participacao)} do total
+                          · {formatPercentual(total.participacao, 1, lang)} {textos.doTotal}
                         </span>
                         <NotaAno />
                       </p>
@@ -107,7 +115,7 @@ export function Eixos() {
 
       {/* Crédito da foto, no mesmo canto e no mesmo tratamento do hero. */}
       <p className="absolute right-4 bottom-3 z-10 text-[11px] font-medium text-white/95 [text-shadow:0_1px_4px_rgb(0_0_0/0.85)] sm:right-6">
-        Fotografia: Talita Oliveira - SECOM/AC
+        {textos.credito}
       </p>
     </section>
   );
