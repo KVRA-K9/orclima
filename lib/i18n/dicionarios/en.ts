@@ -5,10 +5,10 @@ export const en: Dicionario = {
     siteTitulo: "Climate Budget of the State of Acre",
     siteTemplate: "%s | Climate Budget of Acre",
     siteDescricao:
-      "A first-of-its-kind tool for organizing and tracking public spending dedicated to environmental protection and to confronting climate change in the State of Acre.",
-    painelTitulo: "Data dashboard",
+      "A pioneering tool for organizing and tracking public spending dedicated to environmental protection and tackling climate change in the State of Acre.",
+    painelTitulo: "Data Dashboard",
     painelDescricao:
-      "Interactive dashboard for the Climate Budget of the State of Acre: allocation by thematic axis, by agency and by Sustainable Development Goal.",
+      "Interactive dashboard for the Climate Budget of the State of Acre: allocation by thematic axis, agency, and Sustainable Development Goal.",
   },
 
   comum: {
@@ -26,8 +26,8 @@ export const en: Dicionario = {
 
   header: {
     sobre: "About",
-    eixos: "Axes",
-    acessarPainel: "Open the dashboard",
+    eixos: "Thematic Axes",
+    acessarPainel: "Access Dashboard",
     abrirMenu: "Open menu",
     navegacao: "Navigation",
     altLogo: "SEPLAN — State Secretariat for Planning",
@@ -38,19 +38,19 @@ export const en: Dicionario = {
     institucional: "Institutional",
     itens: {
       sobre: "About",
-      eixos: "Thematic axes",
-      instrumentos: "Legal instruments",
-      painel: "Data dashboard",
+      eixos: "Thematic Axes",
+      instrumentos: "Legal Instruments",
+      painel: "Data Dashboard",
     },
     institucionalItens: {
       seplan: "SEPLAN",
       diario: "Official Gazette of Acre",
-      legislacao: "State legislation",
+      legislacao: "State Legislation",
       transparencia: "Transparency Portal",
     },
     altLogo: "Government of the State of Acre 2023-2026",
     copyright: (ano) =>
-      `© ${ano} Government of the State of Acre · State Secretariat for Planning of Acre - Department of Studies and Budget Planning - DEPPO/SEPLAN`,
+      `© ${ano} Government of the State of Acre · State Secretariat for Planning of Acre – Department of Studies and Budget Planning – DEPPO/SEPLAN`,
     endereco: "Av. Getúlio Vargas, 232 · Centro · Rio Branco · Acre · CEP 69900-060",
     creditos:
       "Coordination: Denyscley Oliveira Bandeira (Department of Studies and Budget Planning); Technical Team: Ícaro Lebre Gundim (Economist), Luísa Nascimento Ribeiro (Economist), Roseneide Mendonça de Sena Caldera (Executive Specialist – Administration), Vinicius Carneiro de Farias (Economist).",
@@ -61,85 +61,85 @@ export const en: Dicionario = {
       tituloA: "Climate Budget",
       tituloB: "of the State of Acre",
       paragrafo:
-        "A first-of-its-kind tool for organizing and tracking public spending dedicated to environmental protection and to confronting climate change.",
-      botao: "Open the interactive dashboard",
+        "A pioneering tool for organizing and tracking public spending dedicated to environmental protection and tackling climate change.",
+      botao: "Access the interactive dashboard",
       credito: "Photo: Pedro Devani - SECOM/AC",
     },
     sobre: {
       titulo: "What is the Climate Budget?",
-      p1a: "The Climate Budget is a first-of-its-kind tool in the State of Acre, created to organize and track public spending dedicated to environmental protection and to confronting climate change, as established by",
+      p1a: "The Climate Budget is a pioneering tool in the State of Acre, created to organize and track public spending dedicated to environmental protection and tackling climate change, as established by",
       lei: "State Law No. 4,679, of November 10, 2025",
       p2: "More than an accounting instrument, it is an innovative management model that makes it possible to identify, monitor and evaluate every government action that contributes to:",
       objetivos: [
         "Reducing the impacts of climate change (mitigation);",
         "Preparing the State to face those impacts (adaptation);",
         "Protecting vulnerable populations and territories;",
-        "Valuing the natural and cultural resources of the Amazon.",
+        "Valuing the natural and cultural wealth of the Amazon.",
       ],
       p3: "With this tool, Acre seeks to measure precisely how much it invests in climate action, evaluate the effectiveness of its projects, attract national and international funding, and strengthen public policies aimed at sustainability.",
       cartaoTitulo: "In other words",
-      cartaoA: "It is the answer to the question",
-      cartaoForte: "“how much does the State of Acre actually invest in climate?”",
-      cartaoB: "— separating what is exclusively climate expenditure from what contributes only in part, across every area of government.",
+      cartaoA: "It answers the question:",
+      cartaoForte: "“How much does the State of Acre actually invest in climate action?”",
+      cartaoB: "— distinguishing expenditure dedicated exclusively to climate from that which contributes only partially, across all areas of government.",
       credito: "Photo: Arison Jardim - SECOM/AC",
     },
     eixos: {
-      titulo: "Thematic axes",
+      titulo: "Thematic Axes",
       subtitulo:
-        "Applied in a cross-cutting, integrated way across all areas of government — such as health, education, infrastructure, agriculture, the environment and social assistance — the Climate Budget is organized into seven thematic axes:",
-      doTotal: "of the total",
+        "Applied in a cross-cutting, integrated manner across all areas of government — such as health, education, infrastructure, agriculture, environment, and social assistance — the Climate Budget is organized into seven thematic axes:",
+      doTotal: "of total",
       credito: "Photo: Talita Oliveira - SECOM/AC",
     },
     cta: {
-      titulo: "Explore the Climate Budget data",
+      titulo: "Explore Climate Budget Data",
       paragrafo:
-        "Browse the allocation by thematic axis, by agency and by Sustainable Development Goal, with filters and export of the results.",
+        "Browse allocations by thematic axis, agency, and Sustainable Development Goal, with filters and data export options.",
       botao: "Access the data",
       credito: "Photo: Agência de Notícias do Acre",
     },
     informativo: {
-      titulo: "Learn more about the Climate Budget",
+      titulo: "Learn More About the Climate Budget",
       paragrafo:
-        "A compilation of information about the tool: the foundations, the climate lens methodology, the seven thematic axes, and the programs with climate impact in the state.",
+        "A comprehensive brief on the tool: legal foundations, climate lens methodology, seven thematic axes, and programs with climate impact across the state.",
       botao: "Download PDF",
     },
     notaAno: {
-      texto: (ano) => `The values refer to the year ${ano}`,
+      texto: (ano) => `Values refer to the year ${ano}`,
     },
     rolagem: {
-      aria: "Scroll to the next section",
+      aria: "Scroll to next section",
       rotulo: "Scroll down",
     },
   },
 
   painel: {
-    semOrgaos: "No agency matches the selected filters.",
+    semOrgaos: "No agencies match the selected filters.",
     banner: {
       secoes: {
         analises: {
           titulo: "Overview",
           descricao: (exercicio, fonte) =>
-            `An overview of the fiscal year ${exercicio} climate allocation, separating exclusive expenditure — whose purpose is entirely climatic — from non-exclusive, which contributes only in part. Source: ${fonte}.`,
+            `Summary of fiscal year ${exercicio} climate allocations, distinguishing exclusive expenditure — whose purpose is entirely climate-related — from non-exclusive, which contributes only partially. Source: ${fonte}.`,
         },
         acoes: {
           titulo: "Detailed Table",
           descricao:
-            "Climate allocation by agency, with the option of expanding each thematic axis down to the planned action. Exportable in XLSX and PDF.",
+            "Climate allocation by agency, with the option to expand each thematic axis down to planned actions. Exportable to XLSX and PDF.",
         },
         instrumentos: {
           titulo: "Legal Instruments",
           descricao:
-            "The normative framework of the Climate Budget of the State of Acre: laws, decrees, plans and technical documents that underpin the methodology.",
+            "Regulatory and legal framework of the Climate Budget of the State of Acre: laws, decrees, plans, and technical documents underpinning the methodology.",
         },
         historico: {
-          titulo: "History",
+          titulo: "Legislative History",
           descricao:
-            "Acre's environmental and climate legislation since 1965, with the summary of and the link to the official text of each norm. The multiyear plans and budget guidelines laws show how many times each climate term appears in the text, and the annual budget laws show how much went to the environmental agencies in each fiscal year.",
+            "Environmental and climate legislation in Acre since 1965, with summaries and links to the official text of each legal act. Multiyear plans (PPA) and budget guidelines laws (LDO) display keyword frequency for climate terms, while annual budget laws (LOA) show allocations to environmental agencies for each fiscal year.",
         },
         ods: {
           titulo: "SDGs",
           descricao:
-            "Alignment of the Climate Budget with the Sustainable Development Goals of the 2030 Agenda, with the thematic axis each indicator relates to.",
+            "Alignment of the Climate Budget with the Sustainable Development Goals (SDGs) of the 2030 Agenda, indicating the thematic axis to which each indicator relates.",
         },
       },
     },
@@ -151,7 +151,7 @@ export const en: Dicionario = {
         historico: "History",
         ods: "SDGs",
       },
-      voltar: "Back to the home page",
+      voltar: "Back to Home",
       expandir: "Expand side menu",
       recolher: "Collapse side menu",
       abrirMenu: "Open menu",
@@ -171,7 +171,7 @@ export const en: Dicionario = {
       todosEixos: "All thematic axes",
       todosOrgaos: "All agencies",
       todasClassificacoes: "All classifications",
-      nenhum: "No agency matches the filters.",
+      nenhum: "No agencies match the filters.",
       nOrgaos: (n, m) => `${n} of ${m} agencies in the current selection.`,
     },
     kpis: {
@@ -181,7 +181,7 @@ export const en: Dicionario = {
       },
       exclusivoPlanejado: {
         titulo: "Planned Exclusive Climate Budget",
-        doTotal: "of the total",
+        doTotal: "of total",
       },
       dotacaoExclusiva: {
         titulo: "Exclusive Allocation",
@@ -192,10 +192,10 @@ export const en: Dicionario = {
         rotuloValor: "Planned actions",
       },
       notaValidacao: "Under validation",
-      notaAria: (nota, titulo) => `${nota} — about ${titulo}`,
+      notaAria: (nota, titulo) => `${nota} — regarding ${titulo}`,
     },
     detalhamento: {
-      titulo: "Detailed table",
+      titulo: "Detailed Table",
       colunas: {
         nome: "Agency",
         total: "Total allocation",
@@ -211,40 +211,40 @@ export const en: Dicionario = {
       gerando: "Generating…",
       ordenarPor: (rotulo) => `Sort by ${rotulo}`,
       rodape: {
-        nenhum: "No agency",
+        nenhum: "No agencies",
         palavra: (n) => (n === 1 ? "agency" : "agencies"),
         mostrando: (inicio, fim, n, palavra) =>
           `Showing ${inicio}–${fim} of ${n} ${palavra} · total`,
       },
       filtroFonte: {
-        botao: "Funding source",
+        botao: "Funding Source",
         aria: "Filter by funding source",
         placeholder: "Search by code or name...",
         ariaBusca: "Search funding sources",
-        selecionadas: (n) => `${n} ${n === 1 ? "selected" : "selected"}`,
+        selecionadas: (n) => `${n} selected`,
         limpar: "Clear",
         vazio: "No funding source with that code or name.",
-        maiores: "Largest",
-        demais: "Others",
+        maiores: "Major Sources",
+        demais: "Other Sources",
       },
       fichaFonte: {
         varias: (n) => `${n} funding sources selected`,
         uma: (codigo) => `Funding source ${codigo}`,
-        doRecorte: "of the current selection",
+        doRecorte: "of current selection",
         acoes: (n) => (n === 1 ? "action" : "actions"),
         rateioVaria:
-          "Values prorated by the funding sources' share in the initial allocation of each action in the QDD.",
+          "Values prorated by funding sources' share in the initial allocation of each action in the QDD.",
         rateioUma:
-          "Values prorated by the funding source's share in the initial allocation of each action in the QDD.",
+          "Values prorated by funding source's share in the initial allocation of each action in the QDD.",
       },
     },
     accordion: {
       vazioUmaFonte: (fonte) =>
-        `No agency has an action funded by source ${fonte} within the selected filters.`,
+        `No agency has actions funded by source ${fonte} within the selected filters.`,
       vazioVariasFontes: (n) =>
-        `No agency has an action funded by the ${n} selected sources within the selected filters.`,
+        `No agency has actions funded by the ${n} selected sources within the selected filters.`,
       totalPorEixo: (romano) => `Total by Thematic Axis (Axis ${romano})`,
-      totalOrcamentario: "Budget Total",
+      totalOrcamentario: "Total Budget",
       exclusivo: "Exclusive Budget:",
       naoExclusivo: "Non-exclusive Budget:",
       eixoN: (n) => `Axis ${n}`,
@@ -252,8 +252,8 @@ export const en: Dicionario = {
     historico: {
       indicadores: {
         normas: {
-          titulo: "Mapped norms",
-          subtitulo: "laws, decrees and plans with an environmental and climate scope",
+          titulo: "Mapped legal acts",
+          subtitulo: "laws, decrees, and plans with an environmental and climate scope",
         },
         periodo: {
           titulo: "Period covered",
@@ -261,12 +261,12 @@ export const en: Dicionario = {
         },
         instrumentos: {
           titulo: "Planning instruments",
-          subtitulo: "across PPAs, LDOs and LOAs",
+          subtitulo: "across PPAs, LDOs, and LOAs",
         },
       },
-      acervoTitulo: "Body of legislation",
+      acervoTitulo: "Legislative Collection",
       acervoTexto:
-        "Choose a type of norm to browse the collection. The survey started from descriptors such as “climate change”, “carbon”, “indigenous peoples” and “bioeconomy” to find each norm.",
+        "Select a type of legal act to browse the collection. The survey used descriptors such as “climate change”, “carbon”, “indigenous peoples”, and “bioeconomy” to locate each act.",
       buscar: "Search",
       placeholderBusca: "Summary, number, agency…",
       limparBusca: "Clear search",
@@ -276,24 +276,24 @@ export const en: Dicionario = {
       ordens: {
         recentes: "Most recent",
         antigas: "Oldest",
-        numero: "Norm number",
+        numero: "Act number",
       },
       limparFiltros: "Clear filters",
       rodape: {
-        nenhuma: "No norms",
-        palavra: (n) => (n === 1 ? "norm" : "norms"),
+        nenhuma: "No legal acts",
+        palavra: (n) => (n === 1 ? "act" : "acts"),
         mostrando: (inicio, fim, n, palavra) =>
           `Showing ${inicio}–${fim} of ${n} ${palavra}`,
-        deTotal: (m) => ` (of ${m} in total)`,
+        deTotal: (m) => ` (of ${m} total)`,
       },
-      notaFonteA: (origem) => `Source: ${origem}, on top of the `,
-      notaFonteB: (n, data) => ` database. It comprises ${n} norms, updated on ${data}.`,
+      notaFonteA: (origem) => `Source: ${origem}, based on the `,
+      notaFonteB: (n, data) => ` database. It comprises ${n} legal acts, updated on ${data}.`,
     },
     acervo: {
-      vazio: "No norm matches this search.",
+      vazio: "No legal acts match this search.",
       detalhe: {
-        publicacao: "Published in the DOE",
-        texto: "Norm text",
+        publicacao: "Published in the DOE (Official Gazette)",
+        texto: "Official text",
         orgao: "Agency",
         tambem: "Also listed under",
         descritores: "Climate descriptors in the text",
@@ -307,7 +307,7 @@ export const en: Dicionario = {
         total: "Total",
       },
       moedaEpoca:
-        "Fiscal years before the real: values are in the currency of the time and are not included in the chart.",
+        "Fiscal years prior to the Real Plan: values remain in the currency of the period and are excluded from the chart.",
       nOrgaos: (n) => `${n} ${n === 1 ? "agency" : "agencies"}`,
       exercicio: (n) => `Fiscal year ${n}`,
       quadrienio: (a, b) => `Four-year period ${a}–${b}`,
@@ -315,26 +315,26 @@ export const en: Dicionario = {
     ods: {
       semEixoMapeado: "No axis mapped",
       eixoRotulo: (romano) => `Axis ${romano}`,
-      verFicha: (codigo) => `View the factsheet for ${codigo} on the SDG Brazil portal`,
+      verFicha: (codigo) => `View factsheet for ${codigo} on the SDG Brazil portal`,
       nota: {
-        titulo: "About the indicator links",
-        p1: "Codes with a link lead to the indicator's factsheet on the SDG Brazil portal, by IBGE.",
-        p2: "The remaining ones are under development, under review, or have no data produced by the Federal Government.",
+        titulo: "About indicator links",
+        p1: "Codes with a link lead to the indicator's factsheet on the SDG Brazil portal, maintained by IBGE.",
+        p2: "The remaining indicators are under development, under review, or do not yet have data produced by the Federal Government.",
         aria:
-          "About the indicator links: codes with a link lead to the indicator's factsheet on the SDG Brazil portal, by IBGE; the remaining ones are under development, under review, or have no data produced by the Federal Government",
+          "About indicator links: codes with a link lead to the indicator's factsheet on the SDG Brazil portal, maintained by IBGE; the remaining indicators are under development, under review, or do not yet have data produced by the Federal Government.",
       },
-      vazio: "No indicator of this SDG matches the active filters.",
+      vazio: "No indicators for this SDG match the active filters.",
       tiles: {
         mapeados: {
           titulo: "Mapped indicators",
-          subtitulo: "Match the current filters",
+          subtitulo: "Matching current filters",
         },
         contemplados: {
           titulo: "SDGs addressed",
           subtitulo: "With at least one indicator",
         },
         pendentes: {
-          titulo: "Under development or without data",
+          titulo: "Under development or no data",
           subtitulo: "Indicators not yet produced",
         },
       },
@@ -343,7 +343,7 @@ export const en: Dicionario = {
       eixoOpcao: (romano) => `Axis ${romano}`,
       situacao: "Status:",
       todas: "All",
-      placeholder: "Search by SDG, code or indicator text...",
+      placeholder: "Search by SDG, code, or indicator text...",
       ariaBusca: "Search SDG indicators",
       nSelecionados: (n) => `${n} SDGs selected`,
       fecharTodos: "Close all",
@@ -352,45 +352,45 @@ export const en: Dicionario = {
     graficos: {
       dica: {
         total: "Total",
-        doRecorte: "of the current selection",
+        doRecorte: "of current selection",
       },
       composicao: {
-        titulo: "Climate Budget composition",
+        titulo: "Climate Budget Composition",
         descricao: "Exclusively climate allocation compared with the share that contributes only partially.",
         valor: "Value",
       },
       porEixo: {
-        titulo: "Budget by Axis",
-        descricao: "Climate allocation planned for each thematic axis.",
+        titulo: "Budget by Thematic Axis",
+        descricao: "Planned climate allocation for each thematic axis.",
         dotacao: "Allocation",
       },
       porOrgao: {
-        titulo: "Budget by Secretariat",
+        titulo: "Budget by Agency",
         descricao: (n) =>
-          `${n} ${n === 1 ? "agency" : "agencies"} in the current selection, from largest to smallest.`,
+          `${n} ${n === 1 ? "agency" : "agencies"} in the current selection, ordered from largest to smallest.`,
         exclusivo: "Exclusive",
         naoExclusivo: "Non-exclusive",
       },
       exclusivoPorEixo: {
-        titulo: "Exclusive × Non-exclusive by axis",
+        titulo: "Exclusive × Non-exclusive by Axis",
         descricao:
-          "Estimated split within each axis — the source reports the classification at the agency level, prorated here by the axis share.",
+          "Estimated breakdown within each axis — the source provides classification at the agency level, prorated here by the axis share.",
         exclusivo: "Exclusive",
         naoExclusivo: "Non-exclusive",
       },
       serieLoa: {
-        titulo: "The environmental agencies' allocation, fiscal year by fiscal year",
+        titulo: "Environmental Agencies' Allocation by Fiscal Year",
         descricao: (primeiro, ultimo) =>
-          `Sum of the environmental agencies' allocations in each Annual Budget Law, from ${primeiro} to ${ultimo}. Click a bar to open the law for that fiscal year.`,
+          `Sum of allocations to environmental agencies in each Annual Budget Law (LOA), from ${primeiro} to ${ultimo}. Click a bar to open the law for that fiscal year.`,
         rp: "Own resources",
         outrasFontes: "Other sources",
-        pandemiaTitulo: (a, b) => `COVID-19 pandemic in the fiscal years ${a} to ${b}`,
+        pandemiaTitulo: (a, b) => `COVID-19 pandemic across fiscal years ${a} to ${b}`,
         pandemiaTexto:
-          "The emergency was declared in March 2020. Brazil ended it in May 2022 (Ordinance GM/MS No. 913/2022), and the WHO in May 2023. The span runs through 2024 because the budgetary effects outlast the end of the emergency.",
+          "The public health emergency was declared in March 2020. Brazil declared it ended in May 2022 (Ordinance GM/MS No. 913/2022), and the WHO in May 2023. The period extends through 2024 because budgetary effects outlasted the formal end of the emergency.",
         notaCruzeiro: (a, b) =>
-          `The fiscal years from ${a} to ${b} were budgeted in cruzeiros and are left out of the chart. Converting those values to reais at a fixed rate would produce a meaningless number, because inflation at the time eroded the currency month by month. Those laws are in the list below, with the value in the currency of the time.`,
+          `Fiscal years from ${a} to ${b} were budgeted in cruzeiros and are excluded from the chart. Converting those values to reais at a fixed rate would produce misleading figures due to historical hyperinflation. Those laws are listed below with values in the original currency of the period.`,
         notaRecorte:
-          "This series adds up what went to the environmental agencies and funds in each fiscal year. The rest of the dashboard uses a different selection, by thematic axis, which reaches climate allocations from any secretariat. That is why the two totals do not match.",
+          "This series totals allocations to environmental agencies and funds in each fiscal year. The remainder of the dashboard uses a thematic axis methodology that encompasses climate allocations across all government secretariats. Consequently, the two totals do not match.",
         dica: (exercicio, numero) => `Fiscal year ${exercicio}, Law No. ${numero}`,
       },
     },
@@ -410,32 +410,32 @@ export const en: Dicionario = {
       "Lei Ordinária": {
         rotulo: "Ordinary Law",
         descricao:
-          "Laws passed by the Legislative Assembly on the environment and climate. Those that create or reorganize agencies are listed under Administrative Structure.",
+          "Statutes enacted by the Legislative Assembly on environment and climate. Those establishing or restructuring agencies are listed under Administrative Structure.",
       },
       Decreto: {
         rotulo: "Decree",
         descricao:
-          "Acts of the governor. They regulate environmental laws, create committees and plans, and declare states of emergency.",
+          "Executive decrees issued by the Governor. They regulate environmental statutes, establish committees and plans, and declare states of emergency.",
       },
       "Estrutura Administrativa": {
         rotulo: "Administrative Structure",
         descricao:
-          "Laws that create and reorganize the State's environmental agencies and the careers of their civil servants.",
+          "Laws that establish and reorganize the State's environmental agencies and civil service career frameworks.",
       },
       PPA: {
         rotulo: "PPA",
         descricao:
-          "Multiyear Plan. It defines the State's programs and targets for four years and is the basis of the LDO and the LOA.",
+          "Multiyear Plan. Sets out the State's programs and targets for a four-year period and serves as the foundation for the LDO and LOA.",
       },
       LDO: {
         rotulo: "LDO",
         descricao:
-          "Budget Guidelines Law. Each year it sets the priorities that the following year's budget law must address.",
+          "Budget Guidelines Law. Annually sets the priorities and directives to be addressed in the subsequent year's budget law.",
       },
       LOA: {
         rotulo: "LOA",
         descricao:
-          "Annual Budget Law. It estimates revenue and sets each agency's expenditure for the fiscal year.",
+          "Annual Budget Law. Estimates revenue and fixes expenditures for each agency for the fiscal year.",
       },
     },
     especieNorma: {
@@ -451,7 +451,7 @@ export const en: Dicionario = {
       "Leis Federais": "Federal Laws",
     },
     fonteBanner: "SEPLAN/AC — Department of Studies and Planning (DEPLAN)",
-    origemHistorico: "History of Climate Budget laws, a manual survey by SEPLAN",
+    origemHistorico: "Legislative history of the Climate Budget, surveyed by SEPLAN",
     numeroLei: "No.",
   },
 
@@ -490,7 +490,7 @@ export const en: Dicionario = {
       boxTotal: "Total",
       creditos: [
         "Coordinator: Denyscley Oliveira Bandeira (Public Policy Manager) | Technical Team: Ícaro Lebre Gundim (Economist),",
-        "Luísa Nascimento Ribeiro (Economist), Roseneide Sena (Executive Administrative Specialist), Vinícius Carneiro de Farias (Economist)",
+        "Luísa Nascimento Ribeiro (Economist), Roseneide Sena (Executive Administrative Specialist), Vinicius Carneiro de Farias (Economist)",
       ],
       arquivo: (data) => `climate_budget_report_${data}.pdf`,
     },

@@ -25,13 +25,26 @@ export function codDoOds(cod: string, lang: Locale): string {
   return lang === "en" ? cod.replace("ODS", "SDG") : cod;
 }
 
+/** "Indicador 1.5.3" em PT -> "Indicator 1.5.3" em EN. */
+export function codDoIndicador(codigo: string | null, lang: Locale): string | null {
+  if (!codigo) return null;
+  return lang === "en" ? codigo.replace(/^Indicador\s+/i, "Indicator ") : codigo;
+}
+
+/** Extrai a chave numérica pura do código ("Indicador 1.5.3" -> "1.5.3"). */
+export function chaveIndicador(codigo: string | null): string | null {
+  if (!codigo) return null;
+  return codigo.replace(/^(?:Indicador|Indicator)\s+/i, "").trim();
+}
+
 export function descricaoDoIndicador(
   codigo: string | null,
   padrao: string,
   lang: Locale,
 ): string {
   if (lang === "pt" || !codigo) return padrao;
-  return INDICADORES_ODS_EN[codigo] ?? padrao;
+  const chave = chaveIndicador(codigo);
+  return (chave ? INDICADORES_ODS_EN[chave] : null) ?? INDICADORES_ODS_EN[codigo] ?? padrao;
 }
 
 /**

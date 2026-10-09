@@ -15,7 +15,7 @@ export const EIXOS_EN: Record<number, EixoEn> = {
     rotulo: "Climate change mitigation",
     titulo: "Climate change mitigation",
     descricao:
-      "Actions to reduce greenhouse gas emissions and increase carbon absorption by the Amazon forest.",
+      "Actions to reduce greenhouse gas emissions and increase carbon absorption by the Amazon rainforest.",
   },
   3: {
     rotulo: "Climate adaptation",
@@ -33,17 +33,18 @@ export const EIXOS_EN: Record<number, EixoEn> = {
     rotulo: "Environmental governance and transparency",
     titulo: "Environmental governance and transparency",
     descricao:
-      "Strengthening public management with monitoring, enforcement and access to environmental information.",
+      "Strengthening public administration through monitoring, enforcement, and public access to environmental information.",
   },
   6: {
     rotulo: "Environmental education and innovation",
     titulo: "Environmental education and innovation",
-    descricao: "Promotion of knowledge, research and clean technologies for the sustainable transition.",
+    descricao:
+      "Promotion of knowledge, research, and clean technologies for a sustainable transition.",
   },
   7: {
     rotulo: "Risk management and civil protection",
     titulo: "Risk management and civil protection",
     descricao:
-      "Prevention of and response to natural disasters, forest fires and extreme weather events.",
+      "Prevention and response to natural disasters, wildfires, and extreme weather events.",
   },
 };

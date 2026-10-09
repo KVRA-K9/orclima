@@ -112,6 +112,7 @@ export function AbaHistorico() {
         norma.ementa.toLowerCase().includes(termo) ||
         norma.numero.toLowerCase().includes(termo) ||
         norma.especie.toLowerCase().includes(termo) ||
+        (t.dados.especieNorma[norma.especie]?.toLowerCase().includes(termo) ?? false) ||
         String(norma.ano).includes(termo) ||
         String(norma.exercicio ?? "").includes(termo) ||
         (norma.orgaos?.toLowerCase().includes(termo) ?? false) ||

@@ -22,6 +22,7 @@ import { EIXOS, eixoPorNumero } from "@/data/eixos";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useI18n } from "@/lib/i18n/cliente";
 import {
+  codDoIndicador,
   codDoOds,
   descricaoDoIndicador,
   rotuloDoEixo,
@@ -87,15 +88,15 @@ function IndicadorCard({ indicador }: { indicador: IndicadorDerivado }) {
             href={indicador.url}
             target="_blank"
             rel="noopener noreferrer"
-            title={t.painel.ods.verFicha(indicador.codigo ?? "")}
+            title={t.painel.ods.verFicha(codDoIndicador(indicador.codigo, lang) ?? "")}
             className="text-xs font-semibold tabular-nums underline-offset-4 hover:text-primary hover:underline"
           >
-            {indicador.codigo}
+            {codDoIndicador(indicador.codigo, lang)}
             <ExternalLink className="ml-1 inline size-3 align-[-0.05em]" />
           </a>
         ) : (
           <span className="text-xs font-semibold tabular-nums">
-            {indicador.codigo ?? t.dados.status[indicador.status]}
+            {codDoIndicador(indicador.codigo, lang) ?? t.dados.status[indicador.status]}
           </span>
         )}
       </div>

@@ -101,7 +101,7 @@ export const SECOES_EN: Secao[] = [
       {
         tipo: "paragrafo",
         texto:
-          "The effectiveness of public policies aimed at confronting the contemporary climate crisis depends intrinsically on the capacity to translate abstract international commitments into measurable, budget-auditable local targets. In this sense, the United Nations 2030 Agenda and its Sustainable Development Goals (SDGs) have ceased to be mere rhetorical guidelines for sustainability and have consolidated as the main global framework for monitoring public policies (UN, 2015). In Brazil, practical experiences of alignment between Multiyear Plans (PPA) and the SDGs have been adopted by state governments and capitals that use the 2030 Agenda to guide public investment in energy transition, sanitation and biome protection. Within the State of Acre, the consolidation of the Climate Budget establishes a direct methodological bridge between the fiscal planning cycle and the realization of these global targets — with emphasis on Climate Action (SDG 13), Life on Land (SDG 15) and the effective implementation of Partnerships for the Goals (SDG 17).",
+          "The effectiveness of public policies aimed at addressing the contemporary climate crisis depends intrinsically on the capacity to translate abstract international commitments into measurable, budget-auditable local targets. In this sense, the United Nations 2030 Agenda and its Sustainable Development Goals (SDGs) have ceased to be mere rhetorical guidelines for sustainability and have consolidated as the main global framework for monitoring public policies (UN, 2015). In Brazil, practical experiences of alignment between Multiyear Plans (PPA) and the SDGs have been adopted by state governments and capitals that use the 2030 Agenda to guide public investment in energy transition, sanitation and biome protection. Within the State of Acre, the consolidation of the Climate Budget establishes a direct methodological bridge between the fiscal planning cycle and the realization of these global targets — with emphasis on Climate Action (SDG 13), Life on Land (SDG 15) and the effective implementation of Partnerships for the Goals (SDG 17).",
       },
       {
         tipo: "paragrafo",
@@ -148,7 +148,7 @@ export const SECOES_EN: Secao[] = [
       {
         tipo: "paragrafo",
         texto:
-          "Simultaneously, the orientation toward biodiversity and ecosystem services — such as the regulation of rainfall regimes, carbon sequestration and storage, and the protection of watersheds — lends scientific grounding to resource allocation. Every budget program marked under this guideline is evaluated by its capacity to keep the forest standing and functional. Thus, by improving the marking of public spending, the Government also strengthens its credibility in applying the investments raised with the Multilateral Development Banks, demonstrating that public investment in sustainability is not a fiscal cost. On the contrary, it consolidates itself as the main asset guaranteeing prosperity, administrative efficiency and socioeconomic stability for its partners, funders and for present and future generations of Acre.",
+          "Simultaneously, the orientation toward biodiversity and ecosystem services — such as the regulation of rainfall regimes, carbon sequestration and storage, and the protection of watersheds — lends scientific grounding to resource allocation. Every budget program labeled under this guideline is evaluated for its capacity to keep the forest standing and ecologically functional. Thus, by improving the marking of public spending, the Government also strengthens its credibility in applying the investments raised with Multilateral Development Banks, demonstrating that public investment in sustainability is not a fiscal burden. On the contrary, it consolidates itself as the main asset guaranteeing prosperity, administrative efficiency and socioeconomic stability for its partners, funders and present and future generations of Acre.",
       },
     ],
   },
@@ -188,7 +188,7 @@ export const SECOES_EN: Secao[] = [
           {
             nome: "Climate justice and social inclusion",
             texto:
-              "intended to protect populations, vulnerable territories, indigenous peoples and traditional, extractivist and riverside communities, in strict observance of the Socio-environmental Safeguards.",
+              "intended to protect populations, vulnerable territories, indigenous peoples and traditional, extractivist and riverside communities, in strict observance of Socio-environmental Safeguards.",
           },
           {
             nome: "Environmental governance and transparency",
@@ -216,7 +216,7 @@ export const SECOES_EN: Secao[] = [
         tipo: "nivel",
         titulo: "Level 1 – Macro Allocation (Climate Relevance)",
         texto:
-          "Performs an exhaustive scan of the LOA based on Budget Functions and Subfunctions, using the climate relevance established in the Brazilian Sustainable Taxonomy through the Sectoral Notebooks (associated with the corresponding CNAEs). Functions/Subfunctions are qualified as Direct Relevance (institutional functions of environment, sustainable agriculture and civil defense) and Potential Relevance (cross-cutting actions in infrastructure, education and transport). As a precept of fiscal rigor and to avoid inflated distortions, the Golden Rule of Allocation applies: expenditures on personnel, social charges and payroll management are expressly excluded from the Climate Budget accounting.",
+          "Performs an exhaustive scan of the LOA based on Budget Functions and Subfunctions, using the climate relevance criteria established in the Brazilian Sustainable Taxonomy through its Sectoral Technical Guides (associated with corresponding CNAEs). Functions and Subfunctions are qualified as Direct Relevance (institutional functions of environment, sustainable agriculture and civil defense) and Potential Relevance (cross-cutting actions in infrastructure, education and transport). As a precept of fiscal rigor and to avoid inflated distortions, the Golden Rule of Allocation applies: expenditures on personnel, social charges and payroll management are expressly excluded from Climate Budget accounting.",
       },
       {
         tipo: "nivel",
@@ -226,24 +226,24 @@ export const SECOES_EN: Secao[] = [
           {
             nome: "Exclusive Spending (Direct – 100%)",
             texto:
-              "actions whose purpose is entirely climatic (e.g., firefighting by CBMAC/SEMA, satellite monitoring by IMAC/SEMA, Payment for Environmental Services – PSA).",
+              "actions whose purpose is entirely climate-related (e.g., firefighting by CBMAC/SEMA, satellite monitoring by IMAC/SEMA, Payment for Environmental Services – PSA).",
           },
           {
             nome: "Non-exclusive Spending (Indirect/Cross-cutting)",
             texto:
-              "actions by sectoral secretariats (infrastructure, housing, agriculture) that have multiple objectives but incorporate components or stages with proven climate gains. In these cases, strictly the financial value of the specific project is computed (e.g., the resettlement of families removed from areas at risk of flooding at the critical levels of the Acre River, classified under the Adaptation axis).",
+              "actions by sectoral secretariats (infrastructure, housing, agriculture) that have multiple objectives but incorporate components or stages with proven climate gains. In these cases, strictly the financial value of the specific project component is computed (e.g., the resettlement of families removed from areas at risk of flooding at the critical levels of the Acre River, classified under the Adaptation axis).",
           },
         ],
       },
       {
         tipo: "paragrafo",
         texto:
-          "Operationalizing the methodology requires multilevel governance guided by shared responsibility and aligned with the regimental role of each body, with no overlapping of duties. Under the strategic coordination of SEPLAN and the financial support of SEFAZ, the architecture counts on the technical curation of SEMA and the IMC in framing the axes and environmental monitoring. The sectoral executing bodies are responsible for identifying actions and proving the causal link through technical documentation. This arrangement is articulated by the Climate Budget Governance Committee (CGOC), established by art. 7 of State Law No. 4,679/2025, a collegiate body responsible for validating the methodology, arbitrating divergences, approving the annual assessment reports and fostering social control.",
+          "Operationalizing the methodology requires multilevel governance guided by shared responsibility and aligned with the regimental role of each body, with no overlapping of duties. Under the strategic coordination of SEPLAN and the financial support of SEFAZ, the architecture relies on the technical curation of SEMA and IMC in framing the axes and environmental monitoring. Sectoral executing bodies are responsible for identifying actions and establishing the causal link through technical documentation. This arrangement is articulated by the Climate Budget Governance Committee (CGOC), established by art. 7 of State Law No. 4,679/2025, a collegiate body responsible for validating the methodology, arbitrating divergences, approving annual assessment reports and fostering social control.",
       },
       {
         tipo: "paragrafo",
         texto:
-          "Through this methodological categorization, the climate lens enables not only the marking and accounting traceability of expenditures, but the performance of critical analyses of public policy consistency. It identifies, for example, possible budgetary misalignments, subsidizing managers in the reallocation of resources toward a spending matrix fully consistent with the subnational and global climate commitments (Cepal, 2024). With this rigorous methodological architecture, the Government of Acre consolidates a standard of fiscal governance that unites science, planning and management excellence.",
+          "Through this methodological categorization, the climate lens enables not only the marking and accounting traceability of expenditures, but also critical analyses of public policy consistency. It identifies, for example, possible budgetary misalignments, supporting managers in the reallocation of resources toward a spending matrix fully consistent with subnational and global climate commitments (Cepal, 2024). With this rigorous methodological architecture, the Government of Acre consolidates a standard of fiscal governance that unites science, planning and management excellence.",
       },
     ],
   },
@@ -255,7 +255,7 @@ export const SECOES_EN: Secao[] = [
       {
         tipo: "paragrafo",
         texto:
-          "The consolidation of an innovative instrument for assessing spending through the climate lens does not arise in an institutional vacuum; it is the result of a historical legacy of public policies and budget executions aimed at sustainability. In the case of the State of Acre, the trajectory of vanguard in environmental governance — marked by the implementation of structuring sustainable development programs, respect for socio-environmental safeguards and large-scale international cooperation — provided the indispensable empirical basis for the transition toward high-precision climate fiscal accounting (Acre, 2025). The central challenge consists of migrating from a scenario of decentralized socio-environmental actions to an institutional routine of systematic marking of programs and budget actions (SEPLAN-AC, 2025).",
+          "The consolidation of an innovative instrument for assessing spending through the climate lens does not arise in an institutional vacuum; it is the result of a historical legacy of public policies and budget executions aimed at sustainability. In the case of the State of Acre, a pioneering trajectory in environmental governance — marked by the implementation of structuring sustainable development programs, respect for socio-environmental safeguards and large-scale international cooperation — provided the indispensable empirical basis for the transition toward high-precision climate fiscal accounting (Acre, 2025). The central challenge consists of migrating from a scenario of decentralized socio-environmental actions to an institutional routine of systematic labeling of programs and budget actions (SEPLAN-AC, 2025).",
       },
       {
         tipo: "paragrafo",
@@ -265,12 +265,12 @@ export const SECOES_EN: Secao[] = [
       {
         tipo: "paragrafo",
         texto:
-          "The effectiveness of this governance and the recognition of the State's planning capacity translated into important national awards, such as first place in the 2023 Excellence in Competitiveness Award, promoted by the Center for Public Leadership (CLP), and a prominent position in the ENAP Public Sector Innovation Competition in the environmental innovation category. It is on this solid management foundation that the practice of budgetary marking becomes the definitive tool for translating between long-term strategic planning and the annual financial execution contained in the Annual Budget Law (LOA).",
+          "The effectiveness of this governance and the recognition of the State's planning capacity translated into important national awards, such as first place in the 2023 Excellence in Competitiveness Award, promoted by the Center for Public Leadership (CLP), and a prominent position in the ENAP Public Sector Innovation Competition in the environmental innovation category. It is on this solid management foundation that the practice of budgetary labeling becomes the definitive tool for translating between long-term strategic planning and the annual financial execution contained in the Annual Budget Law (LOA).",
       },
       {
         tipo: "paragrafo",
         texto:
-          "Through advanced labeling methodologies, aligned with the guidelines of State Law No. 4,679, of November 10, 2025, each government program ceases to be evaluated only by its classic sectoral purpose and comes to be scrutinized for its exact coefficient of climate impact (OECD, 2021). This means that actions aimed at rural technical assistance, for example, are disaggregated to identify the precise fraction of the resource that finances the transition to low-carbon agricultural practices, distinguishing it from conventional expenditures.",
+          "Through advanced labeling methodologies, aligned with the guidelines of State Law No. 4,679, of November 10, 2025, each government program ceases to be evaluated only by its classic sectoral purpose and is scrutinized for its exact coefficient of climate impact (OECD, 2021). This means that actions aimed at rural technical assistance, for example, are disaggregated to identify the precise fraction of the resource that finances the transition to low-carbon agricultural practices, distinguishing it from conventional expenditures.",
       },
       {
         tipo: "paragrafo",
@@ -285,7 +285,7 @@ export const SECOES_EN: Secao[] = [
       {
         tipo: "paragrafo",
         texto:
-          "The Climate Budget of the State of Acre is, in its essence, a pact for the future. It summons the Executive, the Legislature, the internal and external oversight bodies, international cooperation organizations, academia and civil society to walk together. More than a methodological innovation or a transparency dashboard, it is an ethical and intergenerational commitment to the protection of the forest, the safety of our cities and the dignity of the people of Acre.",
+          "The Climate Budget of the State of Acre is, in its essence, a pact for the future. It summons the Executive, the Legislature, internal and external oversight bodies, international cooperation organizations, academia and civil society to walk together. More than a methodological innovation or a transparency dashboard, it is an ethical and intergenerational commitment to the protection of the forest, the safety of our cities and the dignity of the people of Acre.",
       },
       {
         tipo: "paragrafo",

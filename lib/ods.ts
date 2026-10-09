@@ -1,4 +1,5 @@
 import { ODS, type IndicadorOds, type Ods } from "@/data/ods";
+import { INDICADORES_ODS_EN, ODS_TITULOS_EN } from "@/data/ods-en";
 import { normalizar } from "@/lib/texto";
 
 /**
@@ -105,13 +106,16 @@ export function filtrarOds({ eixos, status, busca }: FiltroOds): OdsDerivado[] {
   const termo = normalizar(busca.trim());
 
   return ODS_DERIVADOS.map((ods) => {
-    // Buscar pelo nome do ODS ("ODS 13", "ação contra a mudança global do
-    // clima") traz o objetivo inteiro; senão, o termo é casado indicador a
-    // indicador.
+    // Buscar pelo nome do ODS ("ODS 13" / "SDG 13", título PT ou EN) traz o objetivo
+    // inteiro; senão, o termo é casado indicador a indicador (PT e EN).
+    const tituloEn = ODS_TITULOS_EN[ods.numero] ?? "";
+    const codEn = ods.cod.replace("ODS", "SDG");
     const odsCasaBusca =
       termo.length === 0 ||
       normalizar(ods.cod).includes(termo) ||
-      normalizar(ods.titulo).includes(termo);
+      normalizar(codEn).includes(termo) ||
+      normalizar(ods.titulo).includes(termo) ||
+      normalizar(tituloEn).includes(termo);
 
     const indicadores = ods.indicadores.filter((indicador) => {
       // Indicador sem eixo mapeado (há um, no ODS 6) sai de qualquer recorte
@@ -119,7 +123,16 @@ export function filtrarOds({ eixos, status, busca }: FiltroOds): OdsDerivado[] {
       if (eixos.length > 0 && (indicador.eixo == null || !eixos.includes(indicador.eixo)))
         return false;
       if (status.length > 0 && !status.includes(indicador.status)) return false;
-      if (!odsCasaBusca && !normalizar(indicador.texto).includes(termo)) return false;
+      if (!odsCasaBusca) {
+        const matchPt = normalizar(indicador.texto).includes(termo);
+        const corte = indicador.texto.indexOf(":");
+        const num = corte > 0 ? indicador.texto.slice(0, corte).replace(/^Indicador\s+/i, "").trim() : "";
+        const descEn = num ? INDICADORES_ODS_EN[num] : "";
+        const matchEn = descEn
+          ? normalizar(`indicator ${num} ${descEn}`).includes(termo)
+          : false;
+        if (!matchPt && !matchEn) return false;
+      }
       return true;
     });
 
