@@ -61,6 +61,9 @@ type Variante = {
   referenciasTitulo: string;
   disponivelEm: string;
   creditosFotos: string;
+  copyright: string;
+  endereco: string;
+  creditosEquipe: string;
   pdfTitulo: string;
   pdfAutor: string;
   saida: string;
@@ -73,16 +76,21 @@ const VARIANTES: Variante[] = [
     comunicado: COMUNICADO,
     secoes: SECOES,
     referencias: REFERENCIAS,
-    cabecalho: "INFORMATIVO · ORÇAMENTO CLIMÁTICO DO ESTADO DO ACRE",
+    cabecalho: "ORÇAMENTO CLIMÁTICO DO ESTADO DO ACRE",
     rodapeEsq: "Governo do Estado do Acre · SEPLAN · DEPPO",
     rodapeDir: String.raw`Página \thepage\ de \pageref{LastPage}`,
-    capa: "Governo do Estado do Acre · 2023--2026 · Rio Branco, Acre",
+    capa: "Rio Branco, Acre · 2026",
     fotografia: "Fotografia: ",
     referenciasTitulo: "Referências Consultadas",
     disponivelEm: "Disponível em: ",
     creditosFotos:
       "Fotografias: Agência de Notícias do Acre · Talita Oliveira (SECOM/AC) · Arison Jardim (SECOM/AC)",
-    pdfTitulo: "Informativo - Orçamento Climático do Estado do Acre",
+    copyright:
+      "© 2026 Governo do Estado do Acre · Secretaria de Estado de Planejamento do Acre - Departamento de Estudos e Planejamento Orçamentário - DEPPO/SEPLAN",
+    endereco: "Av. Getúlio Vargas, 232 · Centro · Rio Branco · Acre · CEP 69900-060",
+    creditosEquipe:
+      "Coordenação: Denyscley Oliveira Bandeira (Departamento de Estudos e Planejamento Orçamentário) · Equipe Técnica: Ícaro Lebre Gundim (Economista), Luísa Nascimento Ribeiro (Economista), Roseneide Mendonça de Sena Caldera (Especialista Executiva – Administração), Vinicius Carneiro de Farias (Economista).",
+    pdfTitulo: "Orçamento Climático do Estado do Acre",
     pdfAutor: "SEPLAN/AC · DEPPO",
     saida: "informativo-orcamento-climatico.pdf",
   },
@@ -92,16 +100,21 @@ const VARIANTES: Variante[] = [
     comunicado: COMUNICADO_EN,
     secoes: SECOES_EN,
     referencias: REFERENCIAS_EN,
-    cabecalho: "BRIEF · CLIMATE BUDGET OF THE STATE OF ACRE",
+    cabecalho: "CLIMATE BUDGET OF THE STATE OF ACRE",
     rodapeEsq: "Government of the State of Acre · SEPLAN · DEPPO",
-    rodapeDir: String.raw`Page \thepage\ of \pageref{LastPage}`,
-    capa: "Government of the State of Acre · 2023--2026 · Rio Branco, Acre",
+    rodapeDir: String.raw`Page \thepage\ de \pageref{LastPage}`,
+    capa: "Rio Branco, Acre · 2026",
     fotografia: "Photo: ",
     referenciasTitulo: "References Consulted",
     disponivelEm: "Available at: ",
     creditosFotos:
       "Photos: Agência de Notícias do Acre · Talita Oliveira (SECOM/AC) · Arison Jardim (SECOM/AC)",
-    pdfTitulo: "Brief - Climate Budget of the State of Acre",
+    copyright:
+      "© 2026 Government of the State of Acre · State Secretariat for Planning of Acre – Department of Studies and Budget Planning – DEPPO/SEPLAN",
+    endereco: "Av. Getúlio Vargas, 232 · Centro · Rio Branco · Acre · CEP 69900-060",
+    creditosEquipe:
+      "Coordination: Denyscley Oliveira Bandeira (Department of Studies and Budget Planning) · Technical Team: Ícaro Lebre Gundim (Economist), Luísa Nascimento Ribeiro (Economist), Roseneide Mendonça de Sena Caldera (Executive Specialist – Administration), Vinicius Carneiro de Farias (Economist).",
+    pdfTitulo: "Climate Budget of the State of Acre",
     pdfAutor: "SEPLAN/AC · DEPPO",
     saida: "climate-budget-brief-en.pdf",
   },
@@ -206,6 +219,32 @@ const preambuloTex = (v: Variante) => String.raw`\documentclass[11pt,a4paper]{ar
 \fancyfoot[R]{\footnotesize\color{cinzamedio}${v.rodapeDir}}
 \renewcommand{\footrule}{{\color{cinzaclaro}\hrule height 0.6pt width\headwidth}}
 
+\fancypagestyle{ultima}{
+  \fancyhf{}
+  \setlength{\headheight}{18pt}
+  \setlength{\headsep}{12pt}
+  \fancyhead[L]{\includegraphics[height=11pt]{${ativo("seplan-800.png")}}}
+  \fancyhead[R]{\footnotesize\bfseries\color{verde}${v.cabecalho}}
+  \renewcommand{\headrule}{{\color{verdeescuro}\hrule height 1.2pt width\headwidth}}
+  \renewcommand{\footrule}{}
+  \fancyfoot[L]{%
+    \parbox[t]{\headwidth}{%
+      \vspace*{-54pt}%
+      {\footnotesize\color{cinzamedio}${v.rodapeEsq}\hfill ${v.rodapeDir}}\par
+      \vspace{4pt}%
+      \noindent{\color{cinzaclaro}\rule{\headwidth}{0.6pt}}\par
+      \vspace{4pt}%
+      {\footnotesize\color{cinzamedio}${escapar(v.creditosEquipe)}\par}%
+      \vspace{4pt}%
+      \noindent{\color{cinzaclaro}\rule{\headwidth}{0.6pt}}\par
+      \vspace{4pt}%
+      {\footnotesize\color{cinzamedio}${escapar(v.creditosFotos)}\par}%
+    }%
+  }
+  \fancyfoot[R]{}
+}
+
+\usepackage{xurl}
 \usepackage[colorlinks=true,urlcolor=verde,linkcolor=verde,pdftitle={${v.pdfTitulo}},pdfauthor={${v.pdfAutor}}]{hyperref}
 
 % O pdftex re-encoda os subsets das fontes Type1 com codigos proprios; sem
@@ -215,16 +254,18 @@ const preambuloTex = (v: Variante) => String.raw`\documentclass[11pt,a4paper]{ar
 \pdfgentounicode=1
 `;
 
-const capaTex = (v: Variante) => String.raw`\begin{titlepage}
+const capaTex = (v: Variante) => {
+  const kicker = v.comunicado.kicker
+    ? `{\\color{verde}\\bfseries ${escapar(v.comunicado.kicker)}\\par}\n\n    \\vspace{8pt}\n    `
+    : "";
+
+  return String.raw`\begin{titlepage}
   \thispagestyle{empty}
   \noindent\includegraphics[height=26pt]{${ativo("seplan-800.png")}}\hfill\includegraphics[height=52pt]{${ativo("governo-500.png")}}
 
-  \vspace{2.2cm}
+  \vspace{2.4cm}
   \begin{center}
-    {\color{verde}\bfseries ${escapar(v.comunicado.kicker)}\par}
-
-    \vspace{8pt}
-    {\color{verdeescuro}\bfseries\fontsize{26}{31}\selectfont ${escapar(v.comunicado.titulo)}\par}
+    ${kicker}{\color{verdeescuro}\bfseries\fontsize{26}{31}\selectfont ${escapar(v.comunicado.titulo)}\par}
 
     \vspace{14pt}
     {\color{verde}\rule{60pt}{2pt}}
@@ -242,6 +283,7 @@ const capaTex = (v: Variante) => String.raw`\begin{titlepage}
   }}
 \end{titlepage}
 `;
+};
 
 const secoesTex = (v: Variante) =>
   v.secoes
@@ -266,24 +308,17 @@ const referenciasTex = (v: Variante) =>
           : [referencia.corpo, ""];
       const corpo =
         `\\textbf{\\color{verdeescuro}${escapar(entidade)}} ${escapar(resto)}`.trim();
-      // Corpo: paragrafo justificado com recuo frances. URL: paragrafo proprio
-      // alinhado a esquerda (raggedright) — justificar URL estica espacos entre
-      // caracteres e e tipograficamente errado; e a quebra prefere os pontos
-      // naturais (hifens, "/"), nao o meio de palavras. O \parskip=2pt entre
-      // corpo e URL aperta o par dentro da entrada; entre entradas vale o
-      // parskip do documento.
       const url = referencia.url
-        ? `\\par\\parskip=2pt\\noindent\\hangindent=1.5em\\hangafter=1\\small\\raggedright ${v.disponivelEm}\\url{${referencia.url}}\\par`
+        ? `\\par\\nopagebreak\\vspace{2.5pt}\\noindent{\\footnotesize\\color{cinzamedio}${v.disponivelEm}\\url{${referencia.url}}}`
         : "";
-      return `{\\noindent\\hangindent=1.5em\\hangafter=1\\small\n${corpo}\\par}${url}`;
+      return String.raw`\noindent\begin{minipage}{\textwidth}
+  \small\emergencystretch=1.5em
+  \noindent ${corpo}${url}
+\end{minipage}`;
     }),
-  ].join("\n\n");
+  ].join("\n\n\\vspace{7pt}\n\n");
 
-const creditosTex = (v: Variante) => String.raw`\vspace{14pt}
-\begin{center}
-  {\footnotesize\color{cinzamedio}${escapar(v.creditosFotos)}}
-\end{center}
-`;
+const creditosTex = (_v: Variante) => String.raw`\thispagestyle{ultima}`;
 
 for (const variante of VARIANTES) {
   const build = join(BUILD, variante.lang);

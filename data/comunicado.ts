@@ -13,10 +13,10 @@
 
 export const COMUNICADO = {
   titulo: "Orçamento Climático do Estado do Acre",
-  kicker: "Informativo · 2026",
+  kicker: "",
   ano: 2026,
   subtitulo:
-    "Estado do Acre · Secretaria de Estado de Planejamento · Departamento de Estudos e Planejamento Orçamentário (DEPPO)",
+    "Governo do Estado do Acre · Secretaria de Estado de Planejamento · Departamento de Estudos e Planejamento Orçamentário (DEPPO)",
 } as const;
 
 export const PDF_COMUNICADO = "/informativo-orcamento-climatico.pdf";

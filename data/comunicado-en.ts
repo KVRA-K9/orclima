@@ -10,10 +10,10 @@ export const PDF_COMUNICADO_EN = "/climate-budget-brief-en.pdf";
 
 export const COMUNICADO_EN = {
   titulo: "Climate Budget of the State of Acre",
-  kicker: "Brief · 2026",
+  kicker: "",
   ano: 2026,
   subtitulo:
-    "State of Acre · State Secretariat for Planning · Department of Studies and Budget Planning (DEPPO)",
+    "Government of the State of Acre · State Secretariat for Planning · Department of Studies and Budget Planning (DEPPO)",
 } as const;
 
 export const SECOES_EN: Secao[] = [
