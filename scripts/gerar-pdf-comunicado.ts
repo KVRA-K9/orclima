@@ -290,7 +290,8 @@ const secoesTex = (v: Variante) =>
     .map((secao) => {
       const conteudo = secao.blocos.map(blocoTex).join("\n\n");
       const foto = FOTOS_SECAO[secao.numero];
-      const partes = [`\\section{${escapar(secao.titulo)}}`, conteudo];
+      const prefixo = secao.numero === 4 ? "\\clearpage\n" : "";
+      const partes = [`${prefixo}\\section{${escapar(secao.titulo)}}`, conteudo];
       if (foto) partes.push(fotoTex(foto.arquivo, foto.credito, v.fotografia));
       return partes.join("\n\n");
     })
