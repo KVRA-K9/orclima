@@ -290,7 +290,11 @@ const secoesTex = (v: Variante) =>
     .map((secao) => {
       const conteudo = secao.blocos.map(blocoTex).join("\n\n");
       const foto = FOTOS_SECAO[secao.numero];
-      const prefixo = secao.numero === 4 ? "\\clearpage\n" : "";
+      const quebras: Record<number, string> = {
+        2: v.lang === "pt" ? "\\enlargethispage{1.5\\baselineskip}\n" : "",
+        4: "\\clearpage\n",
+      };
+      const prefixo = quebras[secao.numero] ?? "";
       const partes = [`${prefixo}\\section{${escapar(secao.titulo)}}`, conteudo];
       if (foto) partes.push(fotoTex(foto.arquivo, foto.credito, v.fotografia));
       return partes.join("\n\n");
@@ -299,7 +303,7 @@ const secoesTex = (v: Variante) =>
 
 const referenciasTex = (v: Variante) =>
   [
-    `\\section*{${escapar(v.referenciasTitulo)}}`,
+    `\\clearpage\n\\section*{${escapar(v.referenciasTitulo)}}`,
     "",
     ...v.referencias.map((referencia) => {
       const ponto = referencia.corpo.indexOf(". ");
